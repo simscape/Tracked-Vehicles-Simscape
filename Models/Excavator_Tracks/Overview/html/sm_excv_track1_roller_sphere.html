@@ -1,0 +1,232 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Excavator Track (Single), Roller Contact Spheres</title><meta name="generator" content="MATLAB 9.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-08-17"><meta name="DC.source" content="sm_excv_track1_roller_sphere.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Excavator Track (Single), Roller Contact Spheres</h1><!--introduction--><p><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_Overview.png" alt=""> </p><p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p><p>This example models a single track from an excavator in an abstract manner. Contact between the track and the ground is modeled using two spheres on each rollers, sprocket, and idler. The sphere radius includes the depth of the track. This method permits significantly faster simulation for it is far simpler than modeling each segment of the track and all the contact forces with the undercarriage and ground.  Contact forces are modeled using the <a href="https://www.mathworks.com/help/sm/ref/spatialcontactforce.html">Spatial Contact Force block</a>.</p><p>The track can be tested on flat and uneven surfaces. The sprocket is driven with a flexible driveshaft.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Model</a></li><li><a href="#2">Track Subsystem</a></li><li><a href="#3">Rollers Subsystem</a></li><li><a href="#4">Lower Roller Subsystem</a></li><li><a href="#5">Track Subsystem</a></li><li><a href="#6">Simulation Results: Flat Surface</a></li><li><a href="#8">Simulation Results: Plateau</a></li><li><a href="#10">Simulation Results: Rough Road</a></li></ul></div><h2 id="1">Model</h2><p>In this example, one track is modeled and half of the excavator mass is centered on the track.  This enables faster adjustments of the track model which can then be mirrored to the second track.</p><p><a href="matlab:open_system('sm_excv_track1_roller_sphere');">Open Model</a></p><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_01.png" alt=""> <h2 id="2">Track Subsystem</h2><p>The track is composed of the undercarriage and a visual element to represent the track segments which includes parameters for the assumed mass, inertia, and CG of the track segments.  The undercarriage contains the rollers, sprocket, and idler which are rigidly attached to the frame. Contact geometry (spheres) in the undercarriage subsystem connect via a Simscape bus to <a href="https://www.mathworks.com/help/sm/ref/spatialcontactforce.html">Spatial Contact Force block</a> to model ground contact.</p><p><a href="matlab:open_system('sm_excv_track1_roller_sphere');open_system('sm_excv_track1_roller_sphere/Track%20L','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_02.png" alt=""> <h2 id="3">Rollers Subsystem</h2><p>This subsystem models the rollers, idler, and sprocket.  They each can rotate around shafts attached to the lower frame. In this abstract model, the tensioner holds the idler at a fixed position, the position it would reach if the track were holding it in place.</p><p>The sprocket joint interfaces to 1D mechanical rotational port.  This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p><p>The bus of connections at port R contains the connections to the geometry that is used to model contact with the ground.  The rollers, sprocket, and idler have point clouds whose radius includes the depth of the track.</p><p><a href="matlab:open_system('sm_excv_track1_roller_sphere');open_system('sm_excv_track1_roller_sphere/Track%20L/Undercarriage/Rollers','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_03.png" alt=""> <h2 id="4">Lower Roller Subsystem</h2><p>The lower rollers, sprocket, and idler contain a solid to represent the inertial properties, and two spheres to model contact with the ground. The spheres are positioned so that they touch the ground at the edges of the track.</p><p><a href="matlab:open_system('sm_excv_track1_roller_sphere');open_system('sm_excv_track1_roller_sphere/Track%20L/Undercarriage/Rollers/Roller%20Lower%201','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_04.png" alt=""> <h2 id="5">Track Subsystem</h2><p>The track is modeled as a solid. It provides a visual indication of where the track segements would be.  It also includes mass and inertia properties which can be parameterized to match the full set of track segments.</p><p><a href="matlab:open_system('sm_excv_track1_roller_sphere');open_system('sm_excv_track1_roller_sphere/Track%20L/Track','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_05.png" alt=""> <h2 id="6">Simulation Results: Flat Surface</h2><p>Below are the simulation results from a test where the track is driven on a flat surface.  The terrain is defined using the <a href="https://www.mathworks.com/help/sm/ref/infiniteplane.html.">The tracks are driven at different speeds so that the tracked vehicle can turn. Infinite Plane block</a>.</p><pre class="codeoutput">Elapsed Sim Time = 0.98383
+</pre><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_06.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_07.png" alt=""> <h2 id="8">Simulation Results: Plateau</h2><p>Below are the simulation results from a test where the track is driven on a plateau.  The terrain is defined using an extrusion, and the contact patches are moved into place below each roller and oriented based on the position of the location of the roller center.</p><pre class="codeoutput">Elapsed Sim Time = 4.0369
+</pre><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_08.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_09.png" alt=""> <h2 id="10">Simulation Results: Rough Road</h2><p>Below are the simulation results from a test where the track is driven on a rough road.  The terrain is defined using an extrusion, and the contact patches are moved into place below each roller and oriented based on the position of the location of the roller center.</p><pre class="codeoutput">Elapsed Sim Time = 14.7767
+</pre><img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_10.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_roller_sphere_11.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Excavator Track (Single), Roller Contact Spheres
+% 
+% <<sm_excv_track1_roller_sphere_Overview.png>>
+%
+% (<matlab:web('Tracked_Vehicle_Simscape_Overview.html') return to Tracked Vehicle Model with Simscape Overview>)
+%
+% This example models a single track from an excavator in an abstract
+% manner. Contact between the track and the ground is modeled using two
+% spheres on each rollers, sprocket, and idler. The sphere radius includes
+% the depth of the track. This method permits significantly faster
+% simulation for it is far simpler than modeling each segment of the track
+% and all the contact forces with the undercarriage and ground.  Contact
+% forces are modeled using the
+% <https://www.mathworks.com/help/sm/ref/spatialcontactforce.html Spatial
+% Contact Force block>.
+% 
+% The track can be tested on flat and uneven surfaces. The sprocket is driven with a
+% flexible driveshaft.
+%
+% Copyright 2023 The MathWorks, Inc.
+
+%% Model
+%
+% In this example, one track is modeled and half of the excavator mass is
+% centered on the track.  This enables faster adjustments of the track
+% model which can then be mirrored to the second track.
+%
+% <matlab:open_system('sm_excv_track1_roller_sphere'); Open Model>
+
+open_system('sm_excv_track1_roller_sphere')
+
+set_param(find_system('sm_excv_track1_roller_sphere','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+
+%% Track Subsystem
+%
+% The track is composed of the undercarriage and a visual element to
+% represent the track segments which includes parameters for the assumed
+% mass, inertia, and CG of the track segments.  The undercarriage contains the
+% rollers, sprocket, and idler which are rigidly attached to the frame.
+% Contact geometry (spheres) in the undercarriage subsystem connect
+% via a Simscape bus to <https://www.mathworks.com/help/sm/ref/spatialcontactforce.html Spatial Contact Force block> to model ground
+% contact.
+% 
+% <matlab:open_system('sm_excv_track1_roller_sphere');open_system('sm_excv_track1_roller_sphere/Track%20L','force'); Open Subsystem>
+
+set_param('sm_excv_track1_roller_sphere/Track L','LinkStatus','none')
+open_system('sm_excv_track1_roller_sphere/Track L','force')
+
+%% Rollers Subsystem
+%
+% This subsystem models the rollers, idler, and sprocket.  They each can
+% rotate around shafts attached to the lower frame. In this abstract model,
+% the tensioner holds the idler at a fixed position, the position it would
+% reach if the track were holding it in place.
+%
+% The sprocket joint interfaces to 1D mechanical rotational port.  This
+% represents a mechanical shaft connection to the sprocket. It can be
+% attached to Simscape models of gears, hydrostatic transmissions, and
+% electric motors.
+%
+% The bus of connections at port R contains the connections to the geometry
+% that is used to model contact with the ground.  The rollers, sprocket,
+% and idler have point clouds whose radius includes the depth of the track.
+%
+% <matlab:open_system('sm_excv_track1_roller_sphere');open_system('sm_excv_track1_roller_sphere/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+
+set_param('sm_excv_track1_roller_sphere/Track L/Undercarriage','LinkStatus','none')
+set_param('sm_excv_track1_roller_sphere/Track L/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_excv_track1_roller_sphere/Track L/Undercarriage/Rollers','force')
+
+%% Lower Roller Subsystem
+%
+% The lower rollers, sprocket, and idler contain a solid to represent the
+% inertial properties, and two spheres to model contact with the ground.
+% The spheres are positioned so that they touch the ground at the edges of
+% the track.
+%
+% <matlab:open_system('sm_excv_track1_roller_sphere');open_system('sm_excv_track1_roller_sphere/Track%20L/Undercarriage/Rollers/Roller%20Lower%201','force'); Open Subsystem>
+
+set_param('sm_excv_track1_roller_sphere/Track L/Undercarriage/Rollers/Roller Lower 1','LinkStatus','none')
+open_system('sm_excv_track1_roller_sphere/Track L/Undercarriage/Rollers/Roller Lower 1','force')
+
+
+%% Track Subsystem
+%
+% The track is modeled as a solid. It provides a visual indication of where
+% the track segements would be.  It also includes mass and inertia
+% properties which can be parameterized to match the full set of track
+% segments.
+%
+% <matlab:open_system('sm_excv_track1_roller_sphere');open_system('sm_excv_track1_roller_sphere/Track%20L/Track','force'); Open Subsystem>
+
+set_param('sm_excv_track1_roller_sphere/Track L/Track','LinkStatus','none')
+open_system('sm_excv_track1_roller_sphere/Track L/Track','force')
+
+%% Simulation Results: Flat Surface
+%%
+%
+% Below are the simulation results from a test where the track is driven
+% on a flat surface.  The terrain is defined using the 
+% <https://www.mathworks.com/help/sm/ref/infiniteplane.html. The tracks are
+% driven at different speeds so that the tracked vehicle can turn.
+% Infinite Plane block>. 
+
+Excv = sm_excv_track_param_machine;
+
+set_param([bdroot '/Scene'],'LabelModeActiveChoice','Plane')
+set_param(bdroot,'StopTime','16');
+
+sim('sm_excv_track1_roller_sphere');
+
+sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_sphere,logsout_sm_excv_track1_roller_sphere);
+sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_sphere);
+
+%% Simulation Results: Plateau
+%%
+%
+% Below are the simulation results from a test where the track is driven
+% on a plateau.  The terrain is defined using an extrusion, and the contact
+% patches are moved into place below each roller and oriented based on the position of
+% the location of the roller center.
+
+Excv = sm_excv_track_param_machine;
+
+set_param([bdroot '/Scene'],'LabelModeActiveChoice','Plateau')
+set_param(bdroot,'StopTime','220');
+
+sim('sm_excv_track1_roller_sphere');
+
+sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_sphere,logsout_sm_excv_track1_roller_sphere);
+sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_sphere);
+
+%% Simulation Results: Rough Road
+%%
+%
+% Below are the simulation results from a test where the track is driven
+% on a rough road.  The terrain is defined using an extrusion, and the contact
+% patches are moved into place below each roller and oriented based on the position of
+% the location of the roller center.
+
+Excv = sm_excv_track_param_machine;
+
+set_param([bdroot '/Scene'],'LabelModeActiveChoice','Rough_Road')
+set_param(bdroot,'StopTime','160');
+
+sim('sm_excv_track1_roller_sphere');
+
+sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_sphere,logsout_sm_excv_track1_roller_sphere);
+sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_sphere);
+
+
+%%
+
+close all
+bdclose('sm_excv_track1_roller_sphere');
+
+##### SOURCE END #####
+--></body></html>
