@@ -18,6 +18,8 @@ Open the project file Tracked_Vehicle_Simscape.prj to get started.
 ## **Tracked Vehicle Animation Clip**
 ![](Scripts_Data/Overview/Tracked_Vehicle_Simscape_Overview_Animation.gif)
 
+[![View Tracked Vehicle Model with Simscape™ on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/134861-tracked-vehicle-model-with-simscape)
+
 ## **Tracked Vehicle at Varying Fidelity Levels**
 Use the model that best suits your needs.  This repository contains abstract, 
 fast running models and detailed models that model each segment individually.
