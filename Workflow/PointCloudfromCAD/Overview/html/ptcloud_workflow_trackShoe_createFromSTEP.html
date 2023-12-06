@@ -1,0 +1,567 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Extracting Point Cloud from STEP Geometry: Track Shoe</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2023-10-24">
+<meta name="DC.source" content="ptcloud_workflow_trackShoe_createFromSTEP.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Extracting Point Cloud from STEP Geometry: Track Shoe</h1>
+<!--introduction-->
+<p>This example shows MATLAB commands to obtain coordinates for the point cloud that is used to detect collision between the track shoe grousers and the ground terrain. The STEP file for the track shoe is read into MATLAB, and then a few commands are used to extract just the points that are useful for the contact and friction force calculation.</p>
+<p>The code used in the example is <a href="matlab:edit('track_shoe_ptcloud_createFromSTEP.m')">track_shoe_ptcloud_createFromSTEP.m</a>.</p>
+<p>Return to overview <a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html');">Tracked Vehicle Model with Simscape&trade;</a>
+</p>
+<p>Copyright 2023 The MathWorks, Inc</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Read in the STEP file, plot geometry</a>
+</li>
+<li>
+<a href="#2">Filter Points Based on Location: Full Profile</a>
+</li>
+<li>
+<a href="#3">Filter Points Based on Location: Grouser Tips</a>
+</li>
+<li>
+<a href="#5">Create Point Cloud for Grouser Tips</a>
+</li>
+<li>
+<a href="#6">Get Points for Shoe plate</a>
+</li>
+<li>
+<a href="#8">Construct Point Cloud for Shoe Plate</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Read in the STEP file, plot geometry</h2>
+<p>The <a href="matlab:doc('importGeometry')">importGeometry</a> and <a href="matlab:doc('pdegplot')">pdegplot</a> commands are very useful for working with STEP files.</p>
+<pre class="codeinput">
+<span class="comment">% Read in STEP file</span>
+model = createpde(1);
+trshoe_geoObj = importGeometry(model,<span class="string">'CAD_Track_Shoe.STEP'</span>);
+numPtsAll = size(trshoe_geoObj.Vertices,1);
+
+<span class="comment">% Plot geometry</span>
+figure(1)
+pdegplot(trshoe_geoObj,<span class="string">"FaceAlpha"</span>,0.2);
+view(-180,-70)
+ylabel(<span class="string">'y'</span>)
+xlabel(<span class="string">'x'</span>)
+axis <span class="string">equal</span>
+set(gca,<span class="string">'XLim'</span>,[-0.1501    0.1285])
+set(gca,<span class="string">'YLim'</span>,[-0.0454    0.1010])
+
+<span class="comment">% Highlight points</span>
+hold <span class="string">on</span>
+h2=plot3(trshoe_geoObj.Vertices(:,1),trshoe_geoObj.Vertices(:,2),trshoe_geoObj.Vertices(:,3),<span class="keyword">...</span>
+    <span class="string">'bo'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'blue'</span>,<span class="string">'MarkerSize'</span>,2);
+hold <span class="string">off</span>
+view(-180,-70)
+title(<span class="string">'Shoe STEP Geometry and Points'</span>)
+box <span class="string">on</span>
+legend(h2,[<span class="string">'# Points: '</span> num2str(numPtsAll)],<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_01.png" alt=""> <h2 id="2">Filter Points Based on Location: Full Profile</h2>
+<p>As the data is all in x-y-z coordinates, we can look for points within an x-y plane to obtain points around the shoe profile. The code below finds points in a specific plane.</p>
+<pre class="codeinput">
+<span class="comment">% Extract all points within the plane z=4 mm</span>
+ind_z_lim = intersect(<span class="keyword">...</span>
+    find(trshoe_geoObj.Vertices(:,3) &gt;= 3.95/1000),<span class="keyword">...</span>
+    find(trshoe_geoObj.Vertices(:,3) &lt;= 4.05/1000));
+trshoe_stp_pts_z  = trshoe_geoObj.Vertices(ind_z_lim,:);
+numPtsUZ = length(trshoe_stp_pts_z);
+
+<span class="comment">% Plot geometry and highlighted points</span>
+figure(2)
+h1=pdegplot(trshoe_geoObj,<span class="string">"FaceAlpha"</span>,0.2);
+hold <span class="string">on</span>
+h2=plot3(trshoe_stp_pts_z(:,1),trshoe_stp_pts_z(:,2),trshoe_stp_pts_z(:,3),<span class="keyword">...</span>
+    <span class="string">'bo'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'blue'</span>,<span class="string">'MarkerSize'</span>,2);
+hold <span class="string">off</span>
+axis <span class="string">equal</span>
+title(<span class="string">'Shoe Profile Points'</span>)
+view(-180,-70)
+ylabel(<span class="string">'y'</span>)
+xlabel(<span class="string">'x'</span>)
+axis <span class="string">equal</span>
+set(gca,<span class="string">'XLim'</span>,[-0.1501    0.1285])
+set(gca,<span class="string">'YLim'</span>,[-0.0454    0.1010])
+box <span class="string">on</span>
+legend(h2,[<span class="string">'# Points: '</span> num2str(numPtsUZ)],<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_02.png" alt=""> <h2 id="3">Filter Points Based on Location: Grouser Tips</h2>
+<p>We only need the points at the tips of the grousers, as a separate set of points will be used to model contact at the shoe plate. To extract these points, we can zoom in on the grouser tips to see which height range has points suitable for contact. We can then extract those points by only selecting points at or above a certain height.</p>
+<pre class="codeinput">
+<span class="comment">% Plot grouser tip</span>
+figure(3)
+pdegplot(trshoe_geoObj,<span class="string">"FaceAlpha"</span>,0.2);
+hold <span class="string">on</span>
+plot3(trshoe_stp_pts_z(:,1),trshoe_stp_pts_z(:,2),trshoe_stp_pts_z(:,3),<span class="string">'bo'</span>)
+hold <span class="string">off</span>
+set(gca,<span class="string">'XLim'</span>,[-5 15]/1000)
+set(gca,<span class="string">'YLim'</span>,[30 40]/1000)
+title(<span class="string">'Shoe Point Cloud, Grouser Tips (1 of 3)'</span>)
+view(0,90)
+box <span class="string">on</span>
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_03.png" alt=""> <pre class="codeinput">
+<span class="comment">% Extract points above height 37.455 mm</span>
+ind_y_lim = find(trshoe_stp_pts_z(:,2) &gt;= 37.455/1000);
+trshoe_stp_pts_yz  = trshoe_stp_pts_z(ind_y_lim,:);
+numPtsUYZ = length(trshoe_stp_pts_yz);
+
+<span class="comment">% Plot tip highlighting points selected for ground contact</span>
+figure(4)
+pdegplot(trshoe_geoObj,<span class="string">"FaceAlpha"</span>,0.2);
+hold <span class="string">on</span>
+plot3(trshoe_stp_pts_z(:,1),trshoe_stp_pts_z(:,2),trshoe_stp_pts_z(:,3),<span class="string">'bo'</span>);
+h3=plot3(trshoe_stp_pts_yz(:,1),trshoe_stp_pts_yz(:,2),trshoe_stp_pts_yz(:,3),<span class="keyword">...</span>
+    <span class="string">'ro'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'red'</span>);
+hold <span class="string">off</span>
+
+set(gca,<span class="string">'XLim'</span>,[-5 15]/1000)
+set(gca,<span class="string">'YLim'</span>,[30 40]/1000)
+<span class="comment">%title('Grouser Tip Points (1 Grouser of 3), Point Cloud Only')</span>
+title(<span class="string">'Shoe Point Cloud, Grouser Tips (1 of 3)'</span>)
+view(0,90)
+box <span class="string">on</span>
+
+legend(h3,[<span class="string">'# Points: '</span> num2str(numPtsUYZ)],<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_04.png" alt=""> <h2 id="5">Create Point Cloud for Grouser Tips</h2>
+<p>Now that we have the set of points within one plane that capture the grouser tips, we can replicate that set of points along a set of x-y planes along the width of the track shoe.</p>
+<pre class="codeinput">
+<span class="comment">% Create 20 locations for points along the width of the track shoe</span>
+ptcld_z = linspace(4,596,20)/1000;
+
+<span class="comment">% Create 20 sets of x-y-z points, varying the z location</span>
+ptcld_grousers = [];
+vector_zPts = ones(size(trshoe_stp_pts_yz(:,1)));
+<span class="keyword">for</span> i = 1:length(ptcld_z)
+    ptcld_grousers = [<span class="keyword">...</span>
+        ptcld_grousers;
+        trshoe_stp_pts_yz(:,1:2) vector_zPts*ptcld_z(i)];
+<span class="keyword">end</span>
+
+numPtsPtcld = size(ptcld_grousers,1);
+
+<span class="comment">% Plot the STL mesh and points for point cloud</span>
+figure(5)
+pdegplot(trshoe_geoObj,<span class="string">"FaceAlpha"</span>,0.2);
+hold <span class="string">on</span>
+h2=plot3(ptcld_grousers(:,1),ptcld_grousers(:,2),ptcld_grousers(:,3),<span class="string">'ro'</span>,<span class="keyword">...</span>
+    <span class="string">'MarkerFaceColor'</span>,<span class="string">'red'</span>,<span class="string">'MarkerSize'</span>,3);
+hold <span class="string">off</span>
+
+axis <span class="string">equal</span>
+view(-180,-70)
+box <span class="string">on</span>
+set(gca,<span class="string">'XLim'</span>,[-0.1501    0.1285])
+set(gca,<span class="string">'YLim'</span>,[-0.0454    0.1010])
+
+title(<span class="string">'Shoe Point Cloud, Grousers'</span>)
+
+legend(h2,[<span class="string">'# Points: '</span> num2str(numPtsPtcld)],<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_05.png" alt=""> <h2 id="6">Get Points for Shoe plate</h2>
+<p>If the ground is soft, the grousers will penetrate into the ground and the shoe plate will carry most of the contact force with the ground. A point cloud for just the plate is needed. This point cloud will have a rectangular shape and be positioned on the upper surface of the shoe. We will use MATLAB to extract these dimensions from the CAD geometry.</p>
+<pre class="codeinput">
+<span class="comment">% Plot mesh</span>
+figure(6)
+pdegplot(trshoe_geoObj,<span class="string">"FaceAlpha"</span>,0.2);
+axis <span class="string">equal</span>
+set(gca,<span class="string">'XLim'</span>,[-0.1324    0.1155])
+set(gca,<span class="string">'YLim'</span>,[-0.0516    0.0823])
+
+<span class="comment">% Highlight points</span>
+hold <span class="string">on</span>
+h2=plot3(trshoe_geoObj.Vertices(:,1),trshoe_geoObj.Vertices(:,2),trshoe_geoObj.Vertices(:,3),<span class="keyword">...</span>
+    <span class="string">'bo'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'blue'</span>,<span class="string">'MarkerSize'</span>,2);
+hold <span class="string">off</span>
+view(0,90)
+title(<span class="string">'Shoe STEP Geometry and Points'</span>)
+box <span class="string">on</span>
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_06.png" alt=""> <pre class="codeinput">ind_xy_lim = intersect(intersect(<span class="keyword">...</span>
+    find(trshoe_geoObj.Vertices(:,1) &gt;= 25/1000),<span class="keyword">...</span>
+    find(trshoe_geoObj.Vertices(:,1) &lt;= 55/1000)),<span class="keyword">...</span>
+    find(trshoe_geoObj.Vertices(:,2) &gt;= 5/1000));
+
+trshoeplate_stp_pts_xy = trshoe_geoObj.Vertices(ind_xy_lim,:);
+
+hold <span class="string">on</span>
+h3=plot3(trshoeplate_stp_pts_xy(:,1),trshoeplate_stp_pts_xy(:,2),trshoeplate_stp_pts_xy(:,3),<span class="keyword">...</span>
+    <span class="string">'ro'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'red'</span>,<span class="string">'MarkerSize'</span>,5);
+hold <span class="string">off</span>
+
+plate_height = mean(trshoeplate_stp_pts_xy(:,2));
+
+legend(h3,[<span class="string">'Plate Height '</span> num2str(plate_height) <span class="string">' cm'</span>],<span class="string">'Location'</span>,<span class="string">'NorthWest'</span>)
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_07.png" alt=""> <h2 id="8">Construct Point Cloud for Shoe Plate</h2>
+<p>The width of the plate is 0.6m, which can be obtained from the figure. The point cloud needs to cover the shoe plate evenly and should not overlap with the next shoe. We need to have evenly spaced gaps between the lines of the point cloud including a gap between two shoes. To set the length of the point cloud patch, we need to know the length of the plate and the number of rows of points we plan to place. That way, we can leave half a gap at either end to keep the density of points even across the entire track.</p>
+<pre class="codeinput">num_rows     = 3;
+plate_width  = (596-4)/1000; <span class="comment">% Visual inspection CAD geometry</span>
+plate_length = 200/1000;   <span class="comment">% Distance between pin centers</span>
+cloud_len    = plate_length*num_rows/(num_rows +1);
+grid_spacing = cloud_len/2;
+num_cols     = round((plate_width)/grid_spacing)+1;
+
+temp_plate_pts = Point_Cloud_Data_Square(cloud_len,plate_width,[num_rows num_cols],<span class="string">'plot'</span>);
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_08.png" alt=""> <pre class="codeinput">ptcloud_plate  = [temp_plate_pts(:,1) temp_plate_pts(:,1)*0+plate_height temp_plate_pts(:,2)+plate_width/2];
+figure(7)
+pdegplot(trshoe_geoObj,<span class="string">"FaceAlpha"</span>,0.2);
+axis <span class="string">equal</span>
+
+hold <span class="string">on</span>
+h3=plot3(ptcloud_plate(:,1),ptcloud_plate(:,2),ptcloud_plate(:,3),<span class="keyword">...</span>
+    <span class="string">'ro'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'red'</span>,<span class="string">'MarkerSize'</span>,6);
+h4=plot3(ptcloud_plate(:,1)+plate_length,ptcloud_plate(:,2),ptcloud_plate(:,3),<span class="keyword">...</span>
+    <span class="string">'go'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'green'</span>,<span class="string">'MarkerSize'</span>,6);
+hold <span class="string">off</span>
+box <span class="string">on</span>
+title(<span class="string">'Shoe Point Cloud, Plate'</span>)
+legend([h3 h4],{<span class="string">'Point Cloud Shoe 1'</span>,<span class="string">'Point Cloud Shoe 2'</span>},<span class="string">'Location'</span>,<span class="string">'North'</span>)
+
+view(180,0)
+set(gca,<span class="string">'XLim'</span>,[-0.2130    0.3705])
+set(gca,<span class="string">'ZLim'</span>,[-0.0547    0.7253])
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTEP_09.png" alt=""> <pre class="codeinput">close <span class="string">all</span>
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Extracting Point Cloud from STEP Geometry: Track Shoe
+% 
+% This example shows MATLAB commands to obtain coordinates for the point
+% cloud that is used to detect collision between the track shoe grousers
+% and the ground terrain. The STEP file for the track shoe is read into
+% MATLAB, and then a few commands are used to extract just the points that
+% are useful for the contact and friction force calculation.
+%
+% The code used in the example is
+% <matlab:edit('track_shoe_ptcloud_createFromSTEP.m')
+% track_shoe_ptcloud_createFromSTEP.m>.
+% 
+% Return to overview <matlab:web('Tracked_Vehicle_Simscape_Overview.html');
+% Tracked Vehicle Model with Simscape™>
+%
+% Copyright 2023 The MathWorks, Inc
+
+
+%% Read in the STEP file, plot geometry
+%
+% The <matlab:doc('importGeometry') importGeometry> and <matlab:doc('pdegplot') pdegplot>
+% commands are very useful for working with STEP files.
+
+% Read in STEP file
+model = createpde(1);
+trshoe_geoObj = importGeometry(model,'CAD_Track_Shoe.STEP');
+numPtsAll = size(trshoe_geoObj.Vertices,1);
+
+% Plot geometry
+figure(1)
+pdegplot(trshoe_geoObj,"FaceAlpha",0.2);
+view(-180,-70)
+ylabel('y')
+xlabel('x')
+axis equal
+set(gca,'XLim',[-0.1501    0.1285])
+set(gca,'YLim',[-0.0454    0.1010])
+
+% Highlight points
+hold on
+h2=plot3(trshoe_geoObj.Vertices(:,1),trshoe_geoObj.Vertices(:,2),trshoe_geoObj.Vertices(:,3),...
+    'bo','MarkerFaceColor','blue','MarkerSize',2);
+hold off
+view(-180,-70)
+title('Shoe STEP Geometry and Points')
+box on
+legend(h2,['# Points: ' num2str(numPtsAll)],'Location','Best')
+
+%% Filter Points Based on Location: Full Profile
+%
+% As the data is all in x-y-z coordinates, we can look for points within an
+% x-y plane to obtain points around the shoe profile.  The code below finds
+% points in a specific plane.
+
+% Extract all points within the plane z=4 mm
+ind_z_lim = intersect(...
+    find(trshoe_geoObj.Vertices(:,3) >= 3.95/1000),...
+    find(trshoe_geoObj.Vertices(:,3) <= 4.05/1000));
+trshoe_stp_pts_z  = trshoe_geoObj.Vertices(ind_z_lim,:);
+numPtsUZ = length(trshoe_stp_pts_z);
+
+% Plot geometry and highlighted points
+figure(2)
+h1=pdegplot(trshoe_geoObj,"FaceAlpha",0.2);
+hold on
+h2=plot3(trshoe_stp_pts_z(:,1),trshoe_stp_pts_z(:,2),trshoe_stp_pts_z(:,3),...
+    'bo','MarkerFaceColor','blue','MarkerSize',2);
+hold off
+axis equal
+title('Shoe Profile Points')
+view(-180,-70)
+ylabel('y')
+xlabel('x')
+axis equal
+set(gca,'XLim',[-0.1501    0.1285])
+set(gca,'YLim',[-0.0454    0.1010])
+box on
+legend(h2,['# Points: ' num2str(numPtsUZ)],'Location','Best')
+
+
+%% Filter Points Based on Location: Grouser Tips
+%
+% We only need the points at the tips of the grousers, as a separate set of
+% points will be used to model contact at the shoe plate. To extract these
+% points, we can zoom in on the grouser tips to see which height range has
+% points suitable for contact.  We can then extract those points by
+% only selecting points at or above a certain height.
+
+% Plot grouser tip
+figure(3)
+pdegplot(trshoe_geoObj,"FaceAlpha",0.2);
+hold on
+plot3(trshoe_stp_pts_z(:,1),trshoe_stp_pts_z(:,2),trshoe_stp_pts_z(:,3),'bo')
+hold off
+set(gca,'XLim',[-5 15]/1000)
+set(gca,'YLim',[30 40]/1000)
+title('Shoe Point Cloud, Grouser Tips (1 of 3)')
+view(0,90)
+box on
+
+
+%%
+
+% Extract points above height 37.455 mm
+ind_y_lim = find(trshoe_stp_pts_z(:,2) >= 37.455/1000);
+trshoe_stp_pts_yz  = trshoe_stp_pts_z(ind_y_lim,:);
+numPtsUYZ = length(trshoe_stp_pts_yz);
+
+% Plot tip highlighting points selected for ground contact
+figure(4)
+pdegplot(trshoe_geoObj,"FaceAlpha",0.2);
+hold on
+plot3(trshoe_stp_pts_z(:,1),trshoe_stp_pts_z(:,2),trshoe_stp_pts_z(:,3),'bo');
+h3=plot3(trshoe_stp_pts_yz(:,1),trshoe_stp_pts_yz(:,2),trshoe_stp_pts_yz(:,3),...
+    'ro','MarkerFaceColor','red');
+hold off
+
+set(gca,'XLim',[-5 15]/1000)
+set(gca,'YLim',[30 40]/1000)
+%title('Grouser Tip Points (1 Grouser of 3), Point Cloud Only')
+title('Shoe Point Cloud, Grouser Tips (1 of 3)')
+view(0,90)
+box on
+
+legend(h3,['# Points: ' num2str(numPtsUYZ)],'Location','Best')
+
+
+%% Create Point Cloud for Grouser Tips
+%
+% Now that we have the set of points within one plane that capture the
+% grouser tips, we can replicate that set of points along a set of x-y
+% planes along the width of the track shoe.
+
+% Create 20 locations for points along the width of the track shoe
+ptcld_z = linspace(4,596,20)/1000;
+
+% Create 20 sets of x-y-z points, varying the z location
+ptcld_grousers = [];
+vector_zPts = ones(size(trshoe_stp_pts_yz(:,1)));
+for i = 1:length(ptcld_z)
+    ptcld_grousers = [...
+        ptcld_grousers;
+        trshoe_stp_pts_yz(:,1:2) vector_zPts*ptcld_z(i)];
+end
+
+numPtsPtcld = size(ptcld_grousers,1);
+
+% Plot the STL mesh and points for point cloud
+figure(5)
+pdegplot(trshoe_geoObj,"FaceAlpha",0.2);
+hold on
+h2=plot3(ptcld_grousers(:,1),ptcld_grousers(:,2),ptcld_grousers(:,3),'ro',...
+    'MarkerFaceColor','red','MarkerSize',3);
+hold off
+
+axis equal
+view(-180,-70)
+box on
+set(gca,'XLim',[-0.1501    0.1285])
+set(gca,'YLim',[-0.0454    0.1010])
+
+title('Shoe Point Cloud, Grousers')
+
+legend(h2,['# Points: ' num2str(numPtsPtcld)],'Location','Best')
+
+%% Get Points for Shoe plate
+%
+% If the ground is soft, the grousers will penetrate into the ground and
+% the shoe plate will carry most of the contact force with the ground.  A
+% point cloud for just the plate is needed.  This point cloud will have a
+% rectangular shape and be positioned on the upper surface of the shoe.  We
+% will use MATLAB to extract these dimensions from the CAD geometry.
+
+% Plot mesh
+figure(6)
+pdegplot(trshoe_geoObj,"FaceAlpha",0.2);
+axis equal
+set(gca,'XLim',[-0.1324    0.1155])
+set(gca,'YLim',[-0.0516    0.0823])
+
+% Highlight points
+hold on
+h2=plot3(trshoe_geoObj.Vertices(:,1),trshoe_geoObj.Vertices(:,2),trshoe_geoObj.Vertices(:,3),...
+    'bo','MarkerFaceColor','blue','MarkerSize',2);
+hold off
+view(0,90)
+title('Shoe STEP Geometry and Points')
+box on
+
+%%
+ind_xy_lim = intersect(intersect(...
+    find(trshoe_geoObj.Vertices(:,1) >= 25/1000),...
+    find(trshoe_geoObj.Vertices(:,1) <= 55/1000)),...
+    find(trshoe_geoObj.Vertices(:,2) >= 5/1000));
+
+trshoeplate_stp_pts_xy = trshoe_geoObj.Vertices(ind_xy_lim,:);
+
+hold on
+h3=plot3(trshoeplate_stp_pts_xy(:,1),trshoeplate_stp_pts_xy(:,2),trshoeplate_stp_pts_xy(:,3),...
+    'ro','MarkerFaceColor','red','MarkerSize',5);
+hold off
+
+plate_height = mean(trshoeplate_stp_pts_xy(:,2));
+
+legend(h3,['Plate Height ' num2str(plate_height) ' cm'],'Location','NorthWest')
+
+
+%% Construct Point Cloud for Shoe Plate
+%
+% The width of the plate is 0.6m, which can be obtained from the figure.
+% The point cloud needs to cover the shoe plate evenly and should not
+% overlap with the next shoe.  We need to have evenly spaced gaps between
+% the lines of the point cloud including a gap between two shoes.  To set
+% the length of the point cloud patch, we need to know the length of the
+% plate and the number of rows of points we plan to place.  That way, we
+% can leave half a gap at either end to keep the density of points even
+% across the entire track.
+
+num_rows     = 3;
+plate_width  = (596-4)/1000; % Visual inspection CAD geometry
+plate_length = 200/1000;   % Distance between pin centers
+cloud_len    = plate_length*num_rows/(num_rows +1);
+grid_spacing = cloud_len/2;
+num_cols     = round((plate_width)/grid_spacing)+1;
+
+temp_plate_pts = Point_Cloud_Data_Square(cloud_len,plate_width,[num_rows num_cols],'plot');
+
+%%
+ptcloud_plate  = [temp_plate_pts(:,1) temp_plate_pts(:,1)*0+plate_height temp_plate_pts(:,2)+plate_width/2];
+figure(7)
+pdegplot(trshoe_geoObj,"FaceAlpha",0.2);
+axis equal
+
+hold on
+h3=plot3(ptcloud_plate(:,1),ptcloud_plate(:,2),ptcloud_plate(:,3),...
+    'ro','MarkerFaceColor','red','MarkerSize',6);
+h4=plot3(ptcloud_plate(:,1)+plate_length,ptcloud_plate(:,2),ptcloud_plate(:,3),...
+    'go','MarkerFaceColor','green','MarkerSize',6);
+hold off
+box on
+title('Shoe Point Cloud, Plate')
+legend([h3 h4],{'Point Cloud Shoe 1','Point Cloud Shoe 2'},'Location','North')
+
+view(180,0)
+set(gca,'XLim',[-0.2130    0.3705])
+set(gca,'ZLim',[-0.0547    0.7253])
+
+%%
+close all
+##### SOURCE END #####
+-->
+</body>
+</html>

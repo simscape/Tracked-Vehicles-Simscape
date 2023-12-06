@@ -105,6 +105,8 @@ Excv = sm_excv_track_param_machine;
 set_param([bdroot '/Scene'],'LabelModeActiveChoice','Plane')
 set_param([bdroot '/Track Speeds'],'LabelModeActiveChoice','PivotR_Fwd')
 set_param(bdroot,'StopTime','100');
+set_param([bdroot '/Track L'],'popup_sense_roller','Actuator Torque')
+set_param([bdroot '/Track R'],'popup_sense_roller','Actuator Torque')
 
 sim('sm_excv_track2_roller_sphere');
 
@@ -124,11 +126,14 @@ Excv = sm_excv_track_param_machine;
 set_param([bdroot '/Scene'],'LabelModeActiveChoice','Plateau')
 set_param([bdroot '/Track Speeds'],'LabelModeActiveChoice','Fwd')
 set_param(bdroot,'StopTime','220');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+set_param([bdroot '/Track R'],'popup_sense_roller','Constraint Force')
 
 sim('sm_excv_track2_roller_sphere');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_sphere,logsout_sm_excv_track2_roller_sphere);
 sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_sphere);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_sphere)
 
 %% Simulation Results: Rough Road
 %%
@@ -143,6 +148,8 @@ Excv = sm_excv_track_param_machine;
 set_param([bdroot '/Scene'],'LabelModeActiveChoice','Rough_Road')
 set_param([bdroot '/Track Speeds'],'LabelModeActiveChoice','Fwd')
 set_param(bdroot,'StopTime','160');
+set_param([bdroot '/Track L'],'popup_sense_roller','Actuator Torque')
+set_param([bdroot '/Track R'],'popup_sense_roller','Actuator Torque')
 
 sim('sm_excv_track2_roller_sphere');
 

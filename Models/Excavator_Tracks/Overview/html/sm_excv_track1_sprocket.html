@@ -1,12 +1,17 @@
-
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <!--
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Excavator Track (Single) Hanging From Sprocket</title><meta name="generator" content="MATLAB 9.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-08-17"><meta name="DC.source" content="sm_excv_track1_sprocket.m"><style type="text/css">
+      -->
+<title>Excavator Track (Single) Hanging From Sprocket</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2023-09-14">
+<meta name="DC.source" content="sm_excv_track1_sprocket.m">
+<style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -67,8 +72,96 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Excavator Track (Single) Hanging From Sprocket</h1><!--introduction--><p><img vspace="5" hspace="5" src="sm_excv_track1_sprocket_Overview.png" alt=""> </p><p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p><p>This example models a single track from an excavator. The track is suspended in the air and has no contact with the ground. This test harness model enables faster testing of track segment layout and contact force parameters within the track. The sprocket is driven with a flexible driveshaft.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Model</a></li><li><a href="#2">Track Subsystem</a></li><li><a href="#3">Rollers Subsystem</a></li><li><a href="#4">Track Subsystem</a></li><li><a href="#5">Track Segment Subsystem</a></li><li><a href="#6">Simulation Results</a></li></ul></div><h2 id="1">Model</h2><p>In this example, one track is modeled hanging from the sprocket.  Contact between the track and other elements (rollers and idler) is not modeled. This enables faster testing and adjustment of the track model.</p><p><a href="matlab:open_system('sm_excv_track1_sprocket');">Open Model</a></p><img vspace="5" hspace="5" src="sm_excv_track1_sprocket_01.png" alt=""> <h2 id="2">Track Subsystem</h2><p>The track is composed of the undercarriage and the track segments connected into a loop.  The undercarriage contains the rollers, sprocket, and idler which are rigidly attached to the frame.  These are connected to the track chain through three sets of contact forces. In this model, contact with the rollers and idler is commented out.</p><p>1. The chain wraps around the idler (commented out in this model)</p><p><img vspace="5" hspace="5" src="sm_excv_contact_idlerToChain_Overview.png" alt=""> </p><p>2. The rollers roll along the chains (commented out in this model)</p><p><img vspace="5" hspace="5" src="sm_excv_contact_rollerUToChain_Overview.png" alt=""> </p><p>3. The chain pins mesh with the sprocket teeth</p><p><img vspace="5" hspace="5" src="sm_excv_contact_sprocketToChain_Overview.png" alt=""> </p><p>The Planar Track joint positions one of the chain pins at a gap between the sprocket teeth which is positioned facing the rear of the track. Joint targets applied to the track segments helps it to mesh with other teeth on the sprocket and loosely wrap around the rollers and idler. The block Transform Half Seg Angle orients the interface frame so that the two chain segments attached to that pin will wrap around the sprocket.</p><p><a href="matlab:open_system('sm_excv_track1_sprocket');open_system('sm_excv_track1_sprocket/Track%20L','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_sprocket_02.png" alt=""> <h2 id="3">Rollers Subsystem</h2><p>This subsystem models the rollers, idler, and sprocket.  They each can rotate around shafts attached to the lower frame. A spring is included in the Prismatic Tensioner joint that pushes the idler against the chain to maintain tension.</p><p>The sprocket joint interfaces to 1D mechanical rotational port.  This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p><p>The bus of connections at port R contains the connections to the geometry that is used to model contact between the rollers, idler, and sprocket to the chain.</p><p><a href="matlab:open_system('sm_excv_track1_sprocket');open_system('sm_excv_track1_sprocket/Track%20L/Undercarriage/Rollers','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_sprocket_03.png" alt=""> <h2 id="4">Track Subsystem</h2><p>A set of track segments are joined using Revolute Joints to model the track. The joints are contained in each segment. Joint targets are assigned in the mask to ensure the track meshes with the sprocket and wraps loosely around the rollers and idler.</p><p><a href="matlab:open_system('sm_excv_track1_sprocket');open_system('sm_excv_track1_sprocket/Track%20L/Track','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_sprocket_04.png" alt=""> <h2 id="5">Track Segment Subsystem</h2><p>Each track segment is composed of a chain link and a shoe. To streamline the contact force calculation, simpler geometry is connected to the Spatial Contact Force block.</p><div><ol><li>A sphere is used to model the pin contacting the sprocket.</li><li>A brick is used to model the chain contacting the rollers and idler (for this model, no contact with the rollers and idler are modeled).</li><li>A point cloud is used to model the shoe plate contacting the ground (for this model, no contact with the ground is modeled).</li></ol></div><p><img vspace="5" hspace="5" src="sm_excv_contact_trackSeg_PtcldAll_Overview.png" alt=""> </p><p><a href="matlab:open_system('sm_excv_track1_sprocket');open_system('sm_excv_track1_sprocket/Track%20L/Track/Seg%2001','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_sprocket_05.png" alt=""> <h2 id="6">Simulation Results</h2><p>Below are the simulation results from a test where the sprocket is driven as the track is suspended in the air.  The direction of gravity is applied to keep the track taut around the sprocket.</p><pre class="codeoutput">Elapsed Sim Time = 65.5373
-</pre><img vspace="5" hspace="5" src="sm_excv_track1_sprocket_06.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023a</a><br></p></div><!--
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Excavator Track (Single) Hanging From Sprocket</h1>
+<!--introduction-->
+<p>
+<img vspace="5" hspace="5" src="sm_excv_track1_sprocket_Overview.png" alt=""> </p>
+<p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p>
+<p>This example models a single track from an excavator. The track is suspended in the air and has no contact with the ground. This test harness model enables faster testing of track segment layout and contact force parameters within the track. The sprocket is driven with a flexible driveshaft.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Model</a>
+</li>
+<li>
+<a href="#2">Track Subsystem</a>
+</li>
+<li>
+<a href="#3">Rollers Subsystem</a>
+</li>
+<li>
+<a href="#4">Track Subsystem</a>
+</li>
+<li>
+<a href="#5">Track Segment Subsystem</a>
+</li>
+<li>
+<a href="#6">Simulation Results</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Model</h2>
+<p>In this example, one track is modeled hanging from the sprocket. Contact between the track and other elements (rollers and idler) is not modeled. This enables faster testing and adjustment of the track model.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_sprocket');">Open Model</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_sprocket_01.png" alt=""> <h2 id="2">Track Subsystem</h2>
+<p>The track is composed of the undercarriage and the track segments connected into a loop. The undercarriage contains the rollers, sprocket, and idler which are rigidly attached to the frame. These are connected to the track chain through three sets of contact forces. In this model, contact with the rollers and idler is commented out.</p>
+<p>1. The chain wraps around the idler (commented out in this model)</p>
+<p>
+<img vspace="5" hspace="5" src="sm_excv_contact_idlerToChain_Overview.png" alt=""> </p>
+<p>2. The rollers roll along the chains (commented out in this model)</p>
+<p>
+<img vspace="5" hspace="5" src="sm_excv_contact_rollerUToChain_Overview.png" alt=""> </p>
+<p>3. The chain pins mesh with the sprocket teeth</p>
+<p>
+<img vspace="5" hspace="5" src="sm_excv_contact_sprocketToChain_Overview.png" alt=""> </p>
+<p>The Planar Track joint positions one of the chain pins at a gap between the sprocket teeth which is positioned facing the rear of the track. Joint targets applied to the track segments helps it to mesh with other teeth on the sprocket and loosely wrap around the rollers and idler. The block Transform Half Seg Angle orients the interface frame so that the two chain segments attached to that pin will wrap around the sprocket.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_sprocket');open_system('sm_excv_track1_sprocket/Track%20L','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_sprocket_02.png" alt=""> <h2 id="3">Rollers Subsystem</h2>
+<p>This subsystem models the rollers, idler, and sprocket. They each can rotate around shafts attached to the lower frame. A spring is included in the Prismatic Tensioner joint that pushes the idler against the chain to maintain tension.</p>
+<p>The sprocket joint interfaces to 1D mechanical rotational port. This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p>
+<p>The bus of connections at port R contains the connections to the geometry that is used to model contact between the rollers, idler, and sprocket to the chain.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_sprocket');open_system('sm_excv_track1_sprocket/Track%20L/Undercarriage/Rollers','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_sprocket_03.png" alt=""> <h2 id="4">Track Subsystem</h2>
+<p>A set of track segments are joined using Revolute Joints to model the track. The joints are contained in each segment. Joint targets are assigned in the mask to ensure the track meshes with the sprocket and wraps loosely around the rollers and idler.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_sprocket');open_system('sm_excv_track1_sprocket/Track%20L/Track','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_sprocket_04.png" alt=""> <h2 id="5">Track Segment Subsystem</h2>
+<p>Each track segment is composed of a chain link and a shoe. To streamline the contact force calculation, simpler geometry is connected to the Spatial Contact Force block.</p>
+<div>
+<ol>
+<li>A sphere is used to model the pin contacting the sprocket.</li>
+<li>A brick is used to model the chain contacting the rollers and idler (for this model, no contact with the rollers and idler are modeled).</li>
+<li>A point cloud is used to model the shoe plate contacting the ground (for this model, no contact with the ground is modeled).</li>
+</ol>
+</div>
+<p>
+<img vspace="5" hspace="5" src="sm_excv_contact_trackSeg_PtcldAll_Overview.png" alt=""> </p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_sprocket');open_system('sm_excv_track1_sprocket/Track%20L/Track/Seg%2001','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_sprocket_05.png" alt=""> <h2 id="6">Simulation Results</h2>
+<p>Below are the simulation results from a test where the sprocket is driven as the track is suspended in the air. The direction of gravity is applied to keep the track taut around the sprocket.</p>
+<pre class="codeoutput">Elapsed Sim Time = 64.6381
+</pre>
+<img vspace="5" hspace="5" src="sm_excv_track1_sprocket_06.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
 ##### SOURCE BEGIN #####
 %% Excavator Track (Single) Hanging From Sprocket
 % 
@@ -200,4 +293,6 @@ close all
 bdclose('sm_excv_track1_sprocket');
 
 ##### SOURCE END #####
---></body></html>
+-->
+</body>
+</html>

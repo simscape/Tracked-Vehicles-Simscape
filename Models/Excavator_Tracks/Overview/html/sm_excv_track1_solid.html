@@ -1,12 +1,17 @@
-
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <!--
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Excavator Track (Single), Solid Contact on Point Cloud</title><meta name="generator" content="MATLAB 9.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-08-17"><meta name="DC.source" content="sm_excv_track1_solid.m"><style type="text/css">
+      -->
+<title>Excavator Track (Single), Solid Contact on Point Cloud</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2023-10-25">
+<meta name="DC.source" content="sm_excv_track1_solid.m">
+<style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -67,8 +72,96 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Excavator Track (Single), Solid Contact on Point Cloud</h1><!--introduction--><p><img vspace="5" hspace="5" src="sm_excv_track1_solid_Overview.png" alt=""> </p><p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p><p>This example models a single track from an excavator. Contact between the track and the ground is modeled using a brick solid on the shoes and a point cloud for the surface. The track can be tested on uneven terrain. The sprocket is driven with a flexible driveshaft.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Model</a></li><li><a href="#2">Track Subsystem</a></li><li><a href="#3">Rollers Subsystem</a></li><li><a href="#4">Track Subsystem</a></li><li><a href="#5">Track Segment Subsystem</a></li><li><a href="#6">Simulation Results: Terrain Test</a></li></ul></div><h2 id="1">Model</h2><p>In this example, one track is modeled and half of the excavator mass is centered on the track.  This enables faster adjustments of the track model which can then be mirrored to the second track.</p><p><a href="matlab:open_system('sm_excv_track1_solid');">Open Model</a></p><img vspace="5" hspace="5" src="sm_excv_track1_solid_01.png" alt=""> <h2 id="2">Track Subsystem</h2><p>The track is composed of the undercarriage and the track segments connected into a loop.  The undercarriage contains the rollers, sprocket, and idler which are rigidly attached to the frame.  These are connected to the track chain through three sets of contact forces.</p><p>1. The chain wraps around the idler</p><p><img vspace="5" hspace="5" src="sm_excv_contact_idlerToChain_Overview.png" alt=""> </p><p>2. The rollers roll along the chains</p><p><img vspace="5" hspace="5" src="sm_excv_contact_rollerUToChain_Overview.png" alt=""> </p><p>3. The chain pins mesh with the sprocket teeth</p><p><img vspace="5" hspace="5" src="sm_excv_contact_sprocketToChain_Overview.png" alt=""> </p><p>The Planar Track joint positions one of the chain pins at a gap between the sprocket teeth which is positioned facing the rear of the track. Joint targets applied to the track segments helps it to mesh with other teeth on the sprocket and loosely wrap around the rollers and idler. The block Transform Half Seg Angle orients the interface frame so that the two chain segments attached to that pin will wrap around the sprocket.</p><p><a href="matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_solid_02.png" alt=""> <h2 id="3">Rollers Subsystem</h2><p>This subsystem models the rollers, idler, and sprocket.  They each can rotate around shafts attached to the lower frame. A spring is included in the Prismatic Tensioner joint that pushes the idler against the chain to maintain tension.</p><p>The sprocket joint interfaces to 1D mechanical rotational port.  This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p><p>The bus of connections at port R contains the connections to the geometry that is used to model contact between the rollers, idler, and sprocket to the chain.</p><p><a href="matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Undercarriage/Rollers','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_solid_03.png" alt=""> <h2 id="4">Track Subsystem</h2><p>A set of track segments are joined using Revolute Joints to model the track. The joints are contained in each segment. Joint targets are assigned in the mask to ensure the track meshes with the sprocket and wraps loosely around the rollers and idler.</p><p><a href="matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Track','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_solid_04.png" alt=""> <h2 id="5">Track Segment Subsystem</h2><p>Each track segment is composed of a chain link and a shoe. To streamline the contact force calculation, simpler geometry is connected to the Spatial Contact Force block.</p><div><ol><li>A sphere solid is used to model the pin contacting the sprocket.</li><li>A brick solid is used to model the chain contacting the rollers and idler.</li><li>A brick solid is used to model the shoe contacting the ground.</li></ol></div><p><img vspace="5" hspace="5" src="sm_excv_contact_trackSeg_PlSld_Overview.png" alt=""> </p><p><a href="matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Track/Seg%2001','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track1_solid_05.png" alt=""> <h2 id="6">Simulation Results: Terrain Test</h2><p>Below are the simulation results from a test where the track is driven over an uneven surface.  The terrain is defined using the Point Cloud block.</p><pre class="codeoutput">Elapsed Sim Time = 167.7292
-</pre><img vspace="5" hspace="5" src="sm_excv_track1_solid_06.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_solid_07.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023a</a><br></p></div><!--
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Excavator Track (Single), Solid Contact on Point Cloud</h1>
+<!--introduction-->
+<p>
+<img vspace="5" hspace="5" src="sm_excv_track1_solid_Overview.png" alt=""> </p>
+<p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p>
+<p>This example models a single track from an excavator. Contact between the track and the ground is modeled using a brick solid on the shoes and a point cloud for the surface. The track can be tested on uneven terrain. The sprocket is driven with a flexible driveshaft.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Model</a>
+</li>
+<li>
+<a href="#2">Track Subsystem</a>
+</li>
+<li>
+<a href="#3">Rollers Subsystem</a>
+</li>
+<li>
+<a href="#4">Track Subsystem</a>
+</li>
+<li>
+<a href="#5">Track Segment Subsystem</a>
+</li>
+<li>
+<a href="#6">Simulation Results: Terrain Test</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Model</h2>
+<p>In this example, one track is modeled and half of the excavator mass is centered on the track. This enables faster adjustments of the track model which can then be mirrored to the second track.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_solid');">Open Model</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_solid_01.png" alt=""> <h2 id="2">Track Subsystem</h2>
+<p>The track is composed of the undercarriage and the track segments connected into a loop. The undercarriage contains the rollers, sprocket, and idler which are rigidly attached to the frame. These are connected to the track chain through three sets of contact forces.</p>
+<p>1. The chain wraps around the idler</p>
+<p>
+<img vspace="5" hspace="5" src="sm_excv_contact_idlerToChain_Overview.png" alt=""> </p>
+<p>2. The rollers roll along the chains</p>
+<p>
+<img vspace="5" hspace="5" src="sm_excv_contact_rollerUToChain_Overview.png" alt=""> </p>
+<p>3. The chain pins mesh with the sprocket teeth</p>
+<p>
+<img vspace="5" hspace="5" src="sm_excv_contact_sprocketToChain_Overview.png" alt=""> </p>
+<p>The Planar Track joint positions one of the chain pins at a gap between the sprocket teeth which is positioned facing the rear of the track. Joint targets applied to the track segments helps it to mesh with other teeth on the sprocket and loosely wrap around the rollers and idler. The block Transform Half Seg Angle orients the interface frame so that the two chain segments attached to that pin will wrap around the sprocket.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_solid_02.png" alt=""> <h2 id="3">Rollers Subsystem</h2>
+<p>This subsystem models the rollers, idler, and sprocket. They each can rotate around shafts attached to the lower frame. A spring is included in the Prismatic Tensioner joint that pushes the idler against the chain to maintain tension.</p>
+<p>The sprocket joint interfaces to 1D mechanical rotational port. This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p>
+<p>The bus of connections at port R contains the connections to the geometry that is used to model contact between the rollers, idler, and sprocket to the chain.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Undercarriage/Rollers','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_solid_03.png" alt=""> <h2 id="4">Track Subsystem</h2>
+<p>A set of track segments are joined using Revolute Joints to model the track. The joints are contained in each segment. Joint targets are assigned in the mask to ensure the track meshes with the sprocket and wraps loosely around the rollers and idler.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Track','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_solid_04.png" alt=""> <h2 id="5">Track Segment Subsystem</h2>
+<p>Each track segment is composed of a chain link and a shoe. To streamline the contact force calculation, simpler geometry is connected to the Spatial Contact Force block.</p>
+<div>
+<ol>
+<li>A sphere solid is used to model the pin contacting the sprocket.</li>
+<li>A brick solid is used to model the chain contacting the rollers and idler.</li>
+<li>A brick solid is used to model the shoe contacting the ground.</li>
+</ol>
+</div>
+<p>
+<img vspace="5" hspace="5" src="sm_excv_contact_trackSeg_PlSld_Overview.png" alt=""> </p>
+<p>
+<a href="matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Track/Seg%2001','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track1_solid_05.png" alt=""> <h2 id="6">Simulation Results: Terrain Test</h2>
+<p>Below are the simulation results from a test where the track is driven over an uneven surface. The terrain is defined using the Point Cloud block.</p>
+<pre class="codeoutput">Elapsed Sim Time = 219.3599
+</pre>
+<img vspace="5" hspace="5" src="sm_excv_track1_solid_06.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_solid_07.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_solid_08.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
 ##### SOURCE BEGIN #####
 %% Excavator Track (Single), Solid Contact on Point Cloud
 % 
@@ -186,10 +279,13 @@ open_system('sm_excv_track1_solid/Track L/Track/Seg 01','force')
 %
 
 Excv.Shoe.ptcld.pts = Excv.Shoe.ptcld_sets.plate;
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+
 sim('sm_excv_track1_solid');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_solid,logsout_sm_excv_track1_solid);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_solid);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_solid)
 
 %%
 
@@ -197,4 +293,6 @@ close all
 bdclose('sm_excv_track1_solid');
 
 ##### SOURCE END #####
---></body></html>
+-->
+</body>
+</html>

@@ -1,2 +1,2 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<Info Type="Basic" GroupUUID="" Visible="1" Icon="" File="Scripts_Data/sm_excv_track_param_load.m" Name="Load Default Parameters"/>
+<Info File="Scripts_Data/sm_excv_track_param_load.m" GroupUUID="" Icon="" Name="Load Default Parameters" Type="Basic" Visible="1"/>

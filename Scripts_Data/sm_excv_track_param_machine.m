@@ -10,7 +10,7 @@ Excv.Shoe     = Excv_Shoe_Param;
 Excv.Frame    = Excv_Frame_Param;
 Excv.Drive    = Excv_Drive_Param;
 
-% The following functions requireme parameters from other pieces
+% The following functions require parameters from other pieces
 Excv.Roller   = Excv_Roller_Param(Excv.Chain.plate_h, Excv.Shoe.pad_h, Excv.Shoe.w);
 
 Excv.Sprocket = Excv_Sprocket_Param(...
@@ -214,9 +214,9 @@ Excv.Vis.Track = Excv_TrackVis_Param(Excv.Frame.IdlerAssyX,...
 
         % Custom mass settings for plate
         Shoe.mass = 5.85;
-        Shoe.cg   = [-0.001450 -0.0175 0];
-        Shoe.moi  = [0.17759519 0.19840052 0.02499571];
-        Shoe.poi  = [0 0 0];
+        Shoe.cg   = [-0.001450 -0.0175 0];    % CG Location
+        Shoe.moi  = [0.17759519 0.19840052 0.02499571]; % Moments of inertia
+        Shoe.poi  = [0 0 0];                            % Products of inertia
 
         % Contact geometry visual settings for brick solid contact
         Shoe.ground_contact.plate_solid.clr = [1 0 0];

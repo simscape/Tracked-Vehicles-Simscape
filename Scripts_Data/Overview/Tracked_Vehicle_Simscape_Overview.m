@@ -17,7 +17,7 @@
 % modeling each segment of the track as it contacts with the ground.
 %
 % <html>
-% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_segTracks.png"></td><td><ul><li>Single track, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track1_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track2_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track2_ptcld.html');">Doc</a></li><li>Single track, ground contact via brick solid. <a href="matlab:open_system('sm_excv_track1_solid');">Model</a>, <a href="matlab:web('sm_excv_track1_solid.html');">Doc</a></li></ul></td></tr></table>
+% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_segTracks.png"></td><td><ul><li>Single track, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track1_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track2_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track2_ptcld.html');">Doc</a></li><li>Single track, ground contact via brick solid. <a href="matlab:open_system('sm_excv_track1_solid');">Model</a>, <a href="matlab:web('sm_excv_track1_solid.html');">Doc</a></li><li>Single track, ground contact via point cloud, CAD shoe. <a href="matlab:open_system('sm_excv_track1_ptcld_shoecad');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld_shoecad.html');">Doc</a></li></ul></td></tr></table>
 % </html>
 %
 % *Segmented Track Test Examples*
@@ -47,5 +47,15 @@
 % <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_spheres.png"></td><td><ul><li>Single track, track contact geometry is spheres. <a href="matlab:open_system('sm_excv_track1_roller_sphere');">Model</a>, <a href="matlab:web('sm_excv_track1_roller_sphere.html');">Doc</a></li><li>Two tracks, track contact geometry is spheres. <a href="matlab:open_system('sm_excv_track2_roller_sphere');">Model</a>, <a href="matlab:web('sm_excv_track2_roller_sphere.html');">Doc</a></li></ul></td></tr></table>
 % </html>
 %
+% *Workflows*
 %
+% # <matlab:web('ptcloud_workflow_trackShoe_createFromSTL.html')
+% Extracting Point Cloud from STL Geometry: Track Shoe>
+% # <matlab:web('ptcloud_workflow_trackShoe_createFromSTEP.html')
+% Extracting Point Cloud from STEP Geometry: Track Shoe>
+%
+% *Documentation*
+%
+% # <matlab:web('sm_tracked_vehicle_doc_trackSegment.html')
+% Tracked Vehicle Documentation, Track Segment>
 

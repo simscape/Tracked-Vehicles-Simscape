@@ -98,9 +98,7 @@ open_system('sm_excv_track1_roller_sphere/Track L/Track','force')
 %
 % Below are the simulation results from a test where the track is driven
 % on a flat surface.  The terrain is defined using the 
-% <https://www.mathworks.com/help/sm/ref/infiniteplane.html. The tracks are
-% driven at different speeds so that the tracked vehicle can turn.
-% Infinite Plane block>. 
+% <https://www.mathworks.com/help/sm/ref/infiniteplane.html. Infinite Plane block>. 
 
 Excv = sm_excv_track_param_machine;
 
@@ -124,11 +122,13 @@ Excv = sm_excv_track_param_machine;
 
 set_param([bdroot '/Scene'],'LabelModeActiveChoice','Plateau')
 set_param(bdroot,'StopTime','220');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
 
 sim('sm_excv_track1_roller_sphere');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_sphere,logsout_sm_excv_track1_roller_sphere);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_sphere);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_roller_sphere)
 
 %% Simulation Results: Rough Road
 %%
@@ -142,11 +142,13 @@ Excv = sm_excv_track_param_machine;
 
 set_param([bdroot '/Scene'],'LabelModeActiveChoice','Rough_Road')
 set_param(bdroot,'StopTime','160');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
 
 sim('sm_excv_track1_roller_sphere');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_sphere,logsout_sm_excv_track1_roller_sphere);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_sphere);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_roller_sphere)
 
 
 %%

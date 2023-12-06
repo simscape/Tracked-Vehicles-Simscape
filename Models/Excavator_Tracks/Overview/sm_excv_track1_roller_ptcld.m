@@ -104,11 +104,13 @@ stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
 Excv = sm_excv_track_param_machine;
 set_param('sm_excv_track1_roller_ptcld/Scene','LabelModeActiveChoice','Terrain');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
 
 sim('sm_excv_track1_roller_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_ptcld,logsout_sm_excv_track1_roller_ptcld);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_ptcld);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_roller_ptcld)
 
 %% Simulation Results: Slope Test
 %%
@@ -125,11 +127,13 @@ Grid_Surface_Data_Slope(25, 9, 7.5, 1.5, 5, 0.5, 'plot');
 
 Excv = sm_excv_track_param_machine;
 set_param('sm_excv_track1_roller_ptcld/Scene','LabelModeActiveChoice','Slope');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
 
 sim('sm_excv_track1_roller_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_ptcld,logsout_sm_excv_track1_roller_ptcld);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_ptcld);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_roller_ptcld)
 
 %%
 

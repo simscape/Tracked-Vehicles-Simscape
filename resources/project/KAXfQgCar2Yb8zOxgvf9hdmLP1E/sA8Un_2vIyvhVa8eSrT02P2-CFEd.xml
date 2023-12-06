@@ -1,2 +1,2 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<Info Type="StartUp" GroupUUID="9b90c0a9-63d1-4982-91fd-ab628a48d55e" Visible="0" Icon="" File="Scripts_Data/startup_sm_excv_track.m" Name="Load Default Param"/>
+<Info File="Scripts_Data/startup_sm_excv_track.m" GroupUUID="9b90c0a9-63d1-4982-91fd-ab628a48d55e" Icon="" Name="Load Default Param" Type="StartUp" Visible="0"/>

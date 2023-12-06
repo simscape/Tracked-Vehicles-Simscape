@@ -132,11 +132,13 @@ stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
 set_param('sm_excv_track1_ptcld/Scene','LabelModeActiveChoice','Terrain');
 Excv.Shoe.ground_contact.ptcld.pts = Excv.Shoe.ptcld_sets.plate;
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
 
 sim('sm_excv_track1_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld,logsout_sm_excv_track1_ptcld);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld)
 
 %%
 

@@ -1,13 +1,11 @@
 function ptcld = Point_Cloud_Data_Square(d1,d2,npts,varargin)
-%Point_Cloud_Data_Brick Produce point cloud for exterior surface of a brick
-%   [ptcld] = Point_Cloud_Data_Square(x,y,z)
+%Point_Cloud_Data_Brick Produce point cloud covering a square
+%   [ptcld] = Point_Cloud_Data_Square(d1,d2,npts)
 %
 %   You can specify:
-%       x         length along (first column of ptcld)
-%       y         length along (second column of ptcld)
-%       z         length along (third column of ptcld)
-%       pointset  'full':    corners, edges, and faces
-%                 'corners': corners only
+%       d1         length along x
+%       d2         length along y
+%       npts       [number of points along x, number of points along y]
 %   Point cloud data will be centered at [0,0,0]
 %
 % Copyright 2021-2023 The MathWorks, Inc.
@@ -16,7 +14,7 @@ function ptcld = Point_Cloud_Data_Square(d1,d2,npts,varargin)
 if (nargin == 0)
     d1 = 3;
     d2 = 2;
-    npts = [3 2];
+    npts = [5 4];
 end
 
 % Check if plot should be produced
@@ -63,11 +61,22 @@ if (nargin == 0 || strcmpi(showplot,'plot'))
     
     plot(ptcld(:,1),ptcld(:,2),'o','MarkerFaceColor',temp_colororder(2,:))
     hold on
+
+    plot([1 1]*0.1*d1,[-0.5 0.5]*d2,'r--d','MarkerFaceColor','r');
+    text(0.1*d1,0.6*0.5*d2,'{\color{red} d2}','HorizontalAlignment','left');
+
+    plot([-0.5 0.5]*d1,[1 1]*0.1*d2,'b--d','MarkerFaceColor','b');
+    text(0.6*0.5*d1,0.1*d2,'{\color{blue} d1}','VerticalAlignment','top');
+
+    plot(d1_locs,ones(1,length(d1_locs))*0.45*d2,'c--d');
+    text(mean(d1_locs(1:2)),0.45*d2,'{\color{cyan} npts(1)}',...
+        'HorizontalAlignment','center','VerticalAlignment','top');
     
-    %xlabel(['x = ' num2str(x)],'Color','r');
-    %ylabel(['y = ' num2str(y)],'Color','g');
+    plot(-ones(1,length(d2_locs))*0.45*d1,d2_locs,'k--d');
+    text(-0.45*d1,mean(d2_locs(1:2))*0.75,'{\color{black} npts(2)}',...
+        'HorizontalAlignment','left');
     
-    title(['[ptcld] = Point\_Cloud\_Data\_Square(x, y, z, pointset);']);
+    title(['[ptcld] = Point\_Cloud\_Data\_Square(d1, d2, npts);']);
     hold off
     box on
     axis equal

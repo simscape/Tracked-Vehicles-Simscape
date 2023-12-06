@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Tracked Vehicle Documentation, Track Segment</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2023-10-23">
+<meta name="DC.source" content="sm_tracked_vehicle_doc_trackSegment.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Tracked Vehicle Documentation, Track Segment</h1>
+<!--introduction-->
+<p>Documentation for parameters of track segment, which includes chain link and shoe.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Chain Shoe Assembly</a>
+</li>
+<li>
+<a href="#2">Reference Frames</a>
+</li>
+<li>
+<a href="#3">Parameters, Chain</a>
+</li>
+<li>
+<a href="#4">Chain Plate</a>
+</li>
+<li>
+<a href="#5">Chain Segments</a>
+</li>
+<li>
+<a href="#6">Chain Plate Angle</a>
+</li>
+<li>
+<a href="#7">Shoe, Side View</a>
+</li>
+<li>
+<a href="#8">Shoe, Ground Contact, Points</a>
+</li>
+<li>
+<a href="#9">Shoe, Point Sets, Plate</a>
+</li>
+<li>
+<a href="#10">Shoe, Point Sets, Grouser</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Chain Shoe Assembly</h2>
+<p>Model</p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_01.png" alt=""> <h2 id="2">Reference Frames</h2>
+<p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_refFrames.png" alt=""> </p>
+<h2 id="3">Parameters, Chain</h2>
+<pre class="codeoutput">
+ans = 
+
+  struct with fields:
+
+         plate_thk: 0.0130
+           plate_h: 0.1100
+         plate_off: 0.0150
+           pin_sep: 0.2000
+          hole_sep: 0.2006
+         plate_ang: 4.2892
+          hole_rad: 0.0200
+          plate_xc: [150&times;2 double]
+         chain_wid: 0.1530
+         plate_clr: [0.5000 0.5000 0.5000]
+         plate_opc: 1
+           pin_len: 0.2000
+           pin_rad: 0.0300
+           pin_clr: [0.8000 0.8000 0.8000]
+           pin_opc: 1
+            link_m: 21.6000
+           link_cg: [0.0300 -0.0200 0]
+          link_moi: [0.3700 0.4300 0.1200]
+          link_poi: [0 0 0]
+           damping: 1
+    roller_contact: [1&times;1 struct]
+     teeth_contact: [1&times;1 struct]
+
+</pre>
+<h2 id="4">Chain Plate</h2>
+<p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_chainPlate.png" alt=""> </p>
+<h2 id="5">Chain Segments</h2>
+<p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_chainSegments.png" alt=""> </p>
+<h2 id="6">Chain Plate Angle</h2>
+<p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_chainPlateAngle.png" alt=""> </p>
+<h2 id="7">Shoe, Side View</h2>
+<p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_shoeSide.png" alt=""> </p>
+<h2 id="8">Shoe, Ground Contact, Points</h2>
+<p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_shoeGroundContactPts.png" alt=""> </p>
+<h2 id="9">Shoe, Point Sets, Plate</h2>
+<p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_shoePointSetsPlate.png" alt=""> </p>
+<h2 id="10">Shoe, Point Sets, Grouser</h2>
+<p>
+<img vspace="5" hspace="5" src="sm_tracked_vehicle_doc_trackSegment_shoePointSetsGrouser.png" alt=""> </p>
+<p class="footer">Copyright 2023 The MathWorks, Inc.<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Tracked Vehicle Documentation, Track Segment
+% 
+% Documentation for parameters of track segment, which includes chain link
+% and shoe.
+%
+% Copyright 2023 The MathWorks, Inc.
+
+%% Chain Shoe Assembly
+%
+% Model
+
+load_system('sm_tracked_vehicle_lib');
+open_system('sm_tracked_vehicle_lib/Track Segment Shoe Point Cloud Contact','force');
+
+%% Reference Frames
+%
+% <<sm_tracked_vehicle_doc_trackSegment_refFrames.png>>
+
+%% Parameters, Chain
+%
+
+Excv.Chain
+
+%% Chain Plate
+% <<sm_tracked_vehicle_doc_trackSegment_chainPlate.png>>
+
+%% Chain Segments
+% <<sm_tracked_vehicle_doc_trackSegment_chainSegments.png>>
+
+%% Chain Plate Angle
+% <<sm_tracked_vehicle_doc_trackSegment_chainPlateAngle.png>>
+
+%% Shoe, Side View
+% <<sm_tracked_vehicle_doc_trackSegment_shoeSide.png>>
+
+%% Shoe, Ground Contact, Points
+% <<sm_tracked_vehicle_doc_trackSegment_shoeGroundContactPts.png>>
+
+%% Shoe, Point Sets, Plate
+% <<sm_tracked_vehicle_doc_trackSegment_shoePointSetsPlate.png>>
+
+%% Shoe, Point Sets, Grouser
+% <<sm_tracked_vehicle_doc_trackSegment_shoePointSetsGrouser.png>>
+
+%%
+close all
+bdclose all
+
+##### SOURCE END #####
+-->
+</body>
+</html>

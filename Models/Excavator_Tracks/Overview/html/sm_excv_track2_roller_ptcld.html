@@ -1,12 +1,17 @@
-
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <!--
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Excavator Tracks, Roller Contact Point Cloud</title><meta name="generator" content="MATLAB 9.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-08-17"><meta name="DC.source" content="sm_excv_track2_roller_ptcld.m"><style type="text/css">
+      -->
+<title>Excavator Tracks, Roller Contact Point Cloud</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2023-10-25">
+<meta name="DC.source" content="sm_excv_track2_roller_ptcld.m">
+<style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -67,9 +72,85 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Excavator Tracks, Roller Contact Point Cloud</h1><!--introduction--><p><img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_Overview.png" alt=""> </p><p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p><p>This example models the track drive on an excavator in an abstract manner. Contact between the track and the ground is modeled using a point cloud on the rollers, sprocket, and idler. The point cloud radius includes the depth of the track. This method permits significantly faster simulation for it is far simpler than modeling each segment of the track and all the contact forces with the undercarriage and ground.  Contact forces are modeled using the <a href="https://www.mathworks.com/help/sm/ref/spatialcontactforce.html">Spatial Contact Force block</a>.</p><p>The track can be tested on uneven terrain, a slope, or a flat road with bumps. The sprocket is driven with a flexible driveshaft.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Model</a></li><li><a href="#2">Track Subsystem</a></li><li><a href="#3">Rollers Subsystem</a></li><li><a href="#4">Lower Roller Subsystem</a></li><li><a href="#5">Track Subsystem</a></li><li><a href="#6">Simulation Results: Terrain Test</a></li><li><a href="#8">Simulation Results: Slope Test</a></li></ul></div><h2 id="1">Model</h2><p>In this example, both tracks are modeled along with the chassis of excavator.</p><p><a href="matlab:open_system('sm_excv_track2_roller_ptcld');">Open Model</a></p><img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_01.png" alt=""> <h2 id="2">Track Subsystem</h2><p>The track is composed of the undercarriage and a visual element to represent the track segments which includes parameters for the assumed mass, inertia, and CG of the track segments.  The undercarriage contains the rollers, sprocket, and idler which are rigidly attached to the frame. Contact geometry (point clouds) in the undercarriage subsystem connect via a Simscape bus to <a href="https://www.mathworks.com/help/sm/ref/spatialcontactforce.html">Spatial Contact Force block</a> to model ground contact.</p><p><a href="matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_02.png" alt=""> <h2 id="3">Rollers Subsystem</h2><p>This subsystem models the rollers, idler, and sprocket.  They each can rotate around shafts attached to the lower frame. In this abstract model, the tensioner holds the idler at a fixed position, the position it would reach if the track were holding it in place.</p><p>The sprocket joint interfaces to 1D mechanical rotational port.  This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p><p>The bus of connections at port R contains the connections to the geometry that is used to model contact with the ground.  The rollers, sprocket, and idler have point clouds whose radius includes the depth of the track.</p><p><a href="matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Undercarriage/Rollers','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_03.png" alt=""> <h2 id="4">Lower Roller Subsystem</h2><p>The lower rollers, sprocket, and idler contain a solid to represent the inertial properties, a point cloud to model contact with the ground, and a visual element to animate the part spinning in the model.</p><p><a href="matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Undercarriage/Rollers/Roller%20Lower%201','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_04.png" alt=""> <h2 id="5">Track Subsystem</h2><p>The track is modeled as a solid. It provides a visual indication of where the track segements would be.  It also includes mass and inertia properties which can be parameterized to match the full set of track segments.</p><p><a href="matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Track','force');">Open Subsystem</a></p><img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_05.png" alt=""> <h2 id="6">Simulation Results: Terrain Test</h2><p>Below are the simulation results from a test where the track is driven over a hilly terrain.  The terrain is defined using the <a href="https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html">Grid Surface block</a>. An STL file was imported and interpolation was used to create a regular grid composed of 100x100 points.</p><pre class="codeoutput">Elapsed Sim Time = 8.2041
-</pre><img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_06.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_07.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_08.png" alt=""> <h2 id="8">Simulation Results: Slope Test</h2><p>Below are the simulation results from a test where the track is driven up a slope. The slope was defined using a MATLAB function.  This would let us easily sweep the grade of the slope to determine when the design would no longer meet requirements.  The terrain is defined using the <a href="https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html">Grid Surface block</a>.</p><pre class="codeoutput">Elapsed Sim Time = 10.2197
-</pre><img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_09.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_10.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_11.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023a</a><br></p></div><!--
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Excavator Tracks, Roller Contact Point Cloud</h1>
+<!--introduction-->
+<p>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_Overview.png" alt=""> </p>
+<p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p>
+<p>This example models the track drive on an excavator in an abstract manner. Contact between the track and the ground is modeled using a point cloud on the rollers, sprocket, and idler. The point cloud radius includes the depth of the track. This method permits significantly faster simulation for it is far simpler than modeling each segment of the track and all the contact forces with the undercarriage and ground. Contact forces are modeled using the <a href="https://www.mathworks.com/help/sm/ref/spatialcontactforce.html">Spatial Contact Force block</a>.</p>
+<p>The track can be tested on uneven terrain, a slope, or a flat road with bumps. The sprocket is driven with a flexible driveshaft.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Model</a>
+</li>
+<li>
+<a href="#2">Track Subsystem</a>
+</li>
+<li>
+<a href="#3">Rollers Subsystem</a>
+</li>
+<li>
+<a href="#4">Lower Roller Subsystem</a>
+</li>
+<li>
+<a href="#5">Track Subsystem</a>
+</li>
+<li>
+<a href="#6">Simulation Results: Terrain Test</a>
+</li>
+<li>
+<a href="#8">Simulation Results: Slope Test</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Model</h2>
+<p>In this example, both tracks are modeled along with the chassis of excavator.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track2_roller_ptcld');">Open Model</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_01.png" alt=""> <h2 id="2">Track Subsystem</h2>
+<p>The track is composed of the undercarriage and a visual element to represent the track segments which includes parameters for the assumed mass, inertia, and CG of the track segments. The undercarriage contains the rollers, sprocket, and idler which are rigidly attached to the frame. Contact geometry (point clouds) in the undercarriage subsystem connect via a Simscape bus to <a href="https://www.mathworks.com/help/sm/ref/spatialcontactforce.html">Spatial Contact Force block</a> to model ground contact.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_02.png" alt=""> <h2 id="3">Rollers Subsystem</h2>
+<p>This subsystem models the rollers, idler, and sprocket. They each can rotate around shafts attached to the lower frame. In this abstract model, the tensioner holds the idler at a fixed position, the position it would reach if the track were holding it in place.</p>
+<p>The sprocket joint interfaces to 1D mechanical rotational port. This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p>
+<p>The bus of connections at port R contains the connections to the geometry that is used to model contact with the ground. The rollers, sprocket, and idler have point clouds whose radius includes the depth of the track.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Undercarriage/Rollers','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_03.png" alt=""> <h2 id="4">Lower Roller Subsystem</h2>
+<p>The lower rollers, sprocket, and idler contain a solid to represent the inertial properties, a point cloud to model contact with the ground, and a visual element to animate the part spinning in the model.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Undercarriage/Rollers/Roller%20Lower%201','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_04.png" alt=""> <h2 id="5">Track Subsystem</h2>
+<p>The track is modeled as a solid. It provides a visual indication of where the track segements would be. It also includes mass and inertia properties which can be parameterized to match the full set of track segments.</p>
+<p>
+<a href="matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Track','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_05.png" alt=""> <h2 id="6">Simulation Results: Terrain Test</h2>
+<p>Below are the simulation results from a test where the track is driven over a hilly terrain. The terrain is defined using the <a href="https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html">Grid Surface block</a>. An STL file was imported and interpolation was used to create a regular grid composed of 100x100 points.</p>
+<pre class="codeoutput">Elapsed Sim Time = 47.0381
+</pre>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_06.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_07.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_08.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_09.png" alt=""> <h2 id="8">Simulation Results: Slope Test</h2>
+<p>Below are the simulation results from a test where the track is driven up a slope. The slope was defined using a MATLAB function. This would let us easily sweep the grade of the slope to determine when the design would no longer meet requirements. The terrain is defined using the <a href="https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html">Grid Surface block</a>.</p>
+<pre class="codeoutput">Elapsed Sim Time = 44.0552
+</pre>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_10.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_11.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_12.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_ptcld_13.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
 ##### SOURCE BEGIN #####
 %% Excavator Tracks, Roller Contact Point Cloud
 % 
@@ -175,11 +256,14 @@ stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
 Excv = sm_excv_track_param_machine;
 set_param('sm_excv_track2_roller_ptcld/Scene','LabelModeActiveChoice','Terrain');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+set_param([bdroot '/Track R'],'popup_sense_roller','Constraint Force')
 
 sim('sm_excv_track2_roller_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_ptcld,logsout_sm_excv_track2_roller_ptcld);
 sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_ptcld);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld)
 
 %% Simulation Results: Slope Test
 %%
@@ -196,11 +280,14 @@ Grid_Surface_Data_Slope(25, 9, 7.5, 1.5, 5, 0.5, 'plot');
 
 Excv = sm_excv_track_param_machine;
 set_param('sm_excv_track2_roller_ptcld/Scene','LabelModeActiveChoice','Slope');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+set_param([bdroot '/Track R'],'popup_sense_roller','Constraint Force')
 
 sim('sm_excv_track2_roller_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_ptcld,logsout_sm_excv_track2_roller_ptcld);
 sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_ptcld);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld)
 
 %%
 
@@ -208,4 +295,6 @@ close all
 bdclose('sm_excv_track2_roller_ptcld');
 
 ##### SOURCE END #####
---></body></html>
+-->
+</body>
+</html>

@@ -114,10 +114,13 @@ open_system('sm_excv_track1_solid/Track L/Track/Seg 01','force')
 %
 
 Excv.Shoe.ptcld.pts = Excv.Shoe.ptcld_sets.plate;
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+
 sim('sm_excv_track1_solid');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_solid,logsout_sm_excv_track1_solid);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_solid);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_solid)
 
 %%
 

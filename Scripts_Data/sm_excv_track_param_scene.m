@@ -14,6 +14,15 @@ Scene.Road.len = 25;
 Scene.Road.wid = 5;
 Scene.Road.hgt = 0.02;
 
+%% Scene Road with Rod
+Scene.Road.Rod.len      = 4; % m
+Scene.Road.Rod.rad      = 0.75*2.54/100; % m
+Scene.Road.Rod.startx   = 5-0.1; % m
+Scene.Road.Rod.offsety  = 0; % m
+Scene.Road.Rod.offsetz  = 0.75*2.54/100; % m
+Scene.Road.Rod.qz       = 0; % deg
+
+
 %% Scene Hills
 Scene.Terrain = stl_to_gridsurface('hills_terrain.stl',100,100,'n');
 
