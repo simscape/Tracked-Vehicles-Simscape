@@ -9,7 +9,7 @@ To make changes, update the MATLAB code and republish this document.
 <title>Extracting Point Cloud from STL Geometry: Track Shoe</title>
 <meta name="generator" content="MATLAB 23.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2023-10-24">
+<meta name="DC.date" content="2023-12-09">
 <meta name="DC.source" content="ptcloud_workflow_trackShoe_createFromSTL.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -104,6 +104,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </li>
 <li>
 <a href="#8">Construct Point Cloud for Shoe Plate</a>
+</li>
+<li>
+<a href="#10">Construct Point Cloud for Outer Profile</a>
 </li>
 </ul>
 </div>
@@ -289,7 +292,28 @@ legend([h3 h4],{<span class="string">'Point Cloud Shoe 1'</span>,<span class="st
 
 view(180,0)
 </pre>
-<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTL_09.png" alt=""> <pre class="codeinput">close <span class="string">all</span>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTL_09.png" alt=""> <h2 id="10">Construct Point Cloud for Outer Profile</h2>
+<p>The function <a href="matlab:edit('track_shoe_ptcloud_createFromSTL.m')">track_shoe_ptcloud_createFromSTL.m</a> includes additional code that spaces points evenly along the entire outer profile. The plot below shows the result, please look at the code for more information.</p>
+<pre class="codeinput">[~, ~, temp_ptcld_profile] = track_shoe_ptcloud_createFromSTL(<span class="string">'CAD_Track_Shoe.STL'</span>);
+numPtsPtcld = size(temp_ptcld_profile,1);
+
+temp_ptcld_profile = temp_ptcld_profile*1000; <span class="comment">% m to mm</span>
+figure(8)
+trshoe_stl_pts = stlread(<span class="string">'CAD_Track_Shoe.STL'</span>);
+h1=trimesh(trshoe_stl_pts,<span class="string">'EdgeColor'</span>,[0.6 0.6 0.6]);
+hold <span class="string">on</span>
+h2=plot3(temp_ptcld_profile(:,1),temp_ptcld_profile(:,2),temp_ptcld_profile(:,3),<span class="string">'ro'</span>,<span class="keyword">...</span>
+    <span class="string">'MarkerFaceColor'</span>,<span class="string">'red'</span>,<span class="string">'MarkerSize'</span>,2);
+hold <span class="string">off</span>
+axis <span class="string">equal</span>
+view(-180,-70)
+box <span class="string">on</span>
+
+title(<span class="string">'Shoe Point Cloud, Outer Profile'</span>)
+
+legend(h2,[<span class="string">'# Points: '</span> num2str(numPtsPtcld)],<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+</pre>
+<img vspace="5" hspace="5" src="ptcloud_workflow_trackShoe_createFromSTL_10.png" alt=""> <pre class="codeinput">close <span class="string">all</span>
 </pre>
 <p class="footer">
 <br>
@@ -535,6 +559,32 @@ title('Shoe Point Cloud, Plate')
 legend([h3 h4],{'Point Cloud Shoe 1','Point Cloud Shoe 2'},'Location','North')
 
 view(180,0)
+
+%% Construct Point Cloud for Outer Profile
+%
+% The function <matlab:edit('track_shoe_ptcloud_createFromSTL.m')
+% track_shoe_ptcloud_createFromSTL.m> includes additional code that spaces
+% points evenly along the entire outer profile.  The plot below shows the
+% result, please look at the code for more information.
+
+[~, ~, temp_ptcld_profile] = track_shoe_ptcloud_createFromSTL('CAD_Track_Shoe.STL');
+numPtsPtcld = size(temp_ptcld_profile,1);
+
+temp_ptcld_profile = temp_ptcld_profile*1000; % m to mm
+figure(8)
+trshoe_stl_pts = stlread('CAD_Track_Shoe.STL');
+h1=trimesh(trshoe_stl_pts,'EdgeColor',[0.6 0.6 0.6]);
+hold on
+h2=plot3(temp_ptcld_profile(:,1),temp_ptcld_profile(:,2),temp_ptcld_profile(:,3),'ro',...
+    'MarkerFaceColor','red','MarkerSize',2);
+hold off
+axis equal
+view(-180,-70)
+box on
+
+title('Shoe Point Cloud, Outer Profile')
+
+legend(h2,['# Points: ' num2str(numPtsPtcld)],'Location','Best')
 
 %%
 close all

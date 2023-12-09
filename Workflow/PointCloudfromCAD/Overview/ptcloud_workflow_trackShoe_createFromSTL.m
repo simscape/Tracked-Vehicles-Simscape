@@ -235,5 +235,31 @@ legend([h3 h4],{'Point Cloud Shoe 1','Point Cloud Shoe 2'},'Location','North')
 
 view(180,0)
 
+%% Construct Point Cloud for Outer Profile
+%
+% The function <matlab:edit('track_shoe_ptcloud_createFromSTL.m')
+% track_shoe_ptcloud_createFromSTL.m> includes additional code that spaces
+% points evenly along the entire outer profile.  The plot below shows the
+% result, please look at the code for more information.
+
+[~, ~, temp_ptcld_profile] = track_shoe_ptcloud_createFromSTL('CAD_Track_Shoe.STL');
+numPtsPtcld = size(temp_ptcld_profile,1);
+
+temp_ptcld_profile = temp_ptcld_profile*1000; % m to mm
+figure(8)
+trshoe_stl_pts = stlread('CAD_Track_Shoe.STL');
+h1=trimesh(trshoe_stl_pts,'EdgeColor',[0.6 0.6 0.6]);
+hold on
+h2=plot3(temp_ptcld_profile(:,1),temp_ptcld_profile(:,2),temp_ptcld_profile(:,3),'ro',...
+    'MarkerFaceColor','red','MarkerSize',2);
+hold off
+axis equal
+view(-180,-70)
+box on
+
+title('Shoe Point Cloud, Outer Profile')
+
+legend(h2,['# Points: ' num2str(numPtsPtcld)],'Location','Best')
+
 %%
 close all

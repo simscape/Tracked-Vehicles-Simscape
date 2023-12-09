@@ -107,6 +107,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <li>
 <a href="#7">Simulation Results: Terrain Test</a>
 </li>
+<li>
+<a href="#9">Simulation Results: Flat Terrain with Obstacle</a>
+</li>
 </ul>
 </div>
 <h2 id="1">Model</h2>
@@ -167,9 +170,14 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_06.png" alt=""> <h2 id="7">Simulation Results: Terrain Test</h2>
 <p>Below are the simulation results from a test where the track is driven over a hilly terrain. The terrain is defined using the Grid Surface block.An STL file was imported and interpolation was used to create a regular grid composed of 100x100 points.</p>
 <p>For ground contact, points are distributed across the shoe plate and not the grousers.</p>
-<pre class="codeoutput">Elapsed Sim Time = 385.9472
+<pre class="codeoutput">Elapsed Sim Time = 378.1696
 </pre>
-<img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_07.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_08.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_09.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_10.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br>
+<img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_07.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_08.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_09.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_10.png" alt=""> <h2 id="9">Simulation Results: Flat Terrain with Obstacle</h2>
+<p>Below are the simulation results from a test where the track is driven over a hilly terrain. The terrain is defined using the Grid Surface block.An STL file was imported and interpolation was used to create a regular grid composed of 100x100 points.</p>
+<p>For ground contact, points are distributed across the shoe plate and not the grousers.</p>
+<pre class="codeoutput">Elapsed Sim Time = 593.9445
+</pre>
+<img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_11.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_12.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track1_ptcld_shoecad_13.png" alt=""> <p class="footer">Copyright 2023 The MathWorks, Inc.<br>
 <a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
 <br>
 </p>
@@ -333,6 +341,29 @@ sim('sm_excv_track1_ptcld_shoecad');
 sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld_shoecad,logsout_sm_excv_track1_ptcld_shoecad);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld_shoecad);
 sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad)
+
+%% Simulation Results: Flat Terrain with Obstacle
+%%
+%
+% Below are the simulation results from a test where the track is driven
+% over a hilly terrain.  The terrain is defined using the Grid Surface
+% block.An STL file was imported and interpolation was used to create a
+% regular grid composed of 100x100 points.
+%
+% For ground contact, points are distributed across the shoe plate and not
+% the grousers.  
+
+set_param('sm_excv_track1_ptcld_shoecad/Scene','LabelModeActiveChoice','Rod');
+set_param([bdroot '/Track L'],'ptcld_shoe','Excv.Shoe.ptcld_sets.cad_profile');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+set_param(bdroot,'StopTime','7')
+
+sim('sm_excv_track1_ptcld_shoecad');
+
+sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld_shoecad,logsout_sm_excv_track1_ptcld_shoecad);
+sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld_shoecad);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad)
+
 
 %%
 

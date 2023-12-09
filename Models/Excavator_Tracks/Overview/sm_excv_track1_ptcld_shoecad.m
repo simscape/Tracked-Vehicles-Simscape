@@ -156,6 +156,29 @@ sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld_shoecad,logsout_sm_excv_track
 sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld_shoecad);
 sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad)
 
+%% Simulation Results: Flat Terrain with Obstacle
+%%
+%
+% Below are the simulation results from a test where the track is driven
+% over a hilly terrain.  The terrain is defined using the Grid Surface
+% block.An STL file was imported and interpolation was used to create a
+% regular grid composed of 100x100 points.
+%
+% For ground contact, points are distributed across the shoe plate and not
+% the grousers.  
+
+set_param('sm_excv_track1_ptcld_shoecad/Scene','LabelModeActiveChoice','Rod');
+set_param([bdroot '/Track L'],'ptcld_shoe','Excv.Shoe.ptcld_sets.cad_profile');
+set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+set_param(bdroot,'StopTime','7')
+
+sim('sm_excv_track1_ptcld_shoecad');
+
+sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld_shoecad,logsout_sm_excv_track1_ptcld_shoecad);
+sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld_shoecad);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad)
+
+
 %%
 
 close all
