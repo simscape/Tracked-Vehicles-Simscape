@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Belt with Undercarriage, Ground Contact Point Cloud</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-03-13">
+<meta name="DC.source" content="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Belt with Undercarriage, Ground Contact Point Cloud</h1>
+<!--introduction-->
+<p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_Overview.png" alt=""> </p>
+<p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p>
+<p>This example models a single belt from a tracked vehicle with a rubber belt. The components of the track (belt, undercarriage, contact forces) are exposed to permit modular testing of component interactions. The model can be configured as :</p>
+<div>
+<ol>
+<li>"Hang" - the belt contacts the sprocket only</li>
+<li>"Float" - the belt contacts all undercarriage elements, but is held above the ground</li>
+<li>"Drive" - the belt contacts all undercarriage elements and can drive on a flat surface</li>
+</ol>
+</div>
+<p>The sprocket is driven with a flexible driveshaft.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Model</a>
+</li>
+<li>
+<a href="#2">Contact Forces</a>
+</li>
+<li>
+<a href="#3">Rollers Subsystem</a>
+</li>
+<li>
+<a href="#4">Track Subsystem</a>
+</li>
+<li>
+<a href="#5">Belt Segment Subsystem</a>
+</li>
+<li>
+<a href="#6">Simulation Results: Hang Test</a>
+</li>
+<li>
+<a href="#8">Simulation Results: Float Test</a>
+</li>
+<li>
+<a href="#10">Simulation Results: Drive Test</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Model</h2>
+<p>In this example, the belt and undercarriage components are modeled. Contact forces can be enabled or disabled to test interactions between different components.</p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');">Open Model</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_01.png" alt=""> <h2 id="2">Contact Forces</h2>
+<p>The model is composed of the undercarriage and the belt segments connected into a loop. The undercarriage contains the rollers, sprocket, and two idlers. Everything is rigidly attached to the frame except one idler which is attached to an arm which is pushed against the belt to hold it in tension. These exert forces on the belt through two sets of contact forces.</p>
+<p>1. The belt lugs press against the sprocket spokes</p>
+<p>
+<img vspace="5" hspace="5" src="sm_belt_contact_sprocketToLugs_Overview.png" alt=""> </p>
+<p>2. The belt carcass rolls along sprocket and roller surfaces</p>
+<p>
+<img vspace="5" hspace="5" src="sm_belt_contact_rollerToCarcass_Overview.png" alt=""> </p>
+<p>
+<img vspace="5" hspace="5" src="sm_belt_contact_sprocketToCarcass_Overview.png" alt=""> </p>
+<p>The Planar Track joint positions one of the belt lugs at a gap between the sprocket pins which is positioned facing straight down. Joint targets applied to the track segments helps it to mesh with other pins on the sprocket and loosely wrap around the rollers and idler. The block Transform Half Seg Angle orients the interface frame so that the two chain segments attached to that pin will wrap around the sprocket.</p>
+<h2 id="3">Rollers Subsystem</h2>
+<p>This subsystem models the rollers, idler, and sprocket. They each can rotate around shafts attached to the lower frame. A spring is included in the Prismatic Tensioner joint that pushes the idler against the chain to maintain tension.</p>
+<p>The sprocket joint interfaces to 1D mechanical rotational port. This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p>
+<p>The bus of connections at port R contains the connections to the geometry that is used to model contact between the rollers, idler, and sprocket to the chain.</p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Undercarriage/Rollers','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_02.png" alt=""> <h2 id="4">Track Subsystem</h2>
+<p>A set of track segments are joined using Revolute Joints to model the track. The joints are contained in each segment. Joint targets are assigned in the mask to ensure the track meshes with the sprocket and wraps loosely around the rollers and idler.</p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_03.png" alt=""> <h2 id="5">Belt Segment Subsystem</h2>
+<p>Each belt segment is composed of the carcass and lug. To streamline the contact force calculation, simpler geometry is connected to the Spatial Contact Force block.</p>
+<div>
+<ol>
+<li>
+<a href="matlab:web(fullfile(docroot,'sm/ref/disk.html'));">Disk</a> geometry is used to model the pins in the sprocket.</li>
+<li>
+<a href="matlab:web(fullfile(docroot,'sm/ref/linesegment.html'));">Line Segment</a> geometry are used to model the lugs and inner carcass surfaces.</li>
+<li>
+<a href="matlab:web(fullfile(docroot,'sm/ref/pointcloud.html'));">Point Cloud</a> geometry is used to model the outer carcass surface.</li>
+</ol>
+</div>
+<p>The point cloud for the belt-ground contact is parameterized, so the point locations and density can be varied.</p>
+<p>
+<img vspace="5" hspace="5" src="sm_belt_contact_trackSeg_Ptcld_Line_Overview.png" alt=""> </p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track/Seg%2001','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_04.png" alt=""> <h2 id="6">Simulation Results: Hang Test</h2>
+<p>Below are the simulation results from a test where the belt hangs from the sprocket. Contact forces with the idlers and rollers are disabled. The simulation only tests contact between the sprocket spokes and lugs plus sprocket and carcass. A joint holds the frame above the ground.</p>
+<pre class="codeoutput">Elapsed Sim Time = 84.8465
+</pre>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_05.png" alt=""> <h2 id="8">Simulation Results: Float Test</h2>
+<p>Below are the simulation results from a test where the track floats in the air. All contact forces between the belt and internal components are enabled. Contact forces between the belt and the ground are disabled. A joint holds the frame above the ground.</p>
+<pre class="codeoutput">Elapsed Sim Time = 196.7619
+</pre>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_06.png" alt=""> <h2 id="10">Simulation Results: Drive Test</h2>
+<p>Below are the simulation results from a test where the track drives along a flat surface. All contact forces between the belt and internal components are enabled. Contact forces between the belt and the ground are enabled. A planar joint permits the grack to only move within the global X-Z plane.</p>
+<pre class="codeoutput">Elapsed Sim Time = 256.0548
+</pre>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_07.png" alt=""> <p class="footer">Copyright 2024 The MathWorks, Inc.<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Belt with Undercarriage, Ground Contact Point Cloud
+% 
+% <<sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_Overview.png>>
+%
+% (<matlab:web('Tracked_Vehicle_Simscape_Overview.html') return to Tracked Vehicle Model with Simscape Overview>)
+%
+% This example models a single belt from a tracked vehicle with a rubber
+% belt. The components of the track (belt, undercarriage, contact forces)
+% are exposed to permit modular testing of component interactions. The
+% model can be configured as :
+% 
+% # "Hang"  - the belt contacts the sprocket only
+% # "Float" - the belt contacts all undercarriage elements, but is held
+% above the ground
+% # "Drive" - the belt contacts all undercarriage elements and can drive on
+% a flat surface
+%
+% The sprocket is driven with a flexible driveshaft.
+%
+% Copyright 2024 The MathWorks, Inc.
+
+%% Model
+%
+% In this example, the belt and undercarriage components are modeled.
+% Contact forces can be enabled or disabled to test interactions between
+% different components.
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe'); Open Model>
+
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe')
+
+set_param(find_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+
+%% Contact Forces
+%
+% The model is composed of the undercarriage and the belt segments
+% connected into a loop.  The undercarriage contains the rollers, sprocket,
+% and two idlers. Everything is rigidly attached to the frame except one
+% idler which is attached to an arm which is pushed against the belt to
+% hold it in tension.  These exert forces on the belt through two
+% sets of contact forces.
+% 
+% 1. The belt lugs press against the sprocket spokes
+%
+% <<sm_belt_contact_sprocketToLugs_Overview.png>>
+%
+% 2. The belt carcass rolls along sprocket and roller surfaces
+%
+% <<sm_belt_contact_rollerToCarcass_Overview.png>>
+%
+% <<sm_belt_contact_sprocketToCarcass_Overview.png>>
+%
+% The Planar Track joint positions one of the belt lugs at a gap between
+% the sprocket pins which is positioned facing straight down. Joint targets
+% applied to the track segments helps it to mesh with other pins on the
+% sprocket and loosely wrap around the rollers and idler. The block
+% Transform Half Seg Angle orients the interface frame so that the two
+% chain segments attached to that pin will wrap around the sprocket.
+
+%% Rollers Subsystem
+%
+% This subsystem models the rollers, idler, and sprocket.  They each can
+% rotate around shafts attached to the lower frame. A spring is included in
+% the Prismatic Tensioner joint that pushes the idler against the chain to
+% maintain tension. 
+%
+% The sprocket joint interfaces to 1D mechanical rotational port.  This
+% represents a mechanical shaft connection to the sprocket. It can be
+% attached to Simscape models of gears, hydrostatic transmissions, and
+% electric motors.
+%
+% The bus of connections at port R contains the connections to the geometry
+% that is used to model contact between the rollers, idler, and sprocket to
+% the chain.
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Undercarriage/Rollers','force'); Open Subsystem>
+
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Undercarriage','LinkStatus','none')
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Undercarriage/Rollers','force')
+
+%% Track Subsystem
+%
+% A set of track segments are joined using Revolute Joints to model the
+% track. The joints are contained in each segment. Joint targets are
+% assigned in the mask to ensure the track meshes with the sprocket and
+% wraps loosely around the rollers and idler.
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track','force'); Open Subsystem>
+
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track','LinkStatus','none')
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track','force')
+
+%% Belt Segment Subsystem
+%
+% Each belt segment is composed of the carcass and lug. To streamline
+% the contact force calculation, simpler geometry is connected to the
+% Spatial Contact Force block.  
+%
+% # <matlab:web(fullfile(docroot,'sm/ref/disk.html')); Disk> geometry is used to model the pins in the sprocket.
+% # <matlab:web(fullfile(docroot,'sm/ref/linesegment.html')); Line Segment> geometry are used to model the lugs and inner carcass surfaces.
+% # <matlab:web(fullfile(docroot,'sm/ref/pointcloud.html')); Point Cloud> geometry is used to model the outer carcass surface.
+%
+% The point cloud for the belt-ground contact is parameterized, so the
+% point locations and density can be varied. 
+%
+% <<sm_belt_contact_trackSeg_Ptcld_Line_Overview.png>>
+%
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track/Seg%2001','force'); Open Subsystem>
+
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track/Seg 01','LinkStatus','none')
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track/Seg 01','force')
+
+
+%% Simulation Results: Hang Test
+%%
+%
+% Below are the simulation results from a test where the belt hangs from
+% the sprocket.  Contact forces with the idlers and rollers are disabled.
+% The simulation only tests contact between the sprocket spokes and lugs
+% plus sprocket and carcass. A joint holds the frame above the ground.
+
+sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_config('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe','hang')
+
+sim('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');
+
+sm_excv_track_plot2trq(simlog_sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe);
+
+%% Simulation Results: Float Test
+%%
+%
+% Below are the simulation results from a test where the track floats in
+% the air.  All contact forces between the belt and internal components are
+% enabled. Contact forces between the belt and the ground are disabled. A
+% joint holds the frame above the ground. 
+  
+
+sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_config('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe','float')
+
+sim('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');
+
+sm_excv_track_plot2trq(simlog_sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe);
+
+%% Simulation Results: Drive Test
+%%
+%
+% Below are the simulation results from a test where the track drives along
+% a flat surface.  All contact forces between the belt and internal
+% components are enabled. Contact forces between the belt and the ground
+% are enabled. A planar joint permits the grack to only move within the
+% global X-Z plane.
+
+sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe_config('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe','drive')
+
+sim('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');
+
+sm_excv_track_plot2trq(simlog_sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe);
+
+%%
+
+close all
+bdclose('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');
+
+##### SOURCE END #####
+-->
+</body>
+</html>

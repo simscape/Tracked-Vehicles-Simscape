@@ -1,7 +1,7 @@
 function [xy_tread, ptlabels] = Extr_Data_Excv_Lower_Frame(Lower_Frame,varargin)
 % Function to create extrusion for arm from pin locations
 
-% Copyright 2022-2023 The MathWorks, Inc
+% Copyright 2022-2024 The MathWorks, Inc
 
 % Check if plot should be produced
 if (isempty(varargin))

@@ -3,14 +3,14 @@
 % Documentation for parameters of track segment, which includes chain link
 % and shoe.
 %
-% Copyright 2023 The MathWorks, Inc.
+% Copyright 2023-2024 The MathWorks, Inc.
 
 %% Chain Shoe Assembly
 %
 % Model
 
-load_system('sm_tracked_vehicle_lib');
-open_system('sm_tracked_vehicle_lib/Track Segment Shoe Point Cloud Contact','force');
+load_system('sm_trackV_lib_chain_segment');
+open_system('sm_trackV_lib_chain_segment/Track Segment Shoe Point Cloud Contact','force');
 
 %% Reference Frames
 %

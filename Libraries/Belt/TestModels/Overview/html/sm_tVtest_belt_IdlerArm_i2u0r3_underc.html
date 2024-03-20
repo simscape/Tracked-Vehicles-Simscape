@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Undercarriage Test</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-03-13">
+<meta name="DC.source" content="sm_tVtest_belt_IdlerArm_i2u0r3_underc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Undercarriage Test</h1>
+<!--introduction-->
+<p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_underc_Overview.png" alt=""> </p>
+<p>(<a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html')">return to Tracked Vehicle Model with Simscape Overview</a>)</p>
+<p>This example shows the placement of the components in the undercarriage.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Model</a>
+</li>
+<li>
+<a href="#2">Undercarriage</a>
+</li>
+<li>
+<a href="#3">Frame</a>
+</li>
+<li>
+<a href="#4">Rollers</a>
+</li>
+<li>
+<a href="#5">Sprocket</a>
+</li>
+<li>
+<a href="#6">Idler</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Model</h2>
+<p>In this example a sprocket, fixed idler, idler with tensioner, and three rollers are shown. Contact geometry is also modeled.</p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');">Open Model</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_underc_01.png" alt=""> <h2 id="2">Undercarriage</h2>
+<p>The undercarriage is separated into two pieces. The frame connects the chassis of the vehicle to the moving elements, including sprocket, rollers, idlers, and tensioner. The Rollers subsystem contains the parts of the undercarriage which move.</p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_underc_02.png" alt=""> <h2 id="3">Frame</h2>
+<p>The frame connects the chassis of the vehicle to the moving elements. Connection points for the sprocket, idler, tensioner, and rollers are provided. The portion of the frame holding the rollers, idler, and tensioner can be configured to have a rigid connection to the chassis. That portion of the frame may also be permitted to rotate with respect to the chassis. A variant subsytem configures that connection.</p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Frame','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_underc_03.png" alt=""> <h2 id="4">Rollers</h2>
+<p>This subsytem contains the sprocket, idlers, tensioner, and rollers. To streamline the contact force calculation, simple geometry is used for contact detection. The spring for the tensioner is modeled within Prismatic Tensioner.</p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_underc_04.png" alt=""> <h2 id="5">Sprocket</h2>
+<p>The sprocket has spokes which press against the belt lugs. The edges of the sprocket press against the belt carcass. To streamline the contact force calculation, simpler geometry is connected to the Planar Contact Force block.</p>
+<p>1. Disk geometry is used to model the sprocket contacting the carcass.</p>
+<p>
+<img vspace="5" hspace="5" src="sm_belt_contact_sprocketToCarcass_Overview.png" alt=""> </p>
+<p>2. Disk geometry is used to model contact between each spoke and the lugs</p>
+<p>
+<img vspace="5" hspace="5" src="sm_belt_contact_sprocketToLugs_Overview.png" alt=""> </p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers/Sprocket','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_underc_05.png" alt=""> <h2 id="6">Idler</h2>
+<p>The edges of the idler press against the belt carcass. To streamline the contact force calculation, simpler geometry is connected to the Planar Contact Force block. The same approach is used for the rollers.</p>
+<div>
+<ol>
+<li>Disk geometry is used to model the idler contacting the carcass.</li>
+</ol>
+</div>
+<p>
+<img vspace="5" hspace="5" src="sm_belt_contact_rollerToCarcass_Overview.png" alt=""> </p>
+<p>
+<a href="matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers/IdlerR','force');">Open Subsystem</a>
+</p>
+<img vspace="5" hspace="5" src="sm_tVtest_belt_IdlerArm_i2u0r3_underc_06.png" alt=""> <p class="footer">Copyright 2023-2024 The MathWorks, Inc.<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Undercarriage Test
+% 
+% <<sm_tVtest_belt_IdlerArm_i2u0r3_underc_Overview.png>>
+%
+% (<matlab:web('Tracked_Vehicle_Simscape_Overview.html') return to Tracked Vehicle Model with Simscape Overview>)
+%
+% This example shows the placement of the components in the undercarriage.
+%
+% Copyright 2023-2024 The MathWorks, Inc.
+
+%% Model
+%
+% In this example a sprocket, fixed idler, idler with tensioner, and three
+% rollers are shown.  Contact geometry is also modeled.
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc'); Open Model>
+
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc')
+
+set_param(find_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+
+%% Undercarriage
+%
+% The undercarriage is separated into two pieces.  The frame connects 
+% the chassis of the vehicle to the moving elements, including sprocket,
+% rollers, idlers, and tensioner.  The Rollers subsystem contains the parts
+% of the undercarriage which move.
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage','force'); Open Subsystem>
+
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage','LinkStatus','none')
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage','force')
+
+%% Frame
+%
+% The frame connects the chassis of the vehicle to the moving elements.
+% Connection points for the sprocket, idler, tensioner, and rollers are
+% provided. The portion of the frame holding the rollers, idler, and
+% tensioner can be configured to have a rigid connection to the chassis.
+% That portion of the frame may also be permitted to rotate with respect to
+% the chassis.  A variant subsytem configures that connection.
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Frame','force'); Open Subsystem>
+
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Frame','LinkStatus','none')
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Frame','force')
+
+
+
+%% Rollers
+%
+% This subsytem contains the sprocket, idlers, tensioner, and rollers. To
+% streamline the contact force calculation, simple geometry is used for
+% contact detection.  The spring for the tensioner is modeled within
+% Prismatic Tensioner.
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers','force'); Open Subsystem>
+
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers','force')
+
+%% Sprocket
+%
+% The sprocket has spokes which press against the belt lugs. The edges of
+% the sprocket press against the belt carcass. To streamline the contact
+% force calculation, simpler geometry is connected to the Planar Contact
+% Force block.
+%
+% 1. Disk geometry is used to model the sprocket contacting the carcass.
+%
+% <<sm_belt_contact_sprocketToCarcass_Overview.png>>
+%
+% 2. Disk geometry is used to model contact between each spoke and the lugs 
+%
+% <<sm_belt_contact_sprocketToLugs_Overview.png>>
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers/Sprocket','force'); Open Subsystem>
+
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers/Sprocket','LinkStatus','none')
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers/Sprocket','force')
+
+%% Idler
+%
+% The edges of the idler press against the belt carcass. To streamline the
+% contact force calculation, simpler geometry is connected to the Planar
+% Contact Force block.  The same approach is used for the rollers.
+%
+% # Disk geometry is used to model the idler contacting the carcass.
+%
+% <<sm_belt_contact_rollerToCarcass_Overview.png>>
+%
+% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers/IdlerR','force'); Open Subsystem>
+
+set_param('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers/IdlerR','LinkStatus','none')
+open_system('sm_tVtest_belt_IdlerArm_i2u0r3_underc/Undercarriage/Rollers/IdlerR','force')
+
+
+%%
+
+close all
+bdclose('sm_tVtest_belt_IdlerArm_i2u0r3_underc');
+
+##### SOURCE END #####
+-->
+</body>
+</html>

@@ -5,21 +5,28 @@ function sm_excv_track_plot3fcroller(logsoutRes)
 % This function plots the in-plane loads on the lower track rollers. If
 % results for both left and right tracks are available, two plots are made.
 %
-% Copyright 2016-2023 The MathWorks, Inc.
+% Copyright 2016-2024 The MathWorks, Inc.
 
 % Get simulation results
 
 % Assume left track data is available
-TrackLRes = logsoutRes.get('Track L').Values.Underc;
+if(find(contains(logsoutRes.getElementNames,'Track L')))
+    TrackLRes = logsoutRes.get('Track L').Values.Underc;
+elseif(~isempty(find(contains(logsoutRes.getElementNames,'Track FL'), 1)))
+    TrackLRes = logsoutRes.get('Track FL').Values.Underc;
+end
 
 % Check if right track data is available
 elList = getElementNames(logsoutRes);
-hasTrackR = find(startsWith(elList,'Track R'), 1);
+hasTrackR  = find(matches(elList,'Track R'), 1);
+hasTrackFR = find(matches(elList,'Track FR'), 1);
+TrackRRes= [];
 if(~isempty(hasTrackR))
     TrackRRes = logsoutRes.get('Track R').Values.Underc;
-else
-    % If not available, make variable empty
-    TrackRRes= [];
+end
+if(~isempty(hasTrackFR))
+    hasTrackR = hasTrackFR;
+    TrackRRes = logsoutRes.get('Track FR').Values.Underc;
 end
 
 % Get field names from left track results
@@ -33,7 +40,11 @@ RL_inds = find(startsWith(fnl,pat));
 simlog_t = TrackLRes.(fnl{RL_inds(1)}).Time;
 
 % Exclude first two seconds for setting vertical range of plot
-ind_2sec = find(simlog_t>2,1);
+if(simlog_t(end)<2)
+    error('Simulation must run longer than 2 seconds')
+else
+    ind_2sec = find(simlog_t>2,1);
+end
 max_mag = 0;
 
 % Loop over fields with roller data

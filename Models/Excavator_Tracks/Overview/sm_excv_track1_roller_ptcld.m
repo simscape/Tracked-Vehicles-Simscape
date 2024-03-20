@@ -15,7 +15,7 @@
 % The track can be tested on uneven terrain, a slope, or a flat road with
 % bumps. The sprocket is driven with a flexible driveshaft.
 %
-% Copyright 2023 The MathWorks, Inc.
+% Copyright 2023-2024 The MathWorks, Inc.
 
 %% Model
 %

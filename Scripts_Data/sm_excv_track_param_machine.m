@@ -1,11 +1,12 @@
 function Excv = sm_excv_track_param_machine
 % Defines parameters structure for excavator model
 
-% Copyright 2022-2023 The MathWorks, Inc
+% Copyright 2022-2024 The MathWorks, Inc
 
 % Call internal functions to assemble structure
 Excv.Contact  = Contact_Force_Parameters;
 Excv.Chain    = Excv_Chain_Param;
+Excv.Chassis  = Excv_Chassis_Param;
 Excv.Shoe     = Excv_Shoe_Param;
 Excv.Frame    = Excv_Frame_Param;
 Excv.Drive    = Excv_Drive_Param;
@@ -285,6 +286,77 @@ Excv.Vis.Track = Excv_TrackVis_Param(Excv.Frame.IdlerAssyX,...
         % Distance between bottom of lower roller, bottom of idler
         Frame.IdlerRollerVoffset = 0.01; 
 
+        % Distance from sprocket center to axle center
+        % NOTE: x is longitudinal, y is vertical
+        Frame.AxleX = 0.72;
+        Frame.AxleY = 0.2;
+
+        % Distance from sprocket center to frame CG
+        % NOTE: x is longitudinal, y is vertical, z is lateral
+        Frame.CGOffset  = [0.72 0.2 0];
+
+        % Mass parameters
+        Frame.Mass = 500;
+        % NOTE: x is longitudinal, y is vertical, z is lateral
+        Frame.MOI  = [1 10 10];
+        Frame.POI  = [0 0 0];
+
+        % Distance from sprocket center to suspension attachment
+        % Define as all positive values, mirroring for left/right happens in model
+        % NOTE: x is longitudinal, y is vertical, z is lateral
+        Frame.SuspOffset  = [2.7750 0.1 0.45];
+    end
+
+    function Chassis = Excv_Chassis_Param
+        Chassis.Mass        = 7000;       % kg
+        Chassis.MOI         = [53 53 53]; % kg*m^2
+        Chassis.POI         = [0 0 0];    % kg*m^2
+
+        Chassis.CGOffset         = [-0.08   0.755 0];  % m
+        Chassis.AxleOffset       = [-1.045  0.395 0];  % m
+        Chassis.SuspOffset       = [ 1     -0.1   0.65];     % m
+
+        Chassis.TrackSepCtr      = 2.2;   % m
+        Chassis.AxleRad          = 0.15;   % m
+        Chassis.Camera.SprocketTrackCtr = 1.685; % m (for camera)
+        Chassis.Camera.Sprocket2CtrRear = [0 0 0]; % m (for camera)
+        Chassis.Camera.ToFront          = 1.685*2; % m (for camera)
+        Chassis.Camera.ToFrontAimLR     = 180-15; % m (for camera)
+        Chassis.Camera.ToLeftAimRight   = 4;
+        Chassis.Camera.ToRightAimLeftTR = [0 -4 0];
+        Chassis.Camera.ToIsoFR_xyz      = [4 -4 3];
+        Chassis.Camera.ToIsoFR_rpy      = [135 20 0];
+        Chassis.Camera.ToRightAimLeftTL = [0 -1 0];
+        Chassis.Camera.LeftRearAimLF    = 2.2;
+        Chassis.Camera.LeftRearAimLFAng = -15;
+        Chassis.Camera.CtrRearAimLFAng  =  15;
+
+        Chassis.Camera.FRAimFront_rpy   = [140     20 0];
+        Chassis.Camera.FRAimFront_xyz   = [1.685*2+1.3 -0.35 0.5];
+
+        Chassis.Camera.ToIsoFRBig_xyz      = [8 -2.5 2.5];
+        Chassis.Camera.ToIsoFRBig_rpy      = [155 20 0];
+
+        Chassis.Camera.ToIsoFRBigFront_xyz      = [4 -2.5-2.2 2.5];
+        Chassis.Camera.ToIsoFRBigFront_rpy      = [155-20 17 0];
+
+        Chassis.Camera.Sprocket2Top_xyz   = [4 0 8];
+        Chassis.Camera.Sprocket2Top_rpy   = [0 0 0];
+
+        Chassis.Susp.Cylinder.Piston.Len    = 0.30;
+        Chassis.Susp.Cylinder.Piston.Rad    = 0.05;
+        Chassis.Susp.Cylinder.Piston.Mass   = 2.35;
+        %Chassis.Susp.Cylinder.Piston.MOI    = [0.019 0.019 0.002];
+        %Chassis.Susp.Cylinder.Piston.POI    = [0     0     0];
+
+        Chassis.Susp.Cylinder.Cylinder.Len  = 0.20;
+        Chassis.Susp.Cylinder.Cylinder.Rad  = 0.07;
+        Chassis.Susp.Cylinder.Cylinder.Mass = 3.07;
+        % Chassis.Susp.Cylinder.Cylinder.MOI  = 0.07;
+        % Chassis.Susp.Cylinder.Cylinder.POI  = 0.07;
+        Chassis.Susp.Cylinder.xeq = 0.13;
+        Chassis.Susp.Cylinder.k = 5e5;
+        Chassis.Susp.Cylinder.b = 5e4;
     end
 
 %% Idler

@@ -1,10 +1,10 @@
 # **Tracked Vehicle Model with Simscape&trade;**
-Copyright 2023 The MathWorks, Inc.
+Copyright 2024 The MathWorks, Inc.
 
 This repository contains models and code to help engineers model and simulate 
-tracked vehicles. A set of examples shows how to assemble track segments 
-into a chain that will mesh with the sprocket, rollers, and idler 
-in the vehicle undercarriage. Models of vehicles traveling on multiple wheels 
+tracked vehicles with chain or belt tracks. A set of examples shows how to 
+assemble segments into a track that will mesh with the sprocket, rollers, and 
+idlers in the vehicle undercarriage. Models of vehicles traveling on multiple wheels 
 are also provided.
 
 * **Fully parameterized models** of tracked and multi-axle vehicles
@@ -46,6 +46,13 @@ fast running models and detailed models that model each segment individually.
 
 ## **Track and Undercarriage**
 ![](Models/Excavator_Tracks/Overview/html/sm_excv_track2_roller_ptcld_02.png)
+
+## **Model of Segmented Belts on Uneven Terrain**
+![](Models/Tractor_Tracks/Overview/html/sm_trackV_belt4_IdlerArm_i2u0r3_ptcld_terrain_Overview.png)
+
+## **Track and Undercarriage**
+![](Models/Tractor_Tracks/Overview/html/sm_trackV_belt2_IdlerArm_i2u0r3_ptcld_02.png)
+
 
 To learn more about modeling and simulation with Simscape, please visit:
 * [Simscape Getting Started Resources](https://www.mathworks.com/solutions/physical-modeling/resources.html)

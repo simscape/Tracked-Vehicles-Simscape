@@ -17,7 +17,7 @@ function [xy_data, rPitch] = Extr_Data_Sprocket(nTeeth,skipTeeth,linkLen,rRoller
 %   add 'plot' as the final argument
 %   >> Extr_Data_Sprocket(22,1,0.2,0.03,'plot')
 %
-% Copyright 2014-2023 The MathWorks, Inc.
+% Copyright 2014-2024 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)
@@ -34,7 +34,17 @@ else
     showplot = char(varargin);
 end
 
-rOuter = linkLen / (2 * sin((2 * pi / (nTeeth/(skipTeeth+1))) / (skipTeeth+1) ));
+% Determine Sprocket Pitch Radius
+% Number of teeth and chain segment length determines sprocket pitch
+% radius, for a triangle is formed from sprocket center to each end of
+% chain segment. Tooth skipping + number of teeth may result in non-integer
+% number of chain segments to completely wrap around sprocket.  This
+% calculation handles that.
+
+rOuterA = linkLen / (2 * sin((2 * pi / (nTeeth/(skipTeeth+1))) / (skipTeeth+1) ));
+
+intAng  = 2*pi/nTeeth*(skipTeeth+1)/2;
+rOuter = linkLen / (2 * sin(intAng) );
 rInner = rOuter - rRoller;
 
 rPitch = rOuter; % Tooth gap could be deeper

@@ -13,7 +13,7 @@ function ptcld = Point_Cloud_Data_Cylinder(radius,height,numpts,caps,varargin)
 %
 %   Point cloud data will be centered at [0,0,0]
 %
-% Copyright 2022-2023 The MathWorks, Inc.
+% Copyright 2022-2024 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)

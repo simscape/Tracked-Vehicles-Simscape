@@ -4,13 +4,34 @@ function sm_excv_track_plot2trq(simlogRes)
 %
 % <enter plot description here if desired>
 %
-% Copyright 2016-2023 The MathWorks, Inc.
+% Copyright 2016-2024 The MathWorks, Inc.
 
 % Get simulation results
-simlog_t = simlogRes.Angular_Velocity_Source_L.t.series.time;
-
-simlog_trqL = -simlogRes.Angular_Velocity_Source_L.t.series.values;
-simlog_wSprk = simlogRes.Track_L.Undercarriage.Rollers.Revolute_Sprocket.Rz.w.series.values('deg/s');
+if(simlogRes.hasChild('Angular_Velocity_Source_L'))
+    numTrks = 1;
+    simlog_t     = simlogRes.Angular_Velocity_Source_L.t.series.time;
+    simlog_trqL  = -simlogRes.Angular_Velocity_Source_L.t.series.values;
+    if(simlogRes.hasChild('Track_L'))
+        simlog_wSprk = simlogRes.Track_L.Undercarriage.Rollers.Revolute_Sprocket.Rz.w.series.values('deg/s');
+    elseif(simlogRes.hasChild('Undercarriage'))
+        simlog_wSprk = simlogRes.Undercarriage.Rollers.Revolute_Sprocket.Rz.w.series.values('deg/s');
+    end
+    if(simlogRes.hasChild('Angular_Velocity_Source_R'))
+        numTrks = 2;
+        simlog_trqR = -simlogRes.Angular_Velocity_Source_R.t.series.values;
+    end
+elseif(simlogRes.hasChild('Angular_Velocity_Source_FL'))
+    numTrks = 4;
+    simlog_t     = simlogRes.Angular_Velocity_Source_FL.t.series.time;
+    simlog_trqFL  = -simlogRes.Angular_Velocity_Source_FL.t.series.values;
+    simlog_wSprkFL = simlogRes.Track_FL.Undercarriage.Rollers.Revolute_Sprocket.Rz.w.series.values('deg/s');
+    simlog_trqFR  = -simlogRes.Angular_Velocity_Source_FR.t.series.values;
+    simlog_wSprkFR = simlogRes.Track_FR.Undercarriage.Rollers.Revolute_Sprocket.Rz.w.series.values('deg/s');
+    simlog_trqRL  = -simlogRes.Angular_Velocity_Source_RL.t.series.values;
+    simlog_wSprkRL = simlogRes.Track_RL.Undercarriage.Rollers.Revolute_Sprocket.Rz.w.series.values('deg/s');
+    simlog_trqRR  = -simlogRes.Angular_Velocity_Source_RR.t.series.values;
+    simlog_wSprkRR = simlogRes.Track_RR.Undercarriage.Rollers.Revolute_Sprocket.Rz.w.series.values('deg/s');
+end
 
 % Reuse figure if it exists, else create new figure
 % Figure name
@@ -34,18 +55,33 @@ clf(fig_h)
 
 % Plot results
 simlog_handles(1) = subplot(2, 1, 1);
-%plot(simlog_t, simlog_px, 'LineWidth', 1, 'DisplayName','x')
-plot(simlog_t, simlog_wSprk, 'LineWidth', 1, 'DisplayName','y')
+if(numTrks < 4)
+    plot(simlog_t, simlog_wSprk, 'LineWidth', 1, 'DisplayName','y')
+else    
+    plot(simlog_t, simlog_wSprkFL, 'LineWidth', 1, 'DisplayName','FL')
+    hold on
+    plot(simlog_t, simlog_wSprkFR, 'LineWidth', 1, 'DisplayName','FR')
+    plot(simlog_t, simlog_wSprkRL, 'LineWidth', 1, 'DisplayName','RL')
+    plot(simlog_t, simlog_wSprkRR, 'LineWidth', 1, 'DisplayName','RR')
+    hold off
+end
 grid on
 title('Sprocket Rotational Speed')
 ylabel('Speed (deg/s)')
 
 simlog_handles(2) = subplot(2, 1, 2);
-plot(simlog_t, simlog_trqL, 'LineWidth', 1,'DisplayName','Left');
-if(simlogRes.hasChild('Angular_Velocity_Source_R'))
+if(numTrks < 4)
+    plot(simlog_t, simlog_trqL, 'LineWidth', 1,'DisplayName','Left');
+    if(numTrks > 1)
+        hold on
+        plot(simlog_t, simlog_trqR, 'LineWidth', 1,'DisplayName','Right');
+    end
+elseif(numTrks == 4)
+    plot(simlog_t, simlog_trqFL, 'LineWidth', 1,'DisplayName','FL');
     hold on
-    simlog_trqR = -simlogRes.Angular_Velocity_Source_R.t.series.values;
-    plot(simlog_t, simlog_trqR, 'LineWidth', 1,'DisplayName','Right');
+    plot(simlog_t, simlog_trqFR, 'LineWidth', 1,'DisplayName','FR');
+    plot(simlog_t, simlog_trqRL, 'LineWidth', 1,'DisplayName','RL');
+    plot(simlog_t, simlog_trqRR, 'LineWidth', 1,'DisplayName','RR');
     hold off
 end
 grid on

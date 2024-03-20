@@ -1,2 +1,2 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<Info File="Libraries/sm_excv_track_segment_test.slx" GroupUUID="9b90c0a9-63d1-4982-91fd-ab628a48d55e" Icon="" Name="1. Segments" Type="Basic" Visible="1"/>
+<Info File="Libraries/Chain/TestModels/sm_tVtest_chain_trackSeg.slx" GroupUUID="9b90c0a9-63d1-4982-91fd-ab628a48d55e" Icon="" Name="1. Segments" Type="Basic" Visible="1"/>

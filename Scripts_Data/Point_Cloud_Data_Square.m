@@ -8,7 +8,7 @@ function ptcld = Point_Cloud_Data_Square(d1,d2,npts,varargin)
 %       npts       [number of points along x, number of points along y]
 %   Point cloud data will be centered at [0,0,0]
 %
-% Copyright 2021-2023 The MathWorks, Inc.
+% Copyright 2021-2024 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)
