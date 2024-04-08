@@ -112,7 +112,7 @@ sim('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld);
 sm_excv_track_plot2trq(simlog_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld)
+sm_excv_track_plot3fcroller(logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,'magnitude');
 
 %% Simulation Results: Slope Test
 %%
@@ -135,7 +135,7 @@ sim('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld);
 sm_excv_track_plot2trq(simlog_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld)
+sm_excv_track_plot3fcroller(logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,'magnitude');
 
 %%
 

@@ -276,15 +276,15 @@ Excv.Vis.Track = Excv_TrackVis_Param(Excv.Frame.IdlerAssyX,...
         % Vertical distance from sprocket center to upper roller center
         Frame.Sprk2UpperY = 0.34;
 
-        % Note - lower roller height is calculated based on 
-        %        sprocket dimensions to keep chain flat
+        Frame.Sprk2LowerY  = -0.25;
+        Frame.Sprk2IdlerY  =  0.01;
 
-        % Vertical distance from sprocket center to idler center 
+        % Longitudinal distance from sprocket center to idler center 
         % (design position - tensioner contracts for assembly, extends when in use)
         Frame.IdlerAssyX = 3.3750;
 
         % Distance between bottom of lower roller, bottom of idler
-        Frame.IdlerRollerVoffset = 0.01; 
+        %Frame.IdlerRollerVoffset = 0.01; 
 
         % Distance from sprocket center to axle center
         % NOTE: x is longitudinal, y is vertical

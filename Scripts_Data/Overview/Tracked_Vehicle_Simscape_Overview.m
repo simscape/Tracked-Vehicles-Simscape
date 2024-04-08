@@ -25,7 +25,7 @@
 % *Chain Track Test Examples*
 % 
 % <html>
-% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_trackTest.png"></td><td><ul><li>Explore track segment models. <a href="matlab:open_system('sm_excv_track_segment_test');">Model</a>, <a href="matlab:web('sm_excv_track_segment_test.html');">Doc</a></li><li>Explore chain and sprocket contacts. <a href="matlab:open_system('sm_excv_track1_sprocket');">Model</a>, <a href="matlab:web('sm_excv_track1_sprocket.html');">Doc</a></li><li>Explore contact between chain, roller, and idler. <a href="matlab:open_system('sm_excv_track1_float');">Model</a>, <a href="matlab:web('sm_excv_track1_float.html');">Doc</a></li></ul></td></tr></table>
+% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_trackTest.png"></td><td><ul><li>Explore track segment models. <a href="matlab:open_system('sm_tVtest_chain_trackSeg');">Model</a>, <a href="matlab:web('sm_tVtest_chain_trackSeg.html');">Doc</a></li><li>Explore chain and sprocket contacts. <a href="matlab:open_system('sm_excv_track1_sprocket');">Model</a>, <a href="matlab:web('sm_excv_track1_sprocket.html');">Doc</a></li><li>Explore contact between chain, roller, and idler. <a href="matlab:open_system('sm_excv_track1_float');">Model</a>, <a href="matlab:web('sm_excv_track1_float.html');">Doc</a></li></ul></td></tr></table>
 % </html>
 %
 % *Rollers - Track Rolling on Point Clouds*

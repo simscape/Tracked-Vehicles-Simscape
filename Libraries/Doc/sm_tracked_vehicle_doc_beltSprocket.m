@@ -1,4 +1,4 @@
-%% Tracked Vehicle Documentation, Srpcoket for Belt Track
+%% Tracked Vehicle Documentation, Sprocket for Belt Track
 % 
 % Documentation for parameters of sprocket used on belted track, which
 % includes spokes, rollers, and rim.

@@ -109,7 +109,7 @@ sim('sm_excv_track2_roller_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_ptcld,logsout_sm_excv_track2_roller_ptcld);
 sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld)
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld,'magnitude');
 
 %% Simulation Results: Slope Test
 %%
@@ -133,7 +133,28 @@ sim('sm_excv_track2_roller_ptcld');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_ptcld,logsout_sm_excv_track2_roller_ptcld);
 sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld)
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld,'magnitude');
+
+%% Simulation Results: Static Load Test
+%%
+%
+% In this test, we let vehicle settle on flat ground and check final value
+% of roller loads along vehicle vertical axis.  This static test helps us
+% see if the abstract representation of the masses is correct (amount,
+% location).  Note that measuring the roller loads does not take into
+% account any mass below the roller.
+
+set_param('sm_excv_track2_roller_ptcld/Track Speeds','LabelModeActiveChoice','None')
+set_param('sm_excv_track2_roller_ptcld/Scene',       'LabelModeActiveChoice','Road');
+set_param('sm_excv_track2_roller_ptcld/Track L','popup_sense_roller','Constraint Force')
+set_param('sm_excv_track2_roller_ptcld/Track R','popup_sense_roller','Constraint Force')
+sim('sm_excv_track2_roller_ptcld');
+set_param('sm_excv_track2_roller_ptcld/Track L','popup_sense_roller','Actuator Torque')
+set_param('sm_excv_track2_roller_ptcld/Track R','popup_sense_roller','Actuator Torque')
+
+fcR = sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld,'vertical');
+close(gcf)
+sm_excv_track_plot5fcrollerFinal('sm_excv_track2_roller_ptcld', fcR);
 
 %%
 

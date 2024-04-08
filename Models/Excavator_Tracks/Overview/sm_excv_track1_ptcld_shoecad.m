@@ -154,7 +154,7 @@ sim('sm_excv_track1_ptcld_shoecad');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld_shoecad,logsout_sm_excv_track1_ptcld_shoecad);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld_shoecad);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad)
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad,'magnitude');
 
 %% Simulation Results: Flat Terrain with Obstacle
 %%
@@ -176,7 +176,7 @@ sim('sm_excv_track1_ptcld_shoecad');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld_shoecad,logsout_sm_excv_track1_ptcld_shoecad);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld_shoecad);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad)
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad,'magnitude');
 
 
 %%

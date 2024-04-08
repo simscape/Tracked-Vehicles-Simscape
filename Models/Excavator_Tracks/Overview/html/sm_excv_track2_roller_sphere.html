@@ -7,9 +7,9 @@ This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
       -->
 <title>Excavator Tracks, Roller Contact Spheres</title>
-<meta name="generator" content="MATLAB 23.2">
+<meta name="generator" content="MATLAB 24.1">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2024-02-25">
+<meta name="DC.date" content="2024-03-29">
 <meta name="DC.source" content="sm_excv_track2_roller_sphere.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -111,6 +111,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <li>
 <a href="#10">Simulation Results: Rough Road</a>
 </li>
+<li>
+<a href="#12">Simulation Results: Static Load Test</a>
+</li>
 </ul>
 </div>
 <h2 id="1">Model</h2>
@@ -142,18 +145,22 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </p>
 <img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_05.png" alt=""> <h2 id="6">Simulation Results: Flat Surface</h2>
 <p>Below are the simulation results from a test where the track is driven on a flat surface. The terrain is defined using the <a href="https://www.mathworks.com/help/sm/ref/infiniteplane.html.">The tracks are driven at different speeds so that the tracked vehicle can turn. Infinite Plane block</a>.</p>
-<pre class="codeoutput">Elapsed Sim Time = 18.6387
+<pre class="codeoutput">Elapsed Sim Time = 18.1548
 </pre>
 <img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_06.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_07.png" alt=""> <h2 id="8">Simulation Results: Plateau</h2>
 <p>Below are the simulation results from a test where the track is driven on a plateau. The terrain is defined using an extrusion, and the contact patches are moved into place below each roller and oriented based on the position of the location of the roller center.</p>
-<pre class="codeoutput">Elapsed Sim Time = 83.1687
+<pre class="codeoutput">Elapsed Sim Time = 86.2212
 </pre>
 <img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_08.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_09.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_10.png" alt=""> <h2 id="10">Simulation Results: Rough Road</h2>
 <p>Below are the simulation results from a test where the track is driven on a rough road. The terrain is defined using an extrusion, and the contact patches are moved into place below each roller and oriented based on the position of the location of the roller center.</p>
-<pre class="codeoutput">Elapsed Sim Time = 42.6729
+<pre class="codeoutput">Elapsed Sim Time = 41.9546
 </pre>
-<img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_11.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_12.png" alt=""> <p class="footer">Copyright 2023-2024 The MathWorks, Inc.<br>
-<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_11.png" alt=""> <img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_12.png" alt=""> <h2 id="12">Simulation Results: Static Load Test</h2>
+<p>In this test, we let vehicle settle on flat ground and check final value of roller loads along vehicle vertical axis. This static test helps us see if the abstract representation of the masses is correct (amount, location). Note that measuring the roller loads does not take into account any mass below the roller.</p>
+<pre class="codeoutput">Elapsed Sim Time = 6.981
+</pre>
+<img vspace="5" hspace="5" src="sm_excv_track2_roller_sphere_13.png" alt=""> <p class="footer">Copyright 2023-2024 The MathWorks, Inc.<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
 <br>
 </p>
 </div>
@@ -294,7 +301,7 @@ sim('sm_excv_track2_roller_sphere');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_sphere,logsout_sm_excv_track2_roller_sphere);
 sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_sphere);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_sphere)
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_sphere,'magnitude');
 
 %% Simulation Results: Rough Road
 %%
@@ -316,6 +323,27 @@ sim('sm_excv_track2_roller_sphere');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_sphere,logsout_sm_excv_track2_roller_sphere);
 sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_sphere);
+
+%% Simulation Results: Static Load Test
+%%
+%
+% In this test, we let vehicle settle on flat ground and check final value
+% of roller loads along vehicle vertical axis.  This static test helps us
+% see if the abstract representation of the masses is correct (amount,
+% location).  Note that measuring the roller loads does not take into
+% account any mass below the roller.
+
+set_param('sm_excv_track2_roller_sphere/Scene',       'LabelModeActiveChoice','Plane');
+set_param('sm_excv_track2_roller_sphere/Track Speeds','LabelModeActiveChoice','None')
+set_param('sm_excv_track2_roller_sphere/Track L','popup_sense_roller','Constraint Force')
+set_param('sm_excv_track2_roller_sphere/Track R','popup_sense_roller','Constraint Force')
+sim('sm_excv_track2_roller_sphere');
+set_param('sm_excv_track2_roller_sphere/Track L','popup_sense_roller','Actuator Torque')
+set_param('sm_excv_track2_roller_sphere/Track R','popup_sense_roller','Actuator Torque')
+
+fcR = sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_sphere,'vertical');
+close(gcf)
+sm_excv_track_plot5fcrollerFinal('sm_excv_track2_roller_sphere', fcR);
 
 %%
 

@@ -1,4 +1,4 @@
-function sm_excv_track_plot3fcroller(logsoutRes)
+function fcR = sm_excv_track_plot3fcroller(logsoutRes,forceType)
 % Code to plot simulation results from excavator models
 %% Plot Description:
 %
@@ -9,88 +9,95 @@ function sm_excv_track_plot3fcroller(logsoutRes)
 
 % Get simulation results
 
-% Assume left track data is available
-if(find(contains(logsoutRes.getElementNames,'Track L')))
-    TrackLRes = logsoutRes.get('Track L').Values.Underc;
-elseif(~isempty(find(contains(logsoutRes.getElementNames,'Track FL'), 1)))
-    TrackLRes = logsoutRes.get('Track FL').Values.Underc;
+% Find all track data
+logList  = getElementNames(logsoutRes);
+trackInds = find(startsWith(logList,'Track'));
+
+for i = 1:length(trackInds)
+    trackLogN{i}   = logList{trackInds(i)};
+    trackFieldN{i} = strrep(trackLogN{i},' ','_');
 end
-
-% Check if right track data is available
-elList = getElementNames(logsoutRes);
-hasTrackR  = find(matches(elList,'Track R'), 1);
-hasTrackFR = find(matches(elList,'Track FR'), 1);
-TrackRRes= [];
-if(~isempty(hasTrackR))
-    TrackRRes = logsoutRes.get('Track R').Values.Underc;
-end
-if(~isempty(hasTrackFR))
-    hasTrackR = hasTrackFR;
-    TrackRRes = logsoutRes.get('Track FR').Values.Underc;
-end
-
-% Get field names from left track results
-fnl = fieldnames(TrackLRes);
-
-% Find data for lower rollers - name is RL##
-pat = "RL"+digitsPattern(1,100);
-RL_inds = find(startsWith(fnl,pat));
-
-% Get time data
-simlog_t = TrackLRes.(fnl{RL_inds(1)}).Time;
-
-% Exclude first two seconds for setting vertical range of plot
-if(simlog_t(end)<2)
-    error('Simulation must run longer than 2 seconds')
-else
-    ind_2sec = find(simlog_t>2,1);
+trackFieldN = sort(trackFieldN);
+trackLogN = sort(trackLogN);
+for i = 1:length(trackInds)
+    TrackData.(trackFieldN{i}) = logsoutRes.get(trackLogN{i}).Values.Underc;
 end
 max_mag = 0;
+min_mag = 1e10;
 
-% Loop over fields with roller data
-for i = 1:length(RL_inds)
-    % Extract data from logsoutRes
-    RL_fc = squeeze(TrackLRes.(fnl{RL_inds(i)}).Data)';
-
-    % Transpose scalar measurements for vecnorm calculation
-    if(size(RL_fc,1)<size(RL_fc,2))
-        RL_fc = RL_fc'; 
-    end
-
-    % Obtain magnitude of load (fx, fy, fz)
-    fcR_L.(fnl{RL_inds(i)}) = vecnorm(RL_fc,2,2);
-
-    % Save max value of all loads after 2 seconds for axes limits
-    max_mag = max(max_mag,max(fcR_L.(fnl{RL_inds(i)})(ind_2sec:end)));
-end
-
-% Repeat process for right track if data exists
-if(~isempty(hasTrackR))
-    % Get field names from left track results
-    fnr = fieldnames(TrackRRes);
+for t_i=1:length(trackInds)
+    fntr = fieldnames(TrackData.(trackFieldN{t_i}));
 
     % Find data for lower rollers - name is RL##
     pat = "RL"+digitsPattern(1,100);
-    RL_inds = find(startsWith(fnr,pat));
+    RL_inds = find(startsWith(fntr,pat));
+
+    % Get time data
+    simlog_t = TrackData.(trackFieldN{t_i}).(fntr{RL_inds(1)}).Time;
+
+    % Exclude first two seconds for setting vertical range of plot
+    if(simlog_t(end)<2)
+        error('Simulation must run longer than 2 seconds')
+    else
+        ind_2sec = find(simlog_t>2,1);
+    end
+
+    % Check for Sprocket, Idler data first (order rear to front)
+    hasIdler  = find(matches(fntr,'XIdlerR'), 1);
+    if(~isempty(hasIdler))
+        % If rear idler, sprocket reaction forces not needed
+        xIDr_fc = squeeze(TrackData.(trackFieldN{t_i}).XIdlerR.Data)';
+        if(strcmpi(forceType,'magnitude'))
+            fcR.(trackFieldN{t_i}).xIDr = vecnorm(xIDr_fc,2,2);
+        elseif(strcmpi(forceType,'vertical'))
+            fcR.(trackFieldN{t_i}).xIDr = -xIDr_fc(:,2);
+        end
+    else
+        % If no rear idler, measure sprocket
+        xSP_fc = squeeze(TrackData.(trackFieldN{t_i}).XSprk.Data)';
+        if(strcmpi(forceType,'magnitude'))
+            fcR.(trackFieldN{t_i}).xSP = vecnorm(xSP_fc,2,2);
+        elseif(strcmpi(forceType,'vertical'))
+            fcR.(trackFieldN{t_i}).xSP = -xSP_fc(:,2);
+        end
+    end
 
     % Loop over fields with roller data
     for i = 1:length(RL_inds)
         % Extract data from logsoutRes
-        RL_fc = squeeze(TrackRRes.(fnr{RL_inds(i)}).Data)';
+        RL_fc = squeeze(TrackData.(trackFieldN{t_i}).(fntr{RL_inds(i)}).Data)';
 
         % Transpose scalar measurements for vecnorm calculation
         if(size(RL_fc,1)<size(RL_fc,2))
             RL_fc = RL_fc';
         end
 
-        % Obtain magnitude of load (fx, fy, fz)
-        fcR_R.(fnr{RL_inds(i)}) = vecnorm(RL_fc,2,2);
+        if(size(RL_fc,2)<3)
+            error(['It appears constraint forces were not logged:' fntr{RL_inds(i)} ' has less than 3 elements'])
+        end
 
-        % Save max value of all loads after 2 seconds for axes limits
-        max_mag = max(max_mag,max(fcR_R.(fnr{RL_inds(i)})(ind_2sec:end)));
+        % Obtain magnitude of load (fx, fy, fz)
+        if(strcmpi(forceType,'magnitude'))
+            % Measure total magnitude
+            fcR.(trackFieldN{t_i}).(fntr{RL_inds(i)}) = vecnorm(RL_fc,2,2);
+        elseif(strcmpi(forceType,'vertical'))
+            % Measure along vehicle vertical axis
+            fcR.(trackFieldN{t_i}).(fntr{RL_inds(i)}) = -RL_fc(:,2);
+        end
+    end
+
+    % Check for Sprocket, IdlerF data last (order rear to front)
+    hasIdlerF  = find(matches(fntr,'XIdlerF'), 1);
+    if(hasIdlerF)
+        % If rear idler, sprocket reaction forces not needed
+        xIDf_fc = squeeze(TrackData.(trackFieldN{t_i}).XIdlerF.Data)';
+        if(strcmpi(forceType,'magnitude'))
+            fcR.(trackFieldN{t_i}).xIDf = vecnorm(xIDf_fc,2,2);
+        elseif(strcmpi(forceType,'vertical'))
+            fcR.(trackFieldN{t_i}).xIDf = -xIDf_fc(:,2);
+        end
     end
 end
-max_mag = max(max_mag,1);
 
 % Reuse figure if it exists, else create new figure
 % Figure name
@@ -110,55 +117,49 @@ end
 figure(fig_h)
 clf(fig_h)
 
-%temp_colororder = get(gca,'defaultAxesColorOrder');
-
-% Plot results
-if(~isempty(hasTrackR))
-    simlog_handles(1) = subplot(2, 1, 1);
+fcR_tracks = fieldnames(fcR);
+num_tracks = length(fcR_tracks);
+if(num_tracks==1)
+    p_h=tiledlayout(1,1);
+elseif(num_tracks==2)
+    p_h=tiledlayout(2,1);
+else
+    p_h=tiledlayout(2,2);
 end
 
-fcR_L_fields = fieldnames(fcR_L);
+for t_i = 1:num_tracks
+    nexttile
+    fcR_L_fields = fieldnames(fcR.(fcR_tracks{t_i}));
 
-for i = 1:length(fcR_L_fields)
-    display_name = strrep(fcR_L_fields{i},'RL','Lower Roller ');
-    plot(simlog_t,fcR_L.(fcR_L_fields{i}),'DisplayName',display_name);
-    hold on
-end
-hold off
-grid on
-box on
-title('Roller Mechanical Loads (In-Plane), Track L')
-ylabel('Force (N)')
-set(gca,'YLim',[0 max_mag*1.1]);
-legend('Location','Best');
-
-
-if(~isempty(hasTrackR))
-    simlog_handles(2) = subplot(2, 1, 2);
-
-    fcR_R_fields = fieldnames(fcR_R);
-
-    for i = 1:length(fcR_R_fields)
-        display_name = strrep(fcR_R_fields{i},'RL','Lower Roller ');
-        plot(simlog_t,fcR_R.(fcR_R_fields{i}),'DisplayName',display_name);
+    for r_i = 1:length(fcR_L_fields)
+        display_name = strrep(fcR_L_fields{r_i},'RL','Lower Roller ');
+        display_name = strrep(display_name,'xSP','Sprocket');
+        display_name = strrep(display_name,'xIDf','IdlerF');
+        display_name = strrep(display_name,'xIDr','IdlerR');
+        plot(simlog_t,fcR.(fcR_tracks{t_i}).(fcR_L_fields{r_i}),'DisplayName',display_name);
         hold on
+        max_mag = max(max_mag,max(fcR.(fcR_tracks{t_i}).(fcR_L_fields{r_i})(ind_2sec:end)));
+        min_mag = min(min_mag,min(fcR.(fcR_tracks{t_i}).(fcR_L_fields{r_i})(ind_2sec:end)));
     end
+    max_mag = max(max_mag,1);
+    min_mag = min(min_mag,1);
+
     hold off
     grid on
     box on
-    title('Roller Mechanical Loads (In-Plane), Track R')
+
+    title(['Roller Mechanical Loads (' forceType '), ' trackLogN{t_i}])
     ylabel('Force (N)')
-    set(gca,'YLim',[0 max_mag*1.1]);
-    linkaxes(simlog_handles,'x');
-    grid on
-    xlabel('Time (s)')
-else
-    xlabel('Time (s)')
+    legend('Location','Best');
 end
 
-
-
-%linkaxes(simlog_handles, 'x')
+axisPadding = (max_mag-min_mag)*0.05;
+yLims = [min_mag-axisPadding max_mag+axisPadding];
+for c_i = 1:length(p_h.Children)
+    if(strcmp(p_h.Children(c_i).Type,'axes'))
+        set(p_h.Children(c_i),'yLim',yLims);
+    end
+end
 
 % Remove temporary variables
 clear simlog_t simlog_handles

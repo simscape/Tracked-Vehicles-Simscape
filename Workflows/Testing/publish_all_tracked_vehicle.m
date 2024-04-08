@@ -35,11 +35,11 @@ for pf_i = 1:length(publishFolderList)
     filenames_m = {filelist_m.name};
     for i=1:length(filenames_m)
         if ~(strcmp(filenames_m{i},'publish_all_html.m'))
-            if ~(contains(filenames_m{i},'belt4'))
+            %if ~(contains(filenames_m{i},'belt4'))
                 publish(filenames_m{i},'showCode',false)
-            else
-                disp(['SKIPPING ' filenames_m{i}]);
-            end
+            %else
+            %    disp(['SKIPPING ' filenames_m{i}]);
+            %end
         end
     end
 end

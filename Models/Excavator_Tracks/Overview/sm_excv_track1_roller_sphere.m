@@ -128,7 +128,7 @@ sim('sm_excv_track1_roller_sphere');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_sphere,logsout_sm_excv_track1_roller_sphere);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_sphere);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track1_roller_sphere)
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_roller_sphere,'magnitude');
 
 %% Simulation Results: Rough Road
 %%
@@ -148,8 +148,7 @@ sim('sm_excv_track1_roller_sphere');
 
 sm_excv_track_plot1loc(simlog_sm_excv_track1_roller_sphere,logsout_sm_excv_track1_roller_sphere);
 sm_excv_track_plot2trq(simlog_sm_excv_track1_roller_sphere);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track1_roller_sphere)
-
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1_roller_sphere,'magnitude');
 
 %%
 
