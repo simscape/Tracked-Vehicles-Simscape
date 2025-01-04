@@ -1,8 +1,10 @@
 %% Load machine parameters
 Trac = sm_trackV_belt_param_machine_seg45i2u0r3_IdlerArm;
 sprk_pitch_rad = Trac.Sprocket.Spoke.pitch_rad + Trac.Sprocket.Spoke.rad+Trac.Belt.pad_h+0.01;
-
-[track_seg_tgts_seg25i2u0r3, qSegSpr_seg25i2u0r3]= sm_trackV_belt_segTargets_seg45i2u0r3_IdlerArm(Trac.Belt.l, sprk_pitch_rad);
+trackV_joint_targets_seg45i2u0l3;
+Trac.IdlerF.Tensioner.x0 = tensioner_x0;
+clear tensioner_x0
+%[track_seg_tgts_seg45i2u0r3, qSegSpr_seg45i2u0r3]= sm_trackV_belt_segTargets_seg45i2u0r3_IdlerArm(Trac.Belt.l, sprk_pitch_rad);
 
 %% Colors
 trac9x.clr.blk = [0.20 0.20 0.20];

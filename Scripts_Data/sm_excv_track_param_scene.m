@@ -1,6 +1,7 @@
 %% Load targets for track segments
-track_joint_targets      = sm_excv_track_segTargets_46seg1Idler(Excv.Chain.pin_sep, Excv.Sprocket.sprocket_rPitch);
-track_joint_targetsC46I2 = sm_excv_track_segTargets_46seg2Idler(ExcvI2R4.Chain.pin_sep, ExcvI2R4.Sprocket.sprocket_rPitch);
+track_joint_targets_seg46i1u2l7;%sm_excv_track_segTargets_46seg1Idler(Excv.Chain.pin_sep, Excv.Sprocket.sprocket_rPitch);
+%track_joint_targetsC46I2 = sm_excv_track_segTargets_46seg2Idler(ExcvI2R4.Chain.pin_sep, ExcvI2R4.Sprocket.sprocket_rPitch);
+track_joint_targets_seg46i2u0l4;
 
 %% Scene Road
 Scene.Road.Bump.len      = 0.1;

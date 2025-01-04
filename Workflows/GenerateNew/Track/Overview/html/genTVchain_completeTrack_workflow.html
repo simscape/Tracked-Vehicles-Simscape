@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Generate Chain Track</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-01-03">
+<meta name="DC.source" content="genTVchain_completeTrack_workflow.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Generate Chain Track</h1>
+<!--introduction-->
+<p>This example shows MATLAB commands to automatically generate a new track with the desired number of upper rollers, lower rollers, and track segments . Template models for track subsystems (frame, undercarriage, chain, etc.) are copied into new library files and modified using MATLAB commands including add_block(), add_line() to modify the block diagram. The final track is then tested in a single-track model.</p>
+<p>The code used in the example is <a href="matlab:edit('genTVchain_completeTrack.m')">genTVchain_completeTrack.m</a>.</p>
+<p>Return to overview <a href="matlab:web('Tracked_Vehicle_Simscape_Overview.html');">Tracked Vehicle Model with Simscape&trade;</a>
+</p>
+<p>Copyright 2023-2024 The MathWorks, Inc</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Final Test Model</a>
+</li>
+<li>
+<a href="#2">1. Modify Frame to Accommodate Rollers</a>
+</li>
+<li>
+<a href="#3">2. Modify Undercarriage to Include Rollers</a>
+</li>
+<li>
+<a href="#5">3. Modify Track to Include Desired number of Segments</a>
+</li>
+<li>
+<a href="#6">4-6. Assemble Arrays of Contact Forces within Track</a>
+</li>
+<li>
+<a href="#9">7. Assemble Components into New Track</a>
+</li>
+<li>
+<a href="#10">8. Generate new set of Chain Joint Targets</a>
+</li>
+<li>
+<a href="#11">9. Assemble Arrays of Contact Forces for Terrain</a>
+</li>
+<li>
+<a href="#13">Simulate model</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Final Test Model</h2>
+<p>This single track model is automatically generated by swapping in the newly created track into provided example <a href="matlab:open_system('sm_excv_track1_ptcld')">sm_excv_track1_ptcld</a>
+</p>
+<pre class="codeinput">genTVchain_completeTrack
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_01.png" alt=""> <h2 id="2">1. Modify Frame to Accommodate Rollers</h2>
+<p>Custom function <a href="matlab:edit('genTVchain_frame')">genTVchain_frame()</a> uses MATLAB commands such as <a href="matlab:doc('add_block')">add_block</a> to add and parameterize the correct number of Rigid Transform blocks that place a frame at the attachment point for the upper and lower rollers.</p>
+<pre class="codeinput">load_system(newFrameFile)
+open_system([newFrameFile <span class="string">'/'</span> newFrameSub],<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_02.png" alt=""> <h2 id="3">2. Modify Undercarriage to Include Rollers</h2>
+<p>Custom function <a href="matlab:edit('genTVchain_rollers')">genTVchain_rollers()</a> adds the correct number of Revolute Joints, Rollers, and Connection Ports so that it can connect to the previously created Frame subsystem. The Simscape Bus of geometry connections is created which will used to model contact with the chain.</p>
+<p>This shows the undercarriage subsystem with frame and rollers.</p>
+<pre class="codeinput">load_system(newUndercFile)
+open_system([newUndercFile  <span class="string">'/'</span> newUndercSubs],<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_03.png" alt=""> <p>This shows the rollers and the Simscape bus of geometry connections</p>
+<pre class="codeinput">open_system([newUndercFile  <span class="string">'/'</span> newUndercSubs <span class="string">'/Rollers'</span>],<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_04.png" alt=""> <h2 id="5">3. Modify Track to Include Desired number of Segments</h2>
+<p>Custom function <a href="matlab:edit('genTVchain_chain')">genTVchain_chain()</a> adds the correct number of chain segments and connects them into a chain. The function also adds Simscape Busses that group the geometry connections to model contact with the sprocket, idler, and rollers.</p>
+<pre class="codeinput">load_system(newChainFile)
+open_system([newChainFile  <span class="string">'/'</span> newChainSubs],<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_05.png" alt=""> <h2 id="6">4-6. Assemble Arrays of Contact Forces within Track</h2>
+<p>Custom function <a href="matlab:edit('genTVchain_chain2element')">genTVchain_chain2element()</a> assembles arrays of contact force elements to model contact forces between the chain and idler, sprocket, and rollers.</p>
+<p>This set of elements models contact between each chain segement and the idler.</p>
+<pre class="codeinput">load_system(newChainElemFile)
+open_system(newChainIdler,<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_06.png" alt=""> <p>This subsystem models contact between each chain segment and the sprocket.</p>
+<pre class="codeinput">open_system(newChainSprocket,<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_07.png" alt=""> <p>This subsystem models contact between each chain segment and each roller.</p>
+<pre class="codeinput">open_system(newChainRoller,<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_08.png" alt=""> <h2 id="9">7. Assemble Components into New Track</h2>
+<p>Custom function <a href="matlab:edit('genTVchain_track')">genTVchain_track()</a> takes each of the newly created subsystems and swaps them into a template track model. The undercarriage, chain of track segments, and subsystems modeling contact between the chain and undercarriage elements have their ReferenceBlock parameter modified to point to the new subsystems.</p>
+<pre class="codeinput">load_system(newTrackFile)
+open_system([newTrackFile <span class="string">'/'</span> newTrackSub],<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_09.png" alt=""> <h2 id="10">8. Generate new set of Chain Joint Targets</h2>
+<p>The initial position of the track needs to be obtained. That is done using a test harness model <a href="matlab:open_system('test_newTrack_jntTgts')">test_newTrack_jntTgts</a>. A default set of joint targets is assembled using function <a href="matlab:edit('sm_excv_track_segTargets_forAsy')">sm_excv_track_segTargets_forAsy</a>. The test harness model holds the driveshaft for the sprocket at 0 degrees, and the final angles between the chain segments and the tensioner extention amount are extracted from the simulation results using function <a href="matlab:edit('genTVchain_targets')">genTVchain_targets</a> .</p>
+<pre class="codeinput">open_system(newMdlGenTargets);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_10.png" alt=""> <h2 id="11">9. Assemble Arrays of Contact Forces for Terrain</h2>
+<p>Custom function <a href="matlab:edit('genTVtrack_terrain')">genTVtrack_terrain()</a> is used to assemble contact force elements to model contact between each segment of the track and the terrain. The function updates each terrain option within the template library file.</p>
+<p>This shows the terrain and subsystem with contact force elements.</p>
+<pre class="codeinput">load_system(newContactTerrainFile)
+open_system([newContactTerrainFile <span class="string">'/Grid Surface Slope 1 Track'</span>],<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_11.png" alt=""> <p>This models contact between each chain segment and the terrain.</p>
+<pre class="codeinput">open_system([newContactTerrainFile <span class="string">'/Grid Surface Slope 1 Track/CF Track Terrain L'</span>],<span class="string">'force'</span>);
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_12.png" alt=""> <h2 id="13">Simulate model</h2>
+<p>Simulation results from the test model</p>
+<pre class="codeinput">sim(newTestModel)
+sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld,logsout_sm_excv_track1_ptcld)
+sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld)
+</pre>
+<pre class="codeoutput">Elapsed Sim Time = 186.8616
+</pre>
+<img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_13.png" alt=""> <img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_14.png" alt=""> <pre class="codeinput">close <span class="string">all</span>
+bdclose <span class="string">all</span>
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Generate Chain Track
+% 
+% This example shows MATLAB commands to automatically generate a new track
+% with the desired number of upper rollers, lower rollers, and track
+% segments . Template models for track subsystems (frame, undercarriage,
+% chain, etc.) are copied into new library files and modified using
+% MATLAB commands including add_block(), add_line() to modify the block
+% diagram.  The final track is then tested in a single-track model.
+%
+% The code used in the example is
+% <matlab:edit('genTVchain_completeTrack.m')
+% genTVchain_completeTrack.m>.
+% 
+% Return to overview <matlab:web('Tracked_Vehicle_Simscape_Overview.html');
+% Tracked Vehicle Model with Simscape™>
+%
+% Copyright 2023-2024 The MathWorks, Inc
+
+
+%% Final Test Model
+%
+% This single track model is automatically generated by swapping in the
+% newly created track into provided example
+% <matlab:open_system('sm_excv_track1_ptcld') sm_excv_track1_ptcld>
+
+genTVchain_completeTrack
+
+%% 1. Modify Frame to Accommodate Rollers
+%
+% Custom function <matlab:edit('genTVchain_frame') genTVchain_frame()> uses
+% MATLAB commands such as <matlab:doc('add_block') add_block> to add and
+% parameterize the correct number of Rigid Transform blocks that place a
+% frame at the attachment point for the upper and lower rollers.
+
+load_system(newFrameFile)
+open_system([newFrameFile '/' newFrameSub],'force');
+
+
+%% 2. Modify Undercarriage to Include Rollers
+%
+% Custom function <matlab:edit('genTVchain_rollers') genTVchain_rollers()>
+% adds the correct number of Revolute Joints, Rollers, and Connection Ports
+% so that it can connect to the previously created Frame subsystem.  The
+% Simscape Bus of geometry connections is created which will used to model
+% contact with the chain.
+%
+% This shows the undercarriage subsystem with frame and rollers.
+
+load_system(newUndercFile)
+open_system([newUndercFile  '/' newUndercSubs],'force');
+
+%%
+%
+% This shows the rollers and the Simscape bus of geometry connections
+
+open_system([newUndercFile  '/' newUndercSubs '/Rollers'],'force');
+
+%% 3. Modify Track to Include Desired number of Segments
+%
+% Custom function <matlab:edit('genTVchain_chain') genTVchain_chain()> adds
+% the correct number of chain segments and connects them into a chain. The
+% function also adds Simscape Busses that group the geometry connections to
+% model contact with the sprocket, idler, and rollers.
+
+load_system(newChainFile)
+open_system([newChainFile  '/' newChainSubs],'force');
+
+%% 4-6. Assemble Arrays of Contact Forces within Track
+%
+% Custom function <matlab:edit('genTVchain_chain2element')
+% genTVchain_chain2element()> assembles arrays of contact force elements to
+% model contact forces between the chain and idler, sprocket, and rollers.
+%
+% This set of elements models contact between each chain segement and the
+% idler.
+
+load_system(newChainElemFile)
+open_system(newChainIdler,'force');
+
+%%
+% This subsystem models contact between each chain segment and the
+% sprocket.
+
+open_system(newChainSprocket,'force');
+
+%%
+% This subsystem models contact between each chain segment and each roller.
+
+open_system(newChainRoller,'force');
+
+%% 7. Assemble Components into New Track
+%
+% Custom function <matlab:edit('genTVchain_track') genTVchain_track()>
+% takes each of the newly created subsystems and swaps them into a template
+% track model.  The undercarriage, chain of track segments, and subsystems
+% modeling contact between the chain and undercarriage elements have their
+% ReferenceBlock parameter modified to point to the new subsystems.
+
+load_system(newTrackFile)
+open_system([newTrackFile '/' newTrackSub],'force');
+
+%% 8. Generate new set of Chain Joint Targets
+%
+% The initial position of the track needs to be obtained.  That is done
+% using a test harness model <matlab:open_system('test_newTrack_jntTgts')
+% test_newTrack_jntTgts>. A default set of joint targets is assembled using
+% function <matlab:edit('sm_excv_track_segTargets_forAsy')
+% sm_excv_track_segTargets_forAsy>.  The test harness model holds the
+% driveshaft for the sprocket at 0 degrees, and the final angles between
+% the chain segments and the tensioner extention amount are extracted from
+% the simulation results using function <matlab:edit('genTVchain_targets')
+% genTVchain_targets> .
+
+open_system(newMdlGenTargets);
+
+%%  9. Assemble Arrays of Contact Forces for Terrain
+%
+% Custom function <matlab:edit('genTVtrack_terrain') genTVtrack_terrain()>
+% is used to assemble contact force elements to model contact between each
+% segment of the track and the terrain.  The function updates each terrain
+% option within the template library file.
+%
+% This shows the terrain and subsystem with contact force elements.
+
+load_system(newContactTerrainFile)
+open_system([newContactTerrainFile '/Grid Surface Slope 1 Track'],'force');
+
+%%
+% This models contact between each chain segment and the terrain.
+open_system([newContactTerrainFile '/Grid Surface Slope 1 Track/CF Track Terrain L'],'force');
+
+
+%% Simulate model
+%
+% Simulation results from the test model
+
+sim(newTestModel)
+sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld,logsout_sm_excv_track1_ptcld)
+sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld)
+
+%%
+close all
+bdclose all
+
+##### SOURCE END #####
+-->
+</body>
+</html>

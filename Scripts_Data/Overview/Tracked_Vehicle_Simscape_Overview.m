@@ -84,6 +84,10 @@
 % Extracting Point Cloud from STL Geometry: Track Shoe>
 % # <matlab:web('ptcloud_workflow_trackShoe_createFromSTEP.html')
 % Extracting Point Cloud from STEP Geometry: Track Shoe>
+% # <matlab:web('genTVchain_completeTrack_workflow.html')
+% Generate Chain Track>
+% # <matlab:web('get_jntTgts_Track_seg46i1u2l7.html')
+% Generate Joint Targets for Chain Track>
 %
 % *Documentation*
 %

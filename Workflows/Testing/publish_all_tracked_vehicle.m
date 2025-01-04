@@ -35,11 +35,11 @@ for pf_i = 1:length(publishFolderList)
     filenames_m = {filelist_m.name};
     for i=1:length(filenames_m)
         if ~(strcmp(filenames_m{i},'publish_all_html.m'))
-            %if ~(contains(filenames_m{i},'belt4'))
+            if ~(contains(filenames_m{i},'belt4'))
                 publish(filenames_m{i},'showCode',false)
-            %else
-            %    disp(['SKIPPING ' filenames_m{i}]);
-            %end
+            else
+                disp(['SKIPPING ' filenames_m{i}]);
+            end
         end
     end
 end
@@ -78,6 +78,7 @@ end
 %% Publish workflow documentation
 publishFolderList_wkf = {...
     ['Workflows' filesep 'PointCloudfromCAD' filesep 'Overview'],...
+    ['Workflows' filesep 'GenerateNew' filesep 'Track' filesep 'Overview'],...
     }; 
 
 for pf_i = 1:length(publishFolderList_wkf)
@@ -90,5 +91,3 @@ for pf_i = 1:length(publishFolderList_wkf)
         end
     end
 end
-
-
