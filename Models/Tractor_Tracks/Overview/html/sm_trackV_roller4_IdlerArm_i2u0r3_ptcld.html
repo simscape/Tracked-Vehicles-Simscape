@@ -7,9 +7,9 @@ This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
       -->
 <title>Belt Tracks (Four), Roller Contact Point Cloud</title>
-<meta name="generator" content="MATLAB 24.2">
+<meta name="generator" content="MATLAB 25.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2025-01-03">
+<meta name="DC.date" content="2025-11-01">
 <meta name="DC.source" content="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -144,23 +144,23 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <a href="matlab:open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track%20L/Track','force');">Open Subsystem</a>
 </p>
 <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_05.png" alt=""> <h2 id="6">Simulation Results: Terrain Test</h2>
-<p>Below are the simulation results from a test where the track is driven over a hilly terrain. The terrain is defined using the <a href="https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html">Grid Surface block</a>. An STL file was imported and interpolation was used to create a regular grid composed of 100x100 points.</p>
-<pre class="codeoutput">Elapsed Sim Time = 30.0173
+<p>Below are the simulation results from a test where the track is driven over a hilly terrain. The terrain is defined using the <a href="https://www.mathworks.com/help/sm/ref/gridsurface.html">Grid Surface block</a>. An STL file was imported and interpolation was used to create a regular grid composed of 100x100 points.</p>
+<pre class="codeoutput">Elapsed Sim Time = 40.5264
 </pre>
 <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_06.png" alt=""> <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_07.png" alt=""> <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_08.png" alt=""> <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_09.png" alt=""> <h2 id="8">Simulation Results: Slope Test</h2>
-<p>Below are the simulation results from a test where the track is driven up a slope. The slope was defined using a MATLAB function. This would let us easily sweep the grade of the slope to determine when the design would no longer meet requirements. The terrain is defined using the <a href="https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html">Grid Surface block</a>.</p>
-<pre class="codeoutput">Elapsed Sim Time = 26.62
+<p>Below are the simulation results from a test where the track is driven up a slope. The slope was defined using a MATLAB function. This would let us easily sweep the grade of the slope to determine when the design would no longer meet requirements. The terrain is defined using the <a href="https://www.mathworks.com/help/sm/ref/gridsurface.html">Grid Surface block</a>.</p>
+<pre class="codeoutput">Elapsed Sim Time = 38.7119
 </pre>
 <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_10.png" alt=""> <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_11.png" alt=""> <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_12.png" alt=""> <h2 id="10">Simulation Results: Plane Test</h2>
 <p>Below are the simulation results from a test where the track is driven on a flat plane. The front tracks are steered using Ackermann steering angles, and the drive speed of all four tracks are modified based on the steering angle so that the tractor drives in a circular curve.</p>
-<pre class="codeoutput">Elapsed Sim Time = 58.2797
+<pre class="codeoutput">Elapsed Sim Time = 59.5493
 </pre>
 <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_13.png" alt=""> <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_14.png" alt=""> <img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_15.png" alt=""> <h2 id="12">Simulation Results: Static Load Test</h2>
 <p>In this test, we let vehicle settle on flat ground and check final value of roller loads along vehicle vertical axis. This static test helps us see if the abstract representation of the masses is correct (amount, location). Note that measuring the roller loads does not take into account any mass below the roller.</p>
-<pre class="codeoutput">Elapsed Sim Time = 193.7947
+<pre class="codeoutput">Elapsed Sim Time = 220.7479
 </pre>
-<img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_16.png" alt=""> <p class="footer">Copyright 2023-2025 The MathWorks, Inc.<br>
-<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<img vspace="5" hspace="5" src="sm_trackV_roller4_IdlerArm_i2u0r3_ptcld_16.png" alt=""> <p class="footer">Copyright 2023-2024 The MathWorks, Inc.<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2025b</a>
 <br>
 </p>
 </div>
@@ -183,7 +183,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % The track can be tested on uneven terrain, slope, and a flat plane. The
 % sprocket is driven with a flexible driveshaft.
 %
-% Copyright 2023-2025 The MathWorks, Inc.
+% Copyright 2023-2024 The MathWorks, Inc.
 
 %% Model
 %
@@ -263,7 +263,7 @@ open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Track','force')
 %
 % Below are the simulation results from a test where the track is driven
 % over a hilly terrain.  The terrain is defined using the
-% <https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html
+% <https://www.mathworks.com/help/sm/ref/gridsurface.html
 % Grid Surface block>. An STL file was imported and interpolation was used to create a
 % regular grid composed of 100x100 points.
 %
@@ -291,7 +291,7 @@ sm_excv_track_plot4xy(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
 % a slope. The slope was defined using a MATLAB function.  This would let
 % us easily sweep the grade of the slope to determine when the design would
 % no longer meet requirements.  The terrain is defined using the
-% <https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html
+% <https://www.mathworks.com/help/sm/ref/gridsurface.html
 % Grid Surface block>. 
 %
 

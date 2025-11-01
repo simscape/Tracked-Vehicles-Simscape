@@ -7,9 +7,9 @@ This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
       -->
 <title>Generate Chain Track</title>
-<meta name="generator" content="MATLAB 24.2">
+<meta name="generator" content="MATLAB 25.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2025-01-03">
+<meta name="DC.date" content="2025-11-01">
 <meta name="DC.source" content="genTVchain_completeTrack_workflow.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -121,6 +121,15 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </p>
 <pre class="codeinput">genTVchain_completeTrack
 </pre>
+<pre class="codeoutput">Warning: The model name '&lt;a href="matlab:open_system ('test_newTrack_jntTgts_GEN_i1u4l6')"&gt;test_newTrack_jntTgts_GEN_i1u4l6&lt;/a&gt;' is shadowing another
+name in the MATLAB workspace or path. Type "which -all
+&lt;a href="matlab:open_system ('test_newTrack_jntTgts_GEN_i1u4l6')"&gt;test_newTrack_jntTgts_GEN_i1u4l6&lt;/a&gt;" at the command line to find the other uses of
+this name. You should change the name of the model to avoid problems. 
+Warning: The model name '&lt;a href="matlab:open_system ('sm_excv_track1_ptcld_GEN_i1u4l6')"&gt;sm_excv_track1_ptcld_GEN_i1u4l6&lt;/a&gt;' is shadowing another
+name in the MATLAB workspace or path. Type "which -all
+&lt;a href="matlab:open_system ('sm_excv_track1_ptcld_GEN_i1u4l6')"&gt;sm_excv_track1_ptcld_GEN_i1u4l6&lt;/a&gt;" at the command line to find the other uses of
+this name. You should change the name of the model to avoid problems. 
+</pre>
 <img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_01.png" alt=""> <h2 id="2">1. Modify Frame to Accommodate Rollers</h2>
 <p>Custom function <a href="matlab:edit('genTVchain_frame')">genTVchain_frame()</a> uses MATLAB commands such as <a href="matlab:doc('add_block')">add_block</a> to add and parameterize the correct number of Rigid Transform blocks that place a frame at the attachment point for the upper and lower rollers.</p>
 <pre class="codeinput">load_system(newFrameFile)
@@ -176,14 +185,14 @@ open_system([newContactTerrainFile <span class="string">'/Grid Surface Slope 1 T
 sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld,logsout_sm_excv_track1_ptcld)
 sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld)
 </pre>
-<pre class="codeoutput">Elapsed Sim Time = 186.8616
+<pre class="codeoutput">Elapsed Sim Time = 160.2664
 </pre>
 <img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_13.png" alt=""> <img vspace="5" hspace="5" src="genTVchain_completeTrack_workflow_14.png" alt=""> <pre class="codeinput">close <span class="string">all</span>
 bdclose <span class="string">all</span>
 </pre>
 <p class="footer">
 <br>
-<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2025b</a>
 <br>
 </p>
 </div>
