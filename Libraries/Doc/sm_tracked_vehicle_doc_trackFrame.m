@@ -3,7 +3,7 @@
 % Documentation for parameters of track frame, which includes offsets for
 % interface frames for parts and mass properties.  Excludes track.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Chain Shoe Assembly
 %

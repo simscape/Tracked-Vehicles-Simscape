@@ -6,7 +6,7 @@
 %
 % This example shows the placement of the components in the undercarriage.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Model
 %

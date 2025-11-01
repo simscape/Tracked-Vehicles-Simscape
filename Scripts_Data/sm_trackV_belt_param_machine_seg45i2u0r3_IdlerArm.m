@@ -1,7 +1,7 @@
 function Excv = sm_trackV_belt_param_machine_seg45i2u0r3_IdlerArm
 % Defines parameters structure for excavator model
 
-% Copyright 2022-2024 The MathWorks, Inc
+% Copyright 2022-2025 The MathWorks, Inc
 
 % Call internal functions to assemble structure
 Excv.Belt     = Excv_Belt_Param;

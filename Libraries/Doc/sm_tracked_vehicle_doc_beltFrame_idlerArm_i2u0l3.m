@@ -4,7 +4,7 @@
 % has two idlers, 0 upper rollers, 3 lower rollers, and an idler arm to
 % tension the belt.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Test Model for Undercarriage
 %

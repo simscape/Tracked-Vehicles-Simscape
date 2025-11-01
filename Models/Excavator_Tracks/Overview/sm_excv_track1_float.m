@@ -10,7 +10,7 @@
 % force parameters within the track. The sprocket is driven with a flexible
 % driveshaft.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Model
 %

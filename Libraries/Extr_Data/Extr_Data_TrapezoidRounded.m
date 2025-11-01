@@ -22,7 +22,7 @@ function [xy_data] = Extr_Data_TrapezoidRounded(lenL, lenU, rL, rU, riL, riU, xU
 %   add 'plot' as the final argument
 %   >> Extr_Data_TrapezoidRounded(2, 1, 0.3, 0.2,0.05, 0.1, 0.2, 0.5, 'plot')
 %
-% Copyright 2014-2024 The MathWorks, Inc.
+% Copyright 2014-2025 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)

@@ -9,7 +9,7 @@
 % cloud on the belt. The track can be tested on uneven terrain or a slope.
 % The sprocket is driven with a flexible driveshaft.
 %
-% Copyright 2024 The MathWorks, Inc.
+% Copyright 2024-2025 The MathWorks, Inc.
 
 %% Model
 %

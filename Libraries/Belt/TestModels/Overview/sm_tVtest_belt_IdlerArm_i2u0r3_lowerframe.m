@@ -17,7 +17,7 @@
 %
 % The sprocket is driven with a flexible driveshaft.
 %
-% Copyright 2024 The MathWorks, Inc.
+% Copyright 2024-2025 The MathWorks, Inc.
 
 %% Model
 %

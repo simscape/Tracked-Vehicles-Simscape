@@ -19,7 +19,7 @@ function [xy_data] = Extr_Data_Sprocket_Spoke(n_spk, rad_o, rad_i, rad_r, rad_h,
 %   add 'plot' as the final argument
 %   >> Extr_Data_Sprocket_Spoke(21,0.5,0.25,0.375,0.0375,'plot')
 
-% Copyright 2012-2024 The MathWorks, Inc.
+% Copyright 2012-2025 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)

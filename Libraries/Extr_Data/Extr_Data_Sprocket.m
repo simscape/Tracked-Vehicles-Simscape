@@ -17,7 +17,7 @@ function [xy_data, rPitch] = Extr_Data_Sprocket(nTeeth,skipTeeth,linkLen,rRoller
 %   add 'plot' as the final argument
 %   >> Extr_Data_Sprocket(22,1,0.2,0.03,'plot')
 %
-% Copyright 2014-2024 The MathWorks, Inc.
+% Copyright 2014-2025 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)

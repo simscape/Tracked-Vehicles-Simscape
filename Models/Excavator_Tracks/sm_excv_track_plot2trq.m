@@ -4,7 +4,7 @@ function sm_excv_track_plot2trq(simlogRes)
 %
 % <enter plot description here if desired>
 %
-% Copyright 2016-2024 The MathWorks, Inc.
+% Copyright 2016-2025 The MathWorks, Inc.
 
 % Get simulation results
 if(simlogRes.hasChild('Angular_Velocity_Source_L'))

@@ -2,7 +2,7 @@
 % 
 % Documentation for parameters of articulated chassis.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Chassis Model
 %

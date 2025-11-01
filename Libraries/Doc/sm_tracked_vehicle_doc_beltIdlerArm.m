@@ -2,7 +2,7 @@
 % 
 % Documentation for parameters of idler arm used on belted track.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Test Model for Idler Arm
 %

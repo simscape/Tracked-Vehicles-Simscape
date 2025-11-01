@@ -6,7 +6,7 @@
 %
 % This example shows belt segments with different contact geometry.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Model
 %

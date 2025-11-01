@@ -10,7 +10,7 @@
 % bumps. The sprocket is driven with a flexible driveshaft. The track shoes
 % are modeled using CAD geometry.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Model
 %

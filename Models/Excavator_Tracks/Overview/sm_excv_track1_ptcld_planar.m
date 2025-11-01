@@ -10,7 +10,7 @@
 % bumps. The sprocket is driven with a flexible driveshaft. Planar Contact
 % Forces are used within the track to streamline computation.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Model
 %

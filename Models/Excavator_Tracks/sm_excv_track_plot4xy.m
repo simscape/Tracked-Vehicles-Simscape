@@ -4,7 +4,7 @@ function sm_excv_track_plot4xy(simlogRes)
 %
 % <enter plot description here if desired>
 %
-% Copyright 2016-2024 The MathWorks, Inc.
+% Copyright 2016-2025 The MathWorks, Inc.
 
 if(~simlogRes.hasChild('Assembly_to_World'))
     error('Could not find Assembly_to_World in simlog results');

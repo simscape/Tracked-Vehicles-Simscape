@@ -4,7 +4,7 @@
 % includes cylinder, piston, and bracket.  The spring force is modeled
 % using the internal mechanics of the Prismatic Tensioner Joint.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Test Model for Tensioner
 %

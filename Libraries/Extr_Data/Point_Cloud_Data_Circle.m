@@ -8,7 +8,7 @@ function ptcld = Point_Cloud_Data_Circle(radius,numpts,varargin)
 %
 %   Point cloud data will be centered at [0,0,0]
 %
-% Copyright 2021-2024 The MathWorks, Inc.
+% Copyright 2021-2025 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)

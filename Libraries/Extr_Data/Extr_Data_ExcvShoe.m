@@ -18,7 +18,7 @@ function [xy_data] = Extr_Data_ExcvShoe(L, h, hp, wgo, wgi, ngr, varargin)
 %   add 'plot' as the final argument
 %   >> Extr_Data_ExcvShoe(0.2, 0.03,0.005, 0.019, 0.013, 3,'plot')
 %
-% Copyright 2014-2024 The MathWorks, Inc.
+% Copyright 2014-2025 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)

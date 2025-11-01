@@ -3,7 +3,7 @@
 % Documentation for parameters of idler used on belted track, which
 % includes wheel, rim, and axle
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Idler Model
 %

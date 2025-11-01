@@ -8,7 +8,7 @@
 % Point cloud and brick solid are integrated into the track segment and
 % enable different methods of modeling the ground
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Model
 %

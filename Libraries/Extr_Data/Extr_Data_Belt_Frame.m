@@ -24,7 +24,7 @@ function [xy_data] = Extr_Data_Belt_Frame(C, R, varargin)
 %   add 'plot' as the final argument
 %   >> Extr_Data_Triangle_RoundCorners(4,3,5,1,0,'plot')
 
-% Copyright 2012-2024 The MathWorks, Inc.
+% Copyright 2012-2025 The MathWorks, Inc.
 
 % Default data to show diagram
 if (nargin == 0)

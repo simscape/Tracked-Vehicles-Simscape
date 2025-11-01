@@ -6,7 +6,7 @@
 %
 % This example shows the idler arm and its tensioner cylinder.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Model
 %

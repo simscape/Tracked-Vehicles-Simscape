@@ -2,7 +2,7 @@
 % 
 % Documentation for parameters of belt segment, which includes carcass and lug.
 %
-% Copyright 2024 The MathWorks, Inc.
+% Copyright 2024-2025 The MathWorks, Inc.
 
 %% Chain Shoe Assembly
 %

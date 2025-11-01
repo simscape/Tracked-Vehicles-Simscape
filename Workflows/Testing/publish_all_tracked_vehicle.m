@@ -1,5 +1,5 @@
 % Publish all test scripts
-% Copyright 2022-2024 The MathWorks, Inc.
+% Copyright 2022-2025 The MathWorks, Inc.
 
 warning('off','Simulink:Engine:MdlFileShadowedByFile');
 warning('off','Simulink:Harness:WarnABoutNameShadowingOnActivation');

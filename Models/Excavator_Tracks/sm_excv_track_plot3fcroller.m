@@ -5,7 +5,7 @@ function fcR = sm_excv_track_plot3fcroller(logsoutRes,forceType)
 % This function plots the in-plane loads on the lower track rollers. If
 % results for both left and right tracks are available, two plots are made.
 %
-% Copyright 2016-2024 The MathWorks, Inc.
+% Copyright 2016-2025 The MathWorks, Inc.
 
 % Get simulation results
 

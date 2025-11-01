@@ -3,7 +3,7 @@
 % Documentation for parameters of roller used on belted track, which
 % includes two rollers rigidly connected to an axle.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2025 The MathWorks, Inc.
 
 %% Idler Model
 %

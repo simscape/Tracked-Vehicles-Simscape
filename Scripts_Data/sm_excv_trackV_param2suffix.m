@@ -13,7 +13,7 @@ function [suffixStr, suffixVals] = sm_excv_trackV_param2suffix(Trac,mdl)
 %      suffixStr    String with number of segments, idlers, upper and lower rollers
 %      suffixVals   Structure listing number of each component
 
-% Copyright 2024 The MathWorks, Inc.
+% Copyright 2024-2025 The MathWorks, Inc.
 
 TracFields = fieldnames(Trac);
 TracFields = setdiff(TracFields,'IdlerArm');
