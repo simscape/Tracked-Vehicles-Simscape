@@ -95,7 +95,7 @@ open_system('sm_trackV_roller2_IdlerArm_i2u0r3_ptcld/Track L/Track','force')
 %
 % Below are the simulation results from a test where the track is driven
 % over a hilly terrain.  The terrain is defined using the
-% <https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html
+% <https://www.mathworks.com/help/sm/ref/gridsurface.html
 % Grid Surface block>. An STL file was imported and interpolation was used to create a
 % regular grid composed of 100x100 points.
 %
@@ -127,7 +127,7 @@ sm_excv_track_plot3fcroller(logsout_sm_trackV_roller2_IdlerArm_i2u0r3_ptcld,'mag
 % a slope. The slope was defined using a MATLAB function.  This would let
 % us easily sweep the grade of the slope to determine when the design would
 % no longer meet requirements.  The terrain is defined using the
-% <https://www.mathworks.com/help/releases/R2023a/sm/ref/gridsurface.html
+% <https://www.mathworks.com/help/sm/ref/gridsurface.html
 % Grid Surface block>. 
 %
 
