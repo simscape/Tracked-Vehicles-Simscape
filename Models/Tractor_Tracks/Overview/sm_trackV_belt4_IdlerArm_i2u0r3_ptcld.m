@@ -15,7 +15,7 @@
 % sprocket is driven with a flexible driveshaft.  The chassis is
 % articulated so that it can turn corners
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2026 The MathWorks, Inc.
 
 %% Model
 %

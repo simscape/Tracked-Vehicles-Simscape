@@ -13,7 +13,7 @@ sm_trackV_belt_param_load
 % Inputs - can be changed
 nRollL =  6;  % Number of Lower Rollers
 nRollU =  4;  % Number of Upper Rollers
-nSegs  = 47; % Number of Segments
+nSegs  = 48; % Number of Segments
 
 % Cannot be changed yet, needed for file names
 nIdler = 1; % No effect on track yet
@@ -60,6 +60,9 @@ Excv.Frame.Sprk2UpperX = newURPos;
 % Retract tensioner cylinder just to ensure chain surrounds it
 default_Tensionerx0 = Excv.Idler.Tensioner.x0; % Save default value
 Excv.Idler.Tensioner.x0 = -2; % Initial extension of cylinder
+
+% Make equilibrium length depend on number of segments
+Excv.Idler.Tensioner.xeq = 0.5+(Excv.Chain.pin_sep*(nSegs-46)/2);
 
 %% Obtain new set of joint targets for new track
 % Open test harness model, swap in new track

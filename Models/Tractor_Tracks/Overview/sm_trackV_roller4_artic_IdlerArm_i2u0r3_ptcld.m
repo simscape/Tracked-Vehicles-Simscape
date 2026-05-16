@@ -16,7 +16,7 @@
 % sprocket is driven with a flexible driveshaft.  The articulated chassis
 % (joint in the middle) permits steering.
 %
-% Copyright 2023-2024 The MathWorks, Inc.
+% Copyright 2023-2026 The MathWorks, Inc.
 
 %% Model
 %
