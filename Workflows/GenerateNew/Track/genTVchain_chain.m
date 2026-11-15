@@ -56,14 +56,18 @@ end
 
 %% 4. Delete all lines connected to Simscape busses except "1"
 % Find all Simscape Bus blocks
-bh_sb = Simulink.findBlocks([newChainFile '/' newChainSubs],'BlockType','SimscapeBus');
+%bh_sb = Simulink.findBlocks([newChainFile '/' newChainSubs],'BlockType','SimscapeBus');
+f = Simulink.FindOptions('RegExp',true,'SearchDepth',1);
+bh_gb = Simulink.findBlocks([newChainFile '/' newChainSubs],'Name','Geometry Bundle*',f);
 
 % Loop over Simscape bus blocks
-for i=1:length(bh_sb)
+%for i=1:length(bh_sb)
+for i=1:length(bh_gb)
 
     % Delete all lines to Connection Label Blocks
     % except ones at first port
-    line_h = get_param(bh_sb(i),'LineHandles');
+    %line_h = get_param(bh_sb(i),'LineHandles');
+    line_h = get_param(bh_gb(i),'LineHandles');
     delete_line(line_h.LConn(2:end));
 end
 
@@ -74,6 +78,8 @@ end
 
 % Find remaining Segment blocks (only one remaining is reference)
 bh_seg = Simulink.findBlocks([newChainFile '/' newChainSubs],'Name','Seg #*',f);
+
+bh_seg1 = bh_seg; % Hold block handle for renaming later
 
 % Get position
 pos_seg = get_param(bh_seg,'Position');
@@ -147,40 +153,57 @@ end
 ph_sg0 = get_param(bh_seg,'PortHandles');
 add_line([newChainFile '/' newChainSubs],ph_sgi.LConn(2),ph_sg0.LConn(1),'autorouting','on');
 
+% Rename "Seg 01" if necessary
+padlen = floor(log10(abs(nSegs))) + 1;
+nameSeg1 = ['Seg ' pad('1',padlen,"left","0")];
+set_param(bh_seg1,'Name',nameSeg1);
+
 %% 6. Reset Simscape Bus blocks
 
 % Find Simscape Bus blocks
 f = Simulink.FindOptions('RegExp',true,'SearchDepth',1);
-bh_ssbu = Simulink.findBlocks([newChainFile '/' newChainSubs],'BlockType','SimscapeBus','ConnectionType','.*Chain.*',f);
+%bh_ssbu = Simulink.findBlocks([newChainFile '/' newChainSubs],'BlockType','SimscapeBus','ConnectionType','.*Chain.*',f);
+bh_gbnd = Simulink.findBlocks([newChainFile '/' newChainSubs],'Name','Geometry Bundle*',f);
 
-for i = 1:length(bh_ssbu)
+%for i = 1:length(bh_ssbu)
+for i = 1:length(bh_gbnd)
     % Delete remaining lines
-    line_h = get_param(bh_ssbu(i),'LineHandles');
+    %line_h = get_param(bh_ssbu(i),'LineHandles');
+    line_h = get_param(bh_gbnd(i),'LineHandles');
     delete_line(line_h.LConn(1))
 
     % Clear port strings, assign bus object
-    set_param(bh_ssbu(i),'HierarchyStrings','');
-    set_param(bh_ssbu(i),'ConnectionType',['Bus: CBO_Chain' num2str(nSegs)])
+    %set_param(bh_ssbu(i),'HierarchyStrings','');
+    %set_param(bh_ssbu(i),'ConnectionType',['Bus: CBO_Chain' num2str(nSegs)])
+    set_param(bh_gbnd(i),'NumberOfGeometryInputs',num2str(nSegs)) % R26b
 
     % Resize Simscape Bus block based on number of ports
-    pos_ssbu   = get_param(bh_ssbu(i),'Position');
+    %pos_ssbu   = get_param(bh_ssbu(i),'Position');
+    pos_gbnd   = get_param(bh_gbnd(i),'Position');
 
     % Save Bus y position for connecting Connection Label blocks
-    ssbu_py(i) = pos_ssbu(2); %#ok<AGROW>
-    pos_ssbu_new    = pos_ssbu;
-    pos_ssbu_new(3) = pos_ssbu(1)+20*nSegs;
-    set_param(bh_ssbu(i),'Position',pos_ssbu_new);
+    %ssbu_py(i) = pos_ssbu(2); %#ok<AGROW>
+    gbnd_py(i) = pos_gbnd(2); %#ok<AGROW>
+    %pos_ssbu_new    = pos_ssbu;
+    pos_gbnd_new    = pos_gbnd;
+    %pos_ssbu_new(3) = pos_ssbu(1)+20*nSegs;
+    pos_gbnd_new(3) = pos_gbnd(1)+20*nSegs;
+    %set_param(bh_ssbu(i),'Position',pos_ssbu_new);
+    set_param(bh_gbnd(i),'Position',pos_gbnd_new);
 end
 
 % Use relative y position of Simscape Bus blocks to determine 
 % which Connection Label blocks to connect to which bus.
 
 % Get order of Simscape Bus blocks y by y position
-[~, yPosSorti] = sort(ssbu_py);
+%[~, yPosSorti] = sort(ssbu_py);
+[~, yPosSorti] = sort(gbnd_py);
 
 % Sort list of block handles and positions by y position
-bh_ssbu = bh_ssbu(yPosSorti);
-ssbu_py = ssbu_py(yPosSorti);
+%bh_ssbu = bh_ssbu(yPosSorti);
+%ssbu_py = ssbu_py(yPosSorti);
+bh_gbnd = bh_gbnd(yPosSorti);
+gbnd_py = gbnd_py(yPosSorti);
 
 %% 7. Add Connection Label blocks
 
@@ -209,11 +232,14 @@ for li = 1:length(label_set)
     
     % Use y position of Simscape Bus blocks 
     % to find block handle for block to which label should connect
-    ssbu_ind = find(ssbu_py>(po_cnR0(2)),1);
-    ph_ssbu = get_param(bh_ssbu(ssbu_ind),'PortHandles');
+    %ssbu_ind = find(ssbu_py>(po_cnR0(2)),1);
+    %ph_ssbu = get_param(bh_ssbu(ssbu_ind),'PortHandles');
+    gbnd_ind = find(gbnd_py>(po_cnR0(2)),1);
+    ph_gbnd = get_param(bh_gbnd(gbnd_ind),'PortHandles');
 
     % Connect Connection Label block to Simscape Bus block
-    add_line([newChainFile '/' newChainSubs],ph_ssbu.LConn(1),ph_cnR0.LConn(1))
+    %add_line([newChainFile '/' newChainSubs],ph_ssbu.LConn(1),ph_cnR0.LConn(1))
+    add_line([newChainFile '/' newChainSubs],ph_gbnd.LConn(1),ph_cnR0.LConn(1))
 
     % Loop over segment numbers, 2 to end
     for i=2:nSegs
@@ -225,7 +251,8 @@ for li = 1:length(label_set)
 
         % Connect to Simscape Bus block
         ph_cnr = get_param(cn_r,'PortHandles');
-        add_line([newChainFile '/' newChainSubs],ph_ssbu.LConn(i),ph_cnr.LConn(1),'autorouting','on');
+        %add_line([newChainFile '/' newChainSubs],ph_ssbu.LConn(i),ph_cnr.LConn(1),'autorouting','on');
+        add_line([newChainFile '/' newChainSubs],ph_gbnd.LConn(i),ph_cnr.LConn(1),'autorouting','on');
     end
 end
 

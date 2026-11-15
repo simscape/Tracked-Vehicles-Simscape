@@ -29,7 +29,7 @@
 
 open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe')
 
-set_param(find_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
 
 %% Contact Forces
 %
@@ -106,8 +106,7 @@ open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track','force')
 %
 % <<sm_belt_contact_trackSeg_Ptcld_Line_Overview.png>>
 %
-%
-% <matlab:open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe');open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track/Seg%2001','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe','','','Track/Seg%2001'); Open Subsystem>
 
 set_param('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track/Seg 01','LinkStatus','none')
 open_system('sm_tVtest_belt_IdlerArm_i2u0r3_lowerframe/Track/Seg 01','force')

@@ -34,8 +34,8 @@ set_param(find_system('sm_tVtest_belt_trackSeg','FindAll', 'on','type','annotati
 %
 % <matlab:open_system('sm_tVtest_belt_trackSeg');open_system('sm_tVtest_belt_trackSeg/CF%20Roller%20Carcass%2001','force'); Open Subsystem>
 
-set_param('sm_tVtest_belt_trackSeg/CF Roller Carcass 01','LinkStatus','none')
-open_system('sm_tVtest_belt_trackSeg/CF Roller Carcass 01','force')
+set_param('sm_tVtest_belt_trackSeg/Contact Belt Roller Planar','LinkStatus','none')
+open_system('sm_tVtest_belt_trackSeg/Contact Belt Roller Planar','force')
 
 %% Sprocket
 %

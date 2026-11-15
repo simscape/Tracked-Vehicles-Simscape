@@ -21,11 +21,15 @@
 %
 % In this example, both tracks are modeled along with the chassis of excavator. 
 %
-% <matlab:open_system('sm_excv_track2_roller_ptcld'); Open Model>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'RollerPts',''); Open Model>
 
-open_system('sm_excv_track2_roller_ptcld')
+open_system('sm_excv_track2')
 
-set_param(find_system('sm_excv_track2_roller_ptcld','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_excv_track2','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param('sm_excv_track2/Track L','popup_trackModel','Rollers, Points');
+set_param('sm_excv_track2/Track R','popup_trackModel','Rollers, Points');
+sm_trackV_measure_loads('sm_excv_track2/Track L','Actuator Torque')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Actuator Torque')
 
 %% Track Subsystem
 %
@@ -37,10 +41,10 @@ set_param(find_system('sm_excv_track2_roller_ptcld','FindAll', 'on','type','anno
 % via a Simscape bus to <https://www.mathworks.com/help/sm/ref/spatialcontactforce.html Spatial Contact Force block> to model ground
 % contact.
 % 
-% <matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'RollerPts','Track%20L/RollerPts'); Open Subsystem>
 
-set_param('sm_excv_track2_roller_ptcld/Track L','LinkStatus','none')
-open_system('sm_excv_track2_roller_ptcld/Track L','force')
+set_param('sm_excv_track2/Track L/RollerPts','LinkStatus','none')
+open_system('sm_excv_track2/Track L/RollerPts','force')
 
 %% Rollers Subsystem
 %
@@ -58,11 +62,11 @@ open_system('sm_excv_track2_roller_ptcld/Track L','force')
 % that is used to model contact with the ground.  The rollers, sprocket,
 % and idler have point clouds whose radius includes the depth of the track.
 %
-% <matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'RollerPts','Track%20L/RollerPts/Undercarriage/Rollers'); Open Subsystem>
 
-set_param('sm_excv_track2_roller_ptcld/Track L/Undercarriage','LinkStatus','none')
-set_param('sm_excv_track2_roller_ptcld/Track L/Undercarriage/Rollers','LinkStatus','none')
-open_system('sm_excv_track2_roller_ptcld/Track L/Undercarriage/Rollers','force')
+set_param('sm_excv_track2/Track L/RollerPts/Undercarriage','LinkStatus','none')
+set_param('sm_excv_track2/Track L/RollerPts/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_excv_track2/Track L/RollerPts/Undercarriage/Rollers','force')
 
 %% Lower Roller Subsystem
 %
@@ -70,23 +74,23 @@ open_system('sm_excv_track2_roller_ptcld/Track L/Undercarriage/Rollers','force')
 % inertial properties, a point cloud to model contact with the ground, and
 % a visual element to animate the part spinning in the model.
 %
-% <matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Undercarriage/Rollers/Roller%20Lower%201','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'RollerPts','Track%20L/RollerPts/Undercarriage/Rollers/Roller%20Lower%201'); Open Subsystem>
 
-set_param('sm_excv_track2_roller_ptcld/Track L/Undercarriage/Rollers/Roller Lower 1','LinkStatus','none')
-open_system('sm_excv_track2_roller_ptcld/Track L/Undercarriage/Rollers/Roller Lower 1','force')
+set_param('sm_excv_track2/Track L/RollerPts/Undercarriage/Rollers/Roller Lower 1','LinkStatus','none')
+open_system('sm_excv_track2/Track L/RollerPts/Undercarriage/Rollers/Roller Lower 1','force')
 
 
 %% Track Subsystem
 %
 % The track is modeled as a solid. It provides a visual indication of where
-% the track segements would be.  It also includes mass and inertia
+% the track segments would be.  It also includes mass and inertia
 % properties which can be parameterized to match the full set of track
 % segments.
 %
-% <matlab:open_system('sm_excv_track2_roller_ptcld');open_system('sm_excv_track2_roller_ptcld/Track%20L/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'RollerPts','Track%20L/RollerPts/Track'); Open Subsystem>
 
-set_param('sm_excv_track2_roller_ptcld/Track L/Track','LinkStatus','none')
-open_system('sm_excv_track2_roller_ptcld/Track L/Track','force')
+set_param('sm_excv_track2/Track L/RollerPts/Track','LinkStatus','none')
+open_system('sm_excv_track2/Track L/RollerPts/Track','force')
 
 %% Simulation Results: Terrain Test
 %%
@@ -101,15 +105,15 @@ open_system('sm_excv_track2_roller_ptcld/Track L/Track','force')
 stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
 Excv = sm_excv_track_param_machine;
-set_param('sm_excv_track2_roller_ptcld/Scene','LabelModeActiveChoice','Terrain');
-set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
-set_param([bdroot '/Track R'],'popup_sense_roller','Constraint Force')
+set_param('sm_excv_track2/Scene','LabelModeActiveChoice','Terrain');
+sm_trackV_measure_loads('sm_excv_track2/Track L','Constraint Force')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Constraint Force')
 
-sim('sm_excv_track2_roller_ptcld');
+sim('sm_excv_track2');
 
-sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_ptcld,logsout_sm_excv_track2_roller_ptcld);
-sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld,'magnitude');
+sm_excv_track_plot1loc(simlog_sm_excv_track2,logsout_sm_excv_track2);
+sm_excv_track_plot2trq(simlog_sm_excv_track2);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2,'magnitude');
 
 %% Simulation Results: Slope Test
 %%
@@ -125,15 +129,15 @@ sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld,'magnitude');
 Grid_Surface_Data_Slope(25, 9, 7.5, 1.5, 5, 0.5, 'plot');
 
 Excv = sm_excv_track_param_machine;
-set_param('sm_excv_track2_roller_ptcld/Scene','LabelModeActiveChoice','Slope');
-set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
-set_param([bdroot '/Track R'],'popup_sense_roller','Constraint Force')
+set_param('sm_excv_track2/Scene','LabelModeActiveChoice','Slope');
+sm_trackV_measure_loads('sm_excv_track2/Track L','Constraint Force')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Constraint Force')
 
-sim('sm_excv_track2_roller_ptcld');
+sim('sm_excv_track2');
 
-sm_excv_track_plot1loc(simlog_sm_excv_track2_roller_ptcld,logsout_sm_excv_track2_roller_ptcld);
-sm_excv_track_plot2trq(simlog_sm_excv_track2_roller_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld,'magnitude');
+sm_excv_track_plot1loc(simlog_sm_excv_track2,logsout_sm_excv_track2);
+sm_excv_track_plot2trq(simlog_sm_excv_track2);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2,'magnitude');
 
 %% Simulation Results: Static Load Test
 %%
@@ -144,19 +148,19 @@ sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld,'magnitude');
 % location).  Note that measuring the roller loads does not take into
 % account any mass below the roller.
 
-set_param('sm_excv_track2_roller_ptcld/Track Speeds','LabelModeActiveChoice','None')
-set_param('sm_excv_track2_roller_ptcld/Scene',       'LabelModeActiveChoice','Road');
-set_param('sm_excv_track2_roller_ptcld/Track L','popup_sense_roller','Constraint Force')
-set_param('sm_excv_track2_roller_ptcld/Track R','popup_sense_roller','Constraint Force')
-sim('sm_excv_track2_roller_ptcld');
-set_param('sm_excv_track2_roller_ptcld/Track L','popup_sense_roller','Actuator Torque')
-set_param('sm_excv_track2_roller_ptcld/Track R','popup_sense_roller','Actuator Torque')
+set_param('sm_excv_track2/Track Speeds','LabelModeActiveChoice','None')
+set_param('sm_excv_track2/Scene',       'LabelModeActiveChoice','Road');
+sm_trackV_measure_loads('sm_excv_track2/Track L','Constraint Force')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Constraint Force')
+sim('sm_excv_track2');
+sm_trackV_measure_loads('sm_excv_track2/Track L','Actuator Torque')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Actuator Torque')
 
-fcR = sm_excv_track_plot3fcroller(logsout_sm_excv_track2_roller_ptcld,'vertical');
+fcR = sm_excv_track_plot3fcroller(logsout_sm_excv_track2,'vertical');
 close(gcf)
-sm_excv_track_plot5fcrollerFinal('sm_excv_track2_roller_ptcld', fcR);
+sm_excv_track_plot5fcrollerFinal('sm_excv_track2', fcR);
 
 %%
 
 close all
-bdclose('sm_excv_track2_roller_ptcld');
+bdclose('sm_excv_track2');

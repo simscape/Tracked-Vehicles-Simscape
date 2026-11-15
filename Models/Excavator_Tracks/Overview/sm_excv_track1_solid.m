@@ -21,7 +21,8 @@
 
 open_system('sm_excv_track1_solid')
 
-set_param(find_system('sm_excv_track1_solid','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_excv_track1_solid','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param([bdroot '/Track L'],'popup_sense_roller','Actuator Torque')
 
 %% Track Subsystem
 %
@@ -49,7 +50,7 @@ set_param(find_system('sm_excv_track1_solid','FindAll', 'on','type','annotation'
 % block Transform Half Seg Angle orients the interface frame so that the
 % two chain segments attached to that pin will wrap around the sprocket. 
 %
-% <matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track1_solid','','','Track%20L'); Open Subsystem>
 
 set_param('sm_excv_track1_solid/Track L','LinkStatus','none')
 open_system('sm_excv_track1_solid/Track L','force')
@@ -70,7 +71,7 @@ open_system('sm_excv_track1_solid/Track L','force')
 % that is used to model contact between the rollers, idler, and sprocket to
 % the chain.
 %
-% <matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track1_solid','','','Track%20L/Undercarriage/Rollers'); Open Subsystem>
 
 set_param('sm_excv_track1_solid/Track L/Undercarriage','LinkStatus','none')
 set_param('sm_excv_track1_solid/Track L/Undercarriage/Rollers','LinkStatus','none')
@@ -83,7 +84,7 @@ open_system('sm_excv_track1_solid/Track L/Undercarriage/Rollers','force')
 % assigned in the mask to ensure the track meshes with the sprocket and
 % wraps loosely around the rollers and idler.
 %
-% <matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track1_solid','','','Track%20L/Track'); Open Subsystem>
 
 set_param('sm_excv_track1_solid/Track L/Track','LinkStatus','none')
 open_system('sm_excv_track1_solid/Track L/Track','force')
@@ -100,7 +101,7 @@ open_system('sm_excv_track1_solid/Track L/Track','force')
 %
 % <<sm_excv_contact_trackSeg_PlSld_Overview.png>>
 %
-% <matlab:open_system('sm_excv_track1_solid');open_system('sm_excv_track1_solid/Track%20L/Track/Seg%2001','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track1_solid','','','Track%20L/Track/Seg%2001'); Open Subsystem>
 
 set_param('sm_excv_track1_solid/Track L/Track/Seg 01','LinkStatus','none')
 open_system('sm_excv_track1_solid/Track L/Track/Seg 01','force')

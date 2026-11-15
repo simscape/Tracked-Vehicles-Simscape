@@ -29,5 +29,5 @@ warning('on','Simulink:Data:EditTimeResolveInUninitializedMaskWS')
 web('Tracked_Vehicle_Simscape_Overview.html')
 
 % Open model
-open_system('sm_excv_track1_ptcld');
+open_system('sm_excv_track1');
 

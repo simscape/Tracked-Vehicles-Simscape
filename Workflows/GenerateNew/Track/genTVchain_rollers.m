@@ -38,7 +38,8 @@ bh_cnLR = Simulink.findBlocks([newUndercFile '/' newRollerSubs],'BlockType','Con
 bh_cnUR = Simulink.findBlocks([newUndercFile '/' newRollerSubs],'BlockType','ConnectionLabel','Label','U#*',f);
 bh_psLR = Simulink.findBlocks([newUndercFile '/' newRollerSubs],'ReferenceBlock','nesl_utility/PS-Simulink Converter');
 %bh_ssbu = Simulink.findBlocks([newUndercFile '/' newRollerSubs],'BlockType','SimscapeBus','ConnectionType','.*Roller.*',f);
-bh_ssbu = Simulink.findBlocks([newUndercFile '/' newRollerSubs],'BlockType','SimscapeBus'); % Due to Simscape Bus Issue R24b
+%bh_ssbu = Simulink.findBlocks([newUndercFile '/' newRollerSubs],'BlockType','SimscapeBus'); % Due to Simscape Bus Issue R24b
+bh_gbnd = Simulink.findBlocks([newUndercFile '/' newRollerSubs],'Name','Geometry Bundle'); % R26b update
 % Loop over Lower Roller Revolute joints
 for i = 1:length(bh_rvLR)
 
@@ -151,20 +152,27 @@ end
 
 % Reset Simscape Bus
 % Delete all physical connection lines to Connection Labels
-line_h = get_param(bh_ssbu,'LineHandles');
+%line_h = get_param(bh_ssbu,'LineHandles');
+line_h = get_param(bh_gbnd,'LineHandles');
 delete_line(line_h.LConn)
+
+set_param(bh_gbnd,'NumberOfGeometryInputs',num2str(nRollL+nRollU)) % R26b
 
 % Reset Simscape Bus ports
 % Clear port strings, assign bus object
-set_param(bh_ssbu,'HierarchyStrings','');
-set_param(bh_ssbu,'ConnectionType',['Bus: CBO_Roller' num2str(nRollL+nRollU)]) 
-ph_ssbu = get_param(bh_ssbu,'PortHandles');
+%set_param(bh_ssbu,'HierarchyStrings','');
+%set_param(bh_ssbu,'ConnectionType',['Bus: CBO_Roller' num2str(nRollL+nRollU)]) 
+%ph_ssbu = get_param(bh_ssbu,'PortHandles');
+ph_gbnd = get_param(bh_gbnd,'PortHandles');
 
 % Resize Simscape Bus block based on number of ports
-pos_ssbu        = get_param(bh_ssbu,'Position');
-pos_ssbu_new    = pos_ssbu;
-pos_ssbu_new(4) = pos_ssbu(2)+25*(nRollL+nRollL);
-set_param(bh_ssbu,'Position',pos_ssbu_new+[0 5 0 5]*0);
+%pos_ssbu        = get_param(bh_ssbu,'Position');
+pos_gbnd        = get_param(bh_gbnd,'Position');
+pos_gbnd_new    = pos_gbnd;
+%pos_ssbu_new(4) = pos_ssbu(2)+25*(nRollL+nRollL);
+pos_gbnd_new(4) = pos_gbnd(2)+25*(nRollL+nRollU);
+%set_param(bh_ssbu,'Position',pos_ssbu_new+[0 5 0 5]*0);
+set_param(bh_gbnd,'Position',pos_gbnd_new+[0 5 0 5]*0);
 
 %% Add blocks
 
@@ -376,7 +384,8 @@ end
 
 % Reconnect Connection Label L1 to Simscape Bus
 ph_cnLRb = get_param(bh_cnLRb,'PortHandles');
-add_line([newUndercFile '/' newRollerSubs],ph_cnLRb.LConn(1),ph_ssbu.LConn(1));
+%add_line([newUndercFile '/' newRollerSubs],ph_cnLRb.LConn(1),ph_ssbu.LConn(1));
+add_line([newUndercFile '/' newRollerSubs],ph_cnLRb.LConn(1),ph_gbnd.LConn(1));
 
 
 % Loop over Lower Roller index 2 to requested number of lower rollers
@@ -394,7 +403,9 @@ for j = 2:nRollL
 
     % Connect to Simscape Bus
     ph_cnLRi = get_param(bh_cnLRi,'PortHandles');
-    add_line([newUndercFile '/' newRollerSubs],ph_cnLRi.LConn(1),ph_ssbu.LConn(j))
+    %add_line([newUndercFile '/' newRollerSubs],ph_cnLRi.LConn(1),ph_ssbu.LConn(j))
+    add_line([newUndercFile '/' newRollerSubs],ph_cnLRi.LConn(1),ph_gbnd.LConn(j))
+
 end
 
 % Loop over Upper Roller index 2 to requested number of upper rollers
@@ -413,7 +424,8 @@ for j = 1:nRollU
 
     % Connect to Simscape Bus
     ph_cnLRi = get_param(bh_cnLRi,'PortHandles');
-    add_line([newUndercFile '/' newRollerSubs],ph_cnLRi.LConn(1),ph_ssbu.LConn(j+nRollL))
+    %add_line([newUndercFile '/' newRollerSubs],ph_cnLRi.LConn(1),ph_ssbu.LConn(j+nRollL))
+    add_line([newUndercFile '/' newRollerSubs],ph_cnLRi.LConn(1),ph_gbnd.LConn(j+nRollL))
 end
 
 %% Reorder Connection Ports
@@ -523,7 +535,7 @@ end
 % Set Mask Object in subsystem mask
 set_param([newUndercFile '/' refUndercSubs '/Rollers'],'MaskObject',maskObj)
 
-set_param(bh_ssbu,'ConnectionType','Inherit: auto') % Due to Simscape Bus Issue R24b
+%set_param(bh_ssbu,'ConnectionType','Inherit: auto') % Due to Simscape Bus Issue R24b
 
 %% Save file
 save_system(newUndercFile)

@@ -65,30 +65,7 @@ open_system([newUndercFile  '/' newUndercSubs '/Rollers'],'force');
 load_system(newChainFile)
 open_system([newChainFile  '/' newChainSubs],'force');
 
-%% 4-6. Assemble Arrays of Contact Forces within Track
-%
-% Custom function <matlab:edit('genTVchain_chain2element')
-% genTVchain_chain2element()> assembles arrays of contact force elements to
-% model contact forces between the chain and idler, sprocket, and rollers.
-%
-% This set of elements models contact between each chain segement and the
-% idler.
-
-load_system(newChainElemFile)
-open_system(newChainIdler,'force');
-
-%%
-% This subsystem models contact between each chain segment and the
-% sprocket.
-
-open_system(newChainSprocket,'force');
-
-%%
-% This subsystem models contact between each chain segment and each roller.
-
-open_system(newChainRoller,'force');
-
-%% 7. Assemble Components into New Track
+%% 4. Assemble Components into New Track
 %
 % Custom function <matlab:edit('genTVchain_track') genTVchain_track()>
 % takes each of the newly created subsystems and swaps them into a template
@@ -99,7 +76,7 @@ open_system(newChainRoller,'force');
 load_system(newTrackFile)
 open_system([newTrackFile '/' newTrackSub],'force');
 
-%% 8. Generate new set of Chain Joint Targets
+%% 5. Generate new set of Chain Joint Targets
 %
 % The initial position of the track needs to be obtained.  That is done
 % using a test harness model <matlab:open_system('test_newTrack_jntTgts')
@@ -113,30 +90,13 @@ open_system([newTrackFile '/' newTrackSub],'force');
 
 open_system(newMdlGenTargets);
 
-%%  9. Assemble Arrays of Contact Forces for Terrain
-%
-% Custom function <matlab:edit('genTVtrack_terrain') genTVtrack_terrain()>
-% is used to assemble contact force elements to model contact between each
-% segment of the track and the terrain.  The function updates each terrain
-% option within the template library file.
-%
-% This shows the terrain and subsystem with contact force elements.
-
-load_system(newContactTerrainFile)
-open_system([newContactTerrainFile '/Grid Surface Slope 1 Track'],'force');
-
-%%
-% This models contact between each chain segment and the terrain.
-open_system([newContactTerrainFile '/Grid Surface Slope 1 Track/CF Track Terrain L'],'force');
-
-
 %% Simulate model
 %
 % Simulation results from the test model
 
 sim(newTestModel)
-sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld,logsout_sm_excv_track1_ptcld)
-sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld)
+sm_excv_track_plot1loc(simlog_sm_excv_track1,logsout_sm_excv_track1)
+sm_excv_track_plot2trq(simlog_sm_excv_track1)
 
 %%
 close all

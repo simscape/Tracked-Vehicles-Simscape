@@ -7,9 +7,9 @@ This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
       -->
 <title>Tracked Vehicle Model with Simscape&trade;</title>
-<meta name="generator" content="MATLAB 26.1">
+<meta name="generator" content="MATLAB 26.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2026-04-23">
+<meta name="DC.date" content="2026-11-14">
 <meta name="DC.source" content="Tracked_Vehicle_Simscape_Overview.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -91,7 +91,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <li>
 <b>Customizable contact force definition</b> enable models tailored to simulation task.</li>
 <li>
-<b>MATLAB code</b> enables automation of modeling, simulation, and post-procesing tasks.</li>
+<b>MATLAB code</b> enables automation of modeling, simulation, and post-processing tasks.</li>
 </ul>
 </div>
 <p>
@@ -99,7 +99,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </p>
 <p>These models model a track as a segmented chain. They can drive on uneven surfaces and capture the details of modeling each segment of the track as it contacts with the ground. A teeth on a sprocket push against pins in the chain to move the vehicle forward.</p>
 <p>
-<table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_segTracks.png"></td><td><ul><b>-- Single Idler --</b><br><li>Single track, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track1_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track2_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track2_ptcld.html');">Doc</a></li><li>Single track, ground contact via brick solid. <a href="matlab:open_system('sm_excv_track1_solid');">Model</a>, <a href="matlab:web('sm_excv_track1_solid.html');">Doc</a></li><li>Single track, ground contact via point cloud, CAD shoe. <a href="matlab:open_system('sm_excv_track1_ptcld_shoecad');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld_shoecad.html');">Doc</a></li><br><b>-- Double Idler --</b><br><li>Single track, suspended above ground. <a href="matlab:open_system('sm_excv_trackI2R4_1_float');">Model</a>, <a href="matlab:web('sm_excv_trackI2R4_1_float.html');">Doc</a></li><li>Single track, ground contact via point cloud. <a href="matlab:open_system('sm_excv_trackI2R4_1_ptcld');">Model</a>, <a href="matlab:web('sm_excv_trackI2R4_1_ptcld.html');">Doc</a></li></ul></td></tr></table>
+<table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_segTracks.png"></td><td><ul><b>-- Single Idler --</b><br><li>Single track, ground contact via point cloud on shoes. <a href="matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPts','');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track2');">Model</a>, <a href="matlab:web('sm_excv_track2_ptcld.html');">Doc</a></li><li>Single track, ground contact via brick solid. <a href="matlab:open_system('sm_excv_track1_solid');">Model</a>, <a href="matlab:web('sm_excv_track1_solid.html');">Doc</a></li><li>Single track, ground contact via point cloud, CAD shoe. <a href="matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPtsCAD','');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld_shoecad.html');">Doc</a></li><br><b>-- Double Idler --</b><br><li>Single track, suspended above ground. <a href="matlab:open_system('sm_excv_trackI2R4_1_float');">Model</a>, <a href="matlab:web('sm_excv_trackI2R4_1_float.html');">Doc</a></li><li>Single track, ground contact via point cloud. <a href="matlab:open_system('sm_excv_trackI2R4_1_ptcld');">Model</a>, <a href="matlab:web('sm_excv_trackI2R4_1_ptcld.html');">Doc</a></li></ul></td></tr></table>
 </p>
 <p>
 <b>Chain Track Test Examples</b>
@@ -112,7 +112,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </p>
 <p>These models can drive on uneven surfaces and run very fast due to the abstract method of modeling the track drive. They are useful for refining requirements for the mechanical and powertrain system.</p>
 <p>
-<table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_rollers.png"></td><td><ul><li>Single track, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_excv_track1_roller_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track1_roller_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_excv_track2_roller_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track2_roller_ptcld.html');">Doc</a></li></ul></td></tr></table>
+<table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_rollers.png"></td><td><ul><li>Single track, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_excv_track1_roller_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_excv_track2_roller_ptcld.html');">Doc</a></li></ul></td></tr></table>
 </p>
 <p>
 <b>Spheres - Track Rolling on Spheres</b>
@@ -128,14 +128,14 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </p>
 <p>These models model a belt as a set of segments. They can drive on uneven surfaces and capture the details of modeling each segment of the track as it contacts with the ground. Spokes in a sprocket push against lugs in the belt to move the vehicle forward.</p>
 <p>
-<table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_beltSeg.png"></td><td><ul><li>Single track, ground contact via point cloud on carcass.  <a href="matlab:open_system('sm_trackV_belt1_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_belt1_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on carcass. <a href="matlab:open_system('sm_trackV_belt2_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_belt2_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with Ackermann steering, ground contact via point cloud on carcass. <a href="matlab:open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li></ul></td></tr></table>
+<table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_beltSeg.png"></td><td><ul><li>Single track, ground contact via point cloud on carcass.  <a href="matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'BeltPts','');">Model</a>, <a href="matlab:web('sm_trackV_belt1_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on carcass. <a href="matlab:sm_trackV_open_model('sm_trackV_belt2_IdlerArm_i2u0r3',{'Track%20L','Track%20R'},'BeltPts','');">Model</a>, <a href="matlab:web('sm_trackV_belt2_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with steering, ground contact via point cloud on carcass. <a href="matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'BeltPts','');">Model</a>, <a href="matlab:web('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li></ul></td></tr></table>
 </p>
 <p>
 <b>Roller Belt Models - Track Rolling on Point Clouds</b>
 </p>
 <p>These models can drive on uneven surfaces and run very fast due to the abstract method of modeling the track drive. They are useful for refining requirements for the mechanical and powertrain system.</p>
 <p>
-<table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_beltRoll.png"></td><td><ul><li>Single track, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_trackV_roller2_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_roller2_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with Ackermann steering, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with articulated steering, ground contact via point cloud on carcass. <a href="matlab:open_system('sm_trackV_roller4_artic_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_roller4_artic_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li></ul></td></tr></table>
+<table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_beltRoll.png"></td><td><ul><li>Single track, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_trackV_belt2_IdlerArm_i2u0r3',{'Track%20L','Track%20R'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_trackV_roller2_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with steering, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li></ul></td></tr></table>
 </p>
 <p>
 <b>Belt Track Test Examples</b>
@@ -224,7 +224,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </div>
 <p class="footer">
 <br>
-<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026a</a>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026b</a>
 <br>
 </p>
 </div>
@@ -241,7 +241,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % * *Detailed and abstract variants* for efficient testing of different systems
 % * *Modular library elements* enable assembly of parameterized tracked vehicles. 
 % * *Customizable contact force definition* enable models tailored to simulation task.
-% * *MATLAB code* enables automation of modeling, simulation, and post-procesing tasks.
+% * *MATLAB code* enables automation of modeling, simulation, and post-processing tasks.
 %
 % *Chain Track Models*
 %
@@ -251,7 +251,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % pins in the chain to move the vehicle forward.
 %
 % <html>
-% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_segTracks.png"></td><td><ul><b>REPLACE_WITH_DASH_DASH Single Idler REPLACE_WITH_DASH_DASH</b><br><li>Single track, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track1_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track2_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track2_ptcld.html');">Doc</a></li><li>Single track, ground contact via brick solid. <a href="matlab:open_system('sm_excv_track1_solid');">Model</a>, <a href="matlab:web('sm_excv_track1_solid.html');">Doc</a></li><li>Single track, ground contact via point cloud, CAD shoe. <a href="matlab:open_system('sm_excv_track1_ptcld_shoecad');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld_shoecad.html');">Doc</a></li><br><b>REPLACE_WITH_DASH_DASH Double Idler REPLACE_WITH_DASH_DASH</b><br><li>Single track, suspended above ground. <a href="matlab:open_system('sm_excv_trackI2R4_1_float');">Model</a>, <a href="matlab:web('sm_excv_trackI2R4_1_float.html');">Doc</a></li><li>Single track, ground contact via point cloud. <a href="matlab:open_system('sm_excv_trackI2R4_1_ptcld');">Model</a>, <a href="matlab:web('sm_excv_trackI2R4_1_ptcld.html');">Doc</a></li></ul></td></tr></table>
+% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_segTracks.png"></td><td><ul><b>REPLACE_WITH_DASH_DASH Single Idler REPLACE_WITH_DASH_DASH</b><br><li>Single track, ground contact via point cloud on shoes. <a href="matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPts','');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on shoes. <a href="matlab:open_system('sm_excv_track2');">Model</a>, <a href="matlab:web('sm_excv_track2_ptcld.html');">Doc</a></li><li>Single track, ground contact via brick solid. <a href="matlab:open_system('sm_excv_track1_solid');">Model</a>, <a href="matlab:web('sm_excv_track1_solid.html');">Doc</a></li><li>Single track, ground contact via point cloud, CAD shoe. <a href="matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPtsCAD','');">Model</a>, <a href="matlab:web('sm_excv_track1_ptcld_shoecad.html');">Doc</a></li><br><b>REPLACE_WITH_DASH_DASH Double Idler REPLACE_WITH_DASH_DASH</b><br><li>Single track, suspended above ground. <a href="matlab:open_system('sm_excv_trackI2R4_1_float');">Model</a>, <a href="matlab:web('sm_excv_trackI2R4_1_float.html');">Doc</a></li><li>Single track, ground contact via point cloud. <a href="matlab:open_system('sm_excv_trackI2R4_1_ptcld');">Model</a>, <a href="matlab:web('sm_excv_trackI2R4_1_ptcld.html');">Doc</a></li></ul></td></tr></table>
 % </html>
 %
 % *Chain Track Test Examples*
@@ -267,7 +267,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % requirements for the mechanical and powertrain system.
 %
 % <html>
-% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_rollers.png"></td><td><ul><li>Single track, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_excv_track1_roller_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track1_roller_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_excv_track2_roller_ptcld');">Model</a>, <a href="matlab:web('sm_excv_track2_roller_ptcld.html');">Doc</a></li></ul></td></tr></table>
+% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_rollers.png"></td><td><ul><li>Single track, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_excv_track1_roller_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_excv_track2_roller_ptcld.html');">Doc</a></li></ul></td></tr></table>
 % </html>
 %
 % *Spheres - Track Rolling on Spheres*
@@ -291,7 +291,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % lugs in the belt to move the vehicle forward.
 %
 % <html>
-% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_beltSeg.png"></td><td><ul><li>Single track, ground contact via point cloud on carcass.  <a href="matlab:open_system('sm_trackV_belt1_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_belt1_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on carcass. <a href="matlab:open_system('sm_trackV_belt2_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_belt2_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with Ackermann steering, ground contact via point cloud on carcass. <a href="matlab:open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li></ul></td></tr></table>
+% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_beltSeg.png"></td><td><ul><li>Single track, ground contact via point cloud on carcass.  <a href="matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'BeltPts','');">Model</a>, <a href="matlab:web('sm_trackV_belt1_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud on carcass. <a href="matlab:sm_trackV_open_model('sm_trackV_belt2_IdlerArm_i2u0r3',{'Track%20L','Track%20R'},'BeltPts','');">Model</a>, <a href="matlab:web('sm_trackV_belt2_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with steering, ground contact via point cloud on carcass. <a href="matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'BeltPts','');">Model</a>, <a href="matlab:web('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li></ul></td></tr></table>
 % </html>
 %
 % *Roller Belt Models - Track Rolling on Point Clouds*
@@ -301,7 +301,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 % requirements for the mechanical and powertrain system.
 %
 % <html>
-% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_beltRoll.png"></td><td><ul><li>Single track, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_trackV_roller2_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_roller2_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with Ackermann steering, ground contact via point cloud cylinders. <a href="matlab:open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with articulated steering, ground contact via point cloud on carcass. <a href="matlab:open_system('sm_trackV_roller4_artic_IdlerArm_i2u0r3_ptcld');">Model</a>, <a href="matlab:web('sm_trackV_roller4_artic_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li></ul></td></tr></table>
+% <table border=1><tr><td><img src="Tracked_Vehicle_Simscape_Overview_beltRoll.png"></td><td><ul><li>Single track, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Two tracks, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_trackV_belt2_IdlerArm_i2u0r3',{'Track%20L','Track%20R'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_trackV_roller2_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li><li>Four tracks with steering, ground contact via point cloud cylinders. <a href="matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'RollerPts','');">Model</a>, <a href="matlab:web('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld.html');">Doc</a></li></ul></td></tr></table>
 % </html>
 %
 % *Belt Track Test Examples*

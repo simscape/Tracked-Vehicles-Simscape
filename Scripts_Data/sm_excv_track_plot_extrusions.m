@@ -1,5 +1,6 @@
 
 figure(99)
+clf
 patch(Excv.Shoe.xc(:,1),Excv.Shoe.xc(:,2),[1 1 1]*0.95,'EdgeColor','none');
 hold on
 plot(Excv.Shoe.xc(:,1),Excv.Shoe.xc(:,2),'-','Marker','o','MarkerSize',4,'LineWidth',2);

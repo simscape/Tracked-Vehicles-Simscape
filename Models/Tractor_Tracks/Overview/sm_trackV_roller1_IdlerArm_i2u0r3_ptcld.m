@@ -23,11 +23,14 @@
 % centered on the track.  This enables faster adjustments of the track
 % model which can then be mirrored to the second track.
 %
-% <matlab:open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld'); Open Model>
+% <matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'RollerPts',''); Open Model>
 
-open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld')
+open_system('sm_trackV_belt1_IdlerArm_i2u0r3')
 
-set_param(find_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_trackV_belt1_IdlerArm_i2u0r3','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param('sm_trackV_belt1_IdlerArm_i2u0r3/Track L','popup_trackModel','Rollers, Points');
+sm_trackV_measure_loads('sm_trackV_belt1_IdlerArm_i2u0r3/Track L','Actuator Torque');
+
 
 %% Track Subsystem
 %
@@ -41,10 +44,10 @@ set_param(find_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld','FindAll', 'on',
 % <https://www.mathworks.com/help/sm/ref/spatialcontactforce.html Spatial
 % Contact Force block> to model ground contact.
 % 
-% <matlab:open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track%20L','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'RollerPts','Track%20L/RollerPts'); Open Subsystem>
 
-set_param('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L','LinkStatus','none')
-open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L','force')
+set_param('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts','LinkStatus','none')
+open_system('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts','force')
 
 %% Rollers Subsystem
 %
@@ -61,11 +64,11 @@ open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L','force')
 % that is used to model contact with the ground.  The rollers and idlers
 % have point clouds whose radius includes the depth of the belt.
 %
-% <matlab:open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'RollerPts','Track%20L/RollerPts/Undercarriage/Rollers'); Open Subsystem>
 
-set_param('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Undercarriage','LinkStatus','none')
-set_param('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Undercarriage/Rollers','LinkStatus','none')
-open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Undercarriage/Rollers','force')
+set_param('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts/Undercarriage','LinkStatus','none')
+set_param('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts/Undercarriage/Rollers','force')
 
 %% Lower Roller Subsystem
 %
@@ -74,23 +77,23 @@ open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Undercarriage/Rolle
 % contact with the ground, and a visual element to animate the part
 % spinning in the model.
 %
-% <matlab:open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track%20L/Undercarriage/Rollers/Roller%20Lower%201','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'RollerPts','Track%20L/RollerPts/Undercarriage/Rollers/Roller%20Lower%201'); Open Subsystem>
 
-set_param('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Undercarriage/Rollers/Roller Lower 1','LinkStatus','none')
-open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Undercarriage/Rollers/Roller Lower 1','force')
+set_param('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts/Undercarriage/Rollers/Roller Lower 1','LinkStatus','none')
+open_system('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts/Undercarriage/Rollers/Roller Lower 1','force')
 
 
 %% Track Subsystem
 %
 % The track is modeled as a solid. It provides a visual indication of where
-% the track segements would be.  It also includes mass and inertia
+% the track segments would be.  It also includes mass and inertia
 % properties which can be parameterized to match the full set of belt
 % segments.
 %
-% <matlab:open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track%20L/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt1_IdlerArm_i2u0r3',{'Track%20L'},'RollerPts','Track%20L/RollerPts/Track'); Open Subsystem>
 
-set_param('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Track','LinkStatus','none')
-open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Track','force')
+set_param('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts/Track','LinkStatus','none')
+open_system('sm_trackV_belt1_IdlerArm_i2u0r3/Track L/RollerPts/Track','force')
 
 %% Simulation Results: Terrain Test
 %%
@@ -105,14 +108,15 @@ open_system('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Track L/Track','force')
 stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
 Trac = sm_trackV_belt_param_machine_seg45i2u0r3_IdlerArm;
-set_param('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Scene','LabelModeActiveChoice','Terrain');
-set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+set_param('sm_trackV_belt1_IdlerArm_i2u0r3/Scene','LabelModeActiveChoice','Terrain');
+sm_trackV_measure_loads([bdroot '/Track L'],'Constraint Force')
 
-sim('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');
+sim('sm_trackV_belt1_IdlerArm_i2u0r3');
+sm_trackV_measure_loads([bdroot '/Track L'],'Actuator Torque')
 
-sm_excv_track_plot1loc(simlog_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot2trq(simlog_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,'magnitude');
+sm_excv_track_plot1loc(simlog_sm_trackV_belt1_IdlerArm_i2u0r3,logsout_sm_trackV_belt1_IdlerArm_i2u0r3);
+sm_excv_track_plot2trq(simlog_sm_trackV_belt1_IdlerArm_i2u0r3);
+sm_excv_track_plot3fcroller(logsout_sm_trackV_belt1_IdlerArm_i2u0r3,'magnitude');
 
 %% Simulation Results: Slope Test
 %%
@@ -128,16 +132,16 @@ sm_excv_track_plot3fcroller(logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,'mag
 Grid_Surface_Data_Slope(25, 9, 7.5, 1.5, 5, 0.5, 'plot');
 
 Trac = sm_trackV_belt_param_machine_seg45i2u0r3_IdlerArm;
-set_param('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld/Scene','LabelModeActiveChoice','Slope');
-set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+set_param('sm_trackV_belt1_IdlerArm_i2u0r3/Scene','LabelModeActiveChoice','Slope');
+sm_trackV_measure_loads([bdroot '/Track L'],'Constraint Force')
 
-sim('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');
-
-sm_excv_track_plot1loc(simlog_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot2trq(simlog_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_trackV_roller1_IdlerArm_i2u0r3_ptcld,'magnitude');
+sim('sm_trackV_belt1_IdlerArm_i2u0r3');
+sm_trackV_measure_loads([bdroot '/Track L'],'Actuator Torque')
+sm_excv_track_plot1loc(simlog_sm_trackV_belt1_IdlerArm_i2u0r3,logsout_sm_trackV_belt1_IdlerArm_i2u0r3);
+sm_excv_track_plot2trq(simlog_sm_trackV_belt1_IdlerArm_i2u0r3);
+sm_excv_track_plot3fcroller(logsout_sm_trackV_belt1_IdlerArm_i2u0r3,'magnitude');
 
 %%
 
 close all
-bdclose('sm_trackV_roller1_IdlerArm_i2u0r3_ptcld');
+bdclose('sm_trackV_belt1_IdlerArm_i2u0r3');

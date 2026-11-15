@@ -1,9 +1,9 @@
 function [newChain2RollerSetFile, newChain2RollerSetSub] = genTVchain_chain2rollerset(nSegs,nRollers,rollerSetRefBlock)
 
 %% Source files: Copy to new location and modify
-refChain2RollerSetFile = 'sm_trackV_lib_chain_contact_s46r9';
+refChain2RollerSetFile = 'sm_trackV_lib_chain_contact';
 % Reference subsystem to be modified
-refChain2RollerSetSub = sprintf('CF Chain46\nRollers9');
+refChain2RollerSetSub = sprintf('CF Chain\nRollers');
 
 % Save Contacts under new name
 [d, f, e] = fileparts(which(refChain2RollerSetFile));
@@ -21,6 +21,8 @@ dpat = extract(refChain2RollerSetSub,digitsPattern);
 newChain2RollerSetSubC = strrep(refChain2RollerSetSub,dpat{1},num2str(nSegs));
 newChain2RollerSetSub = strrep(newChain2RollerSetSubC,dpat{2},num2str(nRollers));
 set_param([newChain2RollerSetFile '/' refChain2RollerSetSub],'Name',newChain2RollerSetSub)
+
+%{
 
 % 1. Delete all lines connected to contact force elements
 % 2. Delete all contact force elements except "CF Chain Roller R1"
@@ -99,6 +101,7 @@ for i=1:nRollers
 end
 
 %% Save file
+%}
 save_system(newChain2RollerSetFile)
 bdclose(newChain2RollerSetFile)
 end

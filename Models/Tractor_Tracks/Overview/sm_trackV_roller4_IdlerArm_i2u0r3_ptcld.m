@@ -21,11 +21,19 @@
 %
 % In this example, four tracks are modeled along with the chassis. 
 %
-% <matlab:open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld'); Open Model>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'RollerPts',''); Open Model>
 
-open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3')
 
-set_param(find_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_trackV_belt4_IdlerArm_i2u0r3','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL','popup_trackModel','Rollers, Points');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FR','popup_trackModel','Rollers, Points');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track RL','popup_trackModel','Rollers, Points');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track RR','popup_trackModel','Rollers, Points');
+sm_trackV_measure_loads('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL','Actuator Torque')
+sm_trackV_measure_loads('sm_trackV_belt4_IdlerArm_i2u0r3/Track FR','Actuator Torque')
+sm_trackV_measure_loads('sm_trackV_belt4_IdlerArm_i2u0r3/Track RL','Actuator Torque')
+sm_trackV_measure_loads('sm_trackV_belt4_IdlerArm_i2u0r3/Track RR','Actuator Torque')
 
 %% Track Subsystem
 %
@@ -39,10 +47,10 @@ set_param(find_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld','FindAll', 'on',
 % <https://www.mathworks.com/help/sm/ref/spatialcontactforce.html Spatial
 % Contact Force block> to model ground contact.
 % 
-% <matlab:open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track%20L','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'RollerPts','Track%20FL/RollerPts'); Open Subsystem>
 
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL','LinkStatus','none')
-open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts','force')
 
 %% Rollers Subsystem
 %
@@ -59,11 +67,11 @@ open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL','force')
 % that is used to model contact with the ground.  The rollers and idlers
 % have point clouds whose radius includes the depth of the track.
 %
-% <matlab:open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'RollerPts','Track%20FL/RollerPts/Undercarriage/Rollers'); Open Subsystem>
 
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage','LinkStatus','none')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage/Rollers','LinkStatus','none')
-open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage/Rollers','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts/Undercarriage','LinkStatus','none')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts/Undercarriage/Rollers','force')
 
 %% Lower Roller Subsystem
 %
@@ -72,23 +80,33 @@ open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage/Roll
 % contact with the ground, and a visual element to animate the part
 % spinning in the model.
 %
-% <matlab:open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track%20L/Undercarriage/Rollers/Roller%20Lower%201','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'RollerPts','Track%20FL/RollerPts/Undercarriage/Rollers/Roller%20Lower%201s'); Open Subsystem>
 
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage/Rollers/Roller Lower 1','LinkStatus','none')
-open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage/Rollers/Roller Lower 1','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts/Undercarriage/Rollers/Roller Lower 1','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts/Undercarriage/Rollers/Roller Lower 1','force')
 
 
 %% Track Subsystem
 %
 % The track is modeled as a solid. It provides a visual indication of where
-% the track segements would be.  It also includes mass and inertia
+% the track segments would be.  It also includes mass and inertia
 % properties which can be parameterized to match the full set of track
 % segments.
 %
-% <matlab:open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track%20L/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'RollerPts','Track%20FL/RollerPts/Track'); Open Subsystem>
 
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Track','LinkStatus','none')
-open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Track','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts/Track','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/RollerPts/Track','force')
+
+%% Chassis Subsystem
+%
+% The chassis can articulate. A Revolute Joint connecting the front and
+% rear can bend. 
+%
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'RollerPts','Chassis'); Open Subsystem>
+
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Chassis','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Chassis','force')
 
 %% Simulation Results: Terrain Test
 %%
@@ -102,19 +120,19 @@ open_system('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL/Track','force')
 
 stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Scene','LabelModeActiveChoice','Terrain');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Scene','LabelModeActiveChoice','Terrain');
 set_param([bdroot '/Steer On'],'Gain','1')
-set_param([bdroot '/Track FL'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track FR'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track RL'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track RR'],'popup_sense_roller','Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FR'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RR'],'Actuator Torque')
 
 set_param(bdroot,'StopTime','14')
-sim('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');
+sim('sm_trackV_belt4_IdlerArm_i2u0r3');
 
-sm_excv_track_plot1loc(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld,logsout_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot2trq(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot4xy(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
+sm_excv_track_plot1loc(simlog_sm_trackV_belt4_IdlerArm_i2u0r3,logsout_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot2trq(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot4xy(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
 
 %% Simulation Results: Slope Test
 %%
@@ -129,21 +147,48 @@ sm_excv_track_plot4xy(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
 
 Grid_Surface_Data_Slope(25, 9, 7.5, 1.5, 5, 0.5, 'plot');
 
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Scene','LabelModeActiveChoice','Slope');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Scene','LabelModeActiveChoice','Slope');
 set_param([bdroot '/Steer On'],'Gain','0')
-set_param([bdroot '/Track FL'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track FR'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track RL'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track RR'],'popup_sense_roller','Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FR'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RR'],'Actuator Torque')
 
 set_param(bdroot,'StopTime','14')
-sim('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');
+sim('sm_trackV_belt4_IdlerArm_i2u0r3');
 
-sm_excv_track_plot1loc(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld,logsout_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot2trq(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
+sm_excv_track_plot1loc(simlog_sm_trackV_belt4_IdlerArm_i2u0r3,logsout_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot2trq(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
 
 
-%% Simulation Results: Plane Test
+%% Simulation Results: Plane Test, Articulated Steering
+%%
+%
+% Below are the simulation results from a test where the track is driven on
+% a flat plane. Steering is accomplished by articulating the chassis , and
+% the drive speed of all four tracks are modified based on the steering
+% angle so that the tractor drives in a circular curve.
+%
+
+set_param([bdroot '/Steer On'],'Gain','1')
+set_param([bdroot '/Steering'],'popup_steering','Articulation');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Scene','LabelModeActiveChoice','Plane');
+sm_trackV_measure_loads([bdroot '/Track FL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FR'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RR'],'Actuator Torque')
+
+set_param(bdroot,'StopTime','32')
+sim('sm_trackV_belt4_IdlerArm_i2u0r3');
+
+sm_excv_track_plot1loc(simlog_sm_trackV_belt4_IdlerArm_i2u0r3,logsout_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot2trq(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot4xy(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
+
+simlog_px_art = simlog_sm_trackV_belt4_IdlerArm_i2u0r3.Assembly_to_World.Px.p.series.values;
+simlog_py_art = simlog_sm_trackV_belt4_IdlerArm_i2u0r3.Assembly_to_World.Py.p.series.values;
+
+%% Simulation Results: Plane Test, Ackermann Steering
 %%
 %
 % Below are the simulation results from a test where the track is driven on
@@ -153,18 +198,32 @@ sm_excv_track_plot2trq(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
 %
 
 set_param([bdroot '/Steer On'],'Gain','1')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Scene','LabelModeActiveChoice','Plane');
-set_param([bdroot '/Track FL'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track FR'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track RL'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track RR'],'popup_sense_roller','Actuator Torque')
+set_param([bdroot '/Steering'],'popup_steering','Ackermann');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Scene','LabelModeActiveChoice','Plane');
+sm_trackV_measure_loads([bdroot '/Track FL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FR'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RR'],'Actuator Torque')
 
 set_param(bdroot,'StopTime','32')
-sim('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');
+sim('sm_trackV_belt4_IdlerArm_i2u0r3');
 
-sm_excv_track_plot1loc(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld,logsout_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot2trq(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot4xy(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
+sm_excv_track_plot1loc(simlog_sm_trackV_belt4_IdlerArm_i2u0r3,logsout_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot2trq(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot4xy(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
+
+simlog_px_ack = simlog_sm_trackV_belt4_IdlerArm_i2u0r3.Assembly_to_World.Px.p.series.values;
+simlog_py_ack = simlog_sm_trackV_belt4_IdlerArm_i2u0r3.Assembly_to_World.Py.p.series.values;
+
+figure(999)
+plot(simlog_px_art,simlog_py_art,'LineWidth',1,'DisplayName','Articulated')
+hold on
+plot(simlog_px_ack,simlog_py_ack,'LineWidth',1,'DisplayName','Ackermann')
+hold off
+title('Tractor Path')
+xlabel('Position (m)');
+ylabel('Position (m)');
+axis equal
 
 %% Simulation Results: Static Load Test
 %%
@@ -175,20 +234,23 @@ sm_excv_track_plot4xy(simlog_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld);
 % location).  Note that measuring the roller loads does not take into
 % account any mass below the roller.
 
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Vehicle Speed','LabelModeActiveChoice','None')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Scene',       'LabelModeActiveChoice','Slope');
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL','popup_sense_roller','Constraint Force')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FR','popup_sense_roller','Constraint Force')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track RL','popup_sense_roller','Constraint Force')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track RR','popup_sense_roller','Constraint Force')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Steer On','Gain','0');
-sim('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FL','popup_sense_roller','Actuator Torque')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track FR','popup_sense_roller','Actuator Torque')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track RL','popup_sense_roller','Actuator Torque')
-set_param('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld/Track RR','popup_sense_roller','Actuator Torque')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Vehicle Speed','LabelModeActiveChoice','None')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Scene',       'LabelModeActiveChoice','Slope');
 
-fcR = sm_excv_track_plot3fcroller(logsout_sm_trackV_roller4_IdlerArm_i2u0r3_ptcld,'vertical');
+sm_trackV_measure_loads([bdroot '/Track FL'],'Constraint Force')
+sm_trackV_measure_loads([bdroot '/Track FR'],'Constraint Force')
+sm_trackV_measure_loads([bdroot '/Track RL'],'Constraint Force')
+sm_trackV_measure_loads([bdroot '/Track RR'],'Constraint Force')
+
+
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Steer On','Gain','0');
+sim('sm_trackV_belt4_IdlerArm_i2u0r3');
+sm_trackV_measure_loads([bdroot '/Track FL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FR'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RR'],'Actuator Torque')
+
+fcR = sm_excv_track_plot3fcroller(logsout_sm_trackV_belt4_IdlerArm_i2u0r3,'vertical');
 close(gcf)
 sm_excv_track_plot5fcrollerFinal('sm_trackV_belt2_IdlerArm_i2u0r3_ptcld', fcR);
 
@@ -196,4 +258,4 @@ sm_excv_track_plot5fcrollerFinal('sm_trackV_belt2_IdlerArm_i2u0r3_ptcld', fcR);
 %%
 
 close all
-bdclose('sm_trackV_roller4_IdlerArm_i2u0r3_ptcld');
+bdclose('sm_trackV_belt4_IdlerArm_i2u0r3');

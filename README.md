@@ -1,5 +1,5 @@
 # **Tracked Vehicle Model with Simscape&trade;**
-Copyright 2024 The MathWorks, Inc.
+Copyright 2024-2026 The MathWorks, Inc.
 
 This repository contains models and code to help engineers model and simulate 
 tracked vehicles with chain or belt tracks. A set of examples shows how to 

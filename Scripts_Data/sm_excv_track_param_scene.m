@@ -24,6 +24,22 @@ Scene.Road.Rod.offsety  = 0; % m
 Scene.Road.Rod.offsetz  = 0.75*2.54/100; % m
 Scene.Road.Rod.qz       = 0; % deg
 
+%% Scene Road with BumpTrap
+Scene.Road.BumpTrap.extr = flipud([ ...
+    -0.07 0.00;
+    -0.06 0.08;
+    -0.04 0.10;
+     0.04 0.10;
+     0.06 0.08;
+     0.07 0.00]);
+
+Scene.Road.Bump.wid      = 1.2;
+Scene.Road.Bump.hgt      = 0.05;
+Scene.Road.Bump.startx   = 5;
+Scene.Road.Bump.deltax   = 1.75;
+Scene.Road.Bump.offsety  = 1.10;
+Scene.Road.Bump.offsetz  = 0;
+
 
 %% Scene Hills
 Scene.Terrain = stl_to_gridsurface('hills_terrain.stl',100,100,'n');

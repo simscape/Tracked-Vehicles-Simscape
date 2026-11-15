@@ -15,11 +15,15 @@
 %
 % In this example, both tracks are modeled along with the chassis of excavator.
 %
-% <matlab:open_system('sm_excv_track2_ptcld'); Open Model>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'ChainPts',''); Open Model>
 
-open_system('sm_excv_track2_ptcld')
+open_system('sm_excv_track2')
 
-set_param(find_system('sm_excv_track2_ptcld','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_excv_track2','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param('sm_excv_track2/Track L','popup_trackModel','Chain, Points');
+set_param('sm_excv_track2/Track R','popup_trackModel','Chain, Points');
+sm_trackV_measure_loads('sm_excv_track2/Track L','Actuator Torque')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Actuator Torque')
 
 %% Track Subsystem
 %
@@ -47,10 +51,10 @@ set_param(find_system('sm_excv_track2_ptcld','FindAll', 'on','type','annotation'
 % block Transform Half Seg Angle orients the interface frame so that the
 % two chain segments attached to that pin will wrap around the sprocket. 
 %
-% <matlab:open_system('sm_excv_track2_ptcld');open_system('sm_excv_track2_ptcld/Track%20L','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'ChainPts','Track%20L/ChainPts'); Open Subsystem>
 
-set_param('sm_excv_track2_ptcld/Track L','LinkStatus','none')
-open_system('sm_excv_track2_ptcld/Track L','force')
+set_param('sm_excv_track2/Track L/ChainPts','LinkStatus','none')
+open_system('sm_excv_track2/Track L/ChainPts','force')
 
 %% Rollers Subsystem
 %
@@ -68,11 +72,11 @@ open_system('sm_excv_track2_ptcld/Track L','force')
 % that is used to model contact between the rollers, idler, and sprocket to
 % the chain.
 %
-% <matlab:open_system('sm_excv_track2_ptcld');open_system('sm_excv_track2_ptcld/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'ChainPts','Track%20L/ChainPts/Undercarriage/Rollers'); Open Subsystem>
 
-set_param('sm_excv_track2_ptcld/Track L/Undercarriage','LinkStatus','none')
-set_param('sm_excv_track2_ptcld/Track L/Undercarriage/Rollers','LinkStatus','none')
-open_system('sm_excv_track2_ptcld/Track L/Undercarriage/Rollers','force')
+set_param('sm_excv_track2/Track L/ChainPts/Undercarriage','LinkStatus','none')
+set_param('sm_excv_track2/Track L/ChainPts/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_excv_track2/Track L/ChainPts/Undercarriage/Rollers','force')
 
 %% Track Subsystem
 %
@@ -81,10 +85,10 @@ open_system('sm_excv_track2_ptcld/Track L/Undercarriage/Rollers','force')
 % assigned in the mask to ensure the track meshes with the sprocket and
 % wraps loosely around the rollers and idler.
 %
-% <matlab:open_system('sm_excv_track2_ptcld');open_system('sm_excv_track2_ptcld/Track%20L/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'ChainPts','Track%20L/ChainPts/Track'); Open Subsystem>
 
-set_param('sm_excv_track2_ptcld/Track L/Track','LinkStatus','none')
-open_system('sm_excv_track2_ptcld/Track L/Track','force')
+set_param('sm_excv_track2/Track L/ChainPts/Track','LinkStatus','none')
+open_system('sm_excv_track2/Track L/ChainPts/Track','force')
 
 %% Track Segment Subsystem
 %
@@ -109,10 +113,10 @@ open_system('sm_excv_track2_ptcld/Track L/Track','force')
 % 
 % <<sm_excv_contact_trackSeg_PtcldAll_Overview.png>>
 %
-% <matlab:open_system('sm_excv_track2_ptcld');open_system('sm_excv_track2_ptcld/Track%20L/Track/Seg%2001','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2',{'Track%20L','Track%20R'},'ChainPts','Track%20L/ChainPts/Track/Seg%2001'); Open Subsystem>
 
-set_param('sm_excv_track2_ptcld/Track L/Track/Seg 01','LinkStatus','none')
-open_system('sm_excv_track2_ptcld/Track L/Track/Seg 01','force')
+set_param('sm_excv_track2/Track L/ChainPts/Track/Seg 01','LinkStatus','none')
+open_system('sm_excv_track2/Track L/ChainPts/Track/Seg 01','force')
 
 
 %% Simulation Results: Terrain Test
@@ -128,16 +132,16 @@ open_system('sm_excv_track2_ptcld/Track L/Track/Seg 01','force')
 
 stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
-set_param('sm_excv_track2_ptcld/Scene','LabelModeActiveChoice','Terrain');
+set_param('sm_excv_track2/Scene','LabelModeActiveChoice','Terrain');
 Excv.Shoe.ground_contact.ptcld.pts = Excv.Shoe.ptcld_sets.plate;
-set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
-set_param([bdroot '/Track R'],'popup_sense_roller','Constraint Force')
+sm_trackV_measure_loads('sm_excv_track2/Track L','Constraint Force')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Constraint Force')
 
-sim('sm_excv_track2_ptcld');
+sim('sm_excv_track2');
 
-sm_excv_track_plot1loc(simlog_sm_excv_track2_ptcld,logsout_sm_excv_track2_ptcld);
-sm_excv_track_plot2trq(simlog_sm_excv_track2_ptcld);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track2_ptcld,'magnitude');
+sm_excv_track_plot1loc(simlog_sm_excv_track2,logsout_sm_excv_track2);
+sm_excv_track_plot2trq(simlog_sm_excv_track2);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track2,'magnitude');
 
 %% Simulation Results: Static Load Test
 %
@@ -147,19 +151,19 @@ sm_excv_track_plot3fcroller(logsout_sm_excv_track2_ptcld,'magnitude');
 % location).  Note that measuring the roller loads does not take into
 % account any mass below the roller.
 
-set_param('sm_excv_track2_ptcld/Track Speeds','LabelModeActiveChoice','None')
-set_param('sm_excv_track2_ptcld/Scene',       'LabelModeActiveChoice','Road');
-set_param('sm_excv_track2_ptcld/Track L','popup_sense_roller','Constraint Force')
-set_param('sm_excv_track2_ptcld/Track R','popup_sense_roller','Constraint Force')
-sim('sm_excv_track2_ptcld')
-set_param('sm_excv_track2_ptcld/Track L','popup_sense_roller','Actuator Torque')
-set_param('sm_excv_track2_ptcld/Track R','popup_sense_roller','Actuator Torque');
+set_param('sm_excv_track2/Track Speeds','LabelModeActiveChoice','None')
+set_param('sm_excv_track2/Scene',       'LabelModeActiveChoice','Road');
+sm_trackV_measure_loads('sm_excv_track2/Track L','Constraint Force')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Constraint Force')
+sim('sm_excv_track2')
+sm_trackV_measure_loads('sm_excv_track2/Track L','Actuator Torque')
+sm_trackV_measure_loads('sm_excv_track2/Track R','Actuator Torque')
 
-fcR = sm_excv_track_plot3fcroller(logsout_sm_excv_track2_ptcld,'vertical');
+fcR = sm_excv_track_plot3fcroller(logsout_sm_excv_track2,'vertical');
 close(gcf)
-sm_excv_track_plot5fcrollerFinal('sm_excv_track2_ptcld', fcR);
+sm_excv_track_plot5fcrollerFinal('sm_excv_track2', fcR);
 
 %%
 
 close all
-bdclose('sm_excv_track2_ptcld');
+bdclose('sm_excv_track2');

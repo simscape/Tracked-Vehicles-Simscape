@@ -7,9 +7,9 @@ This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
       -->
 <title>Excavator Track (Single, Two Idler) Suspended in Air</title>
-<meta name="generator" content="MATLAB 26.1">
+<meta name="generator" content="MATLAB 26.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2026-04-23">
+<meta name="DC.date" content="2026-11-14">
 <meta name="DC.source" content="sm_excv_trackI2R4_1_float.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -124,19 +124,19 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <img vspace="5" hspace="5" src="sm_excv_contact_sprocketToChain_Overview.png" alt=""> </p>
 <p>The Planar Track joint positions one of the chain pins at a gap between the sprocket teeth which is positioned facing the rear of the track. Joint targets applied to the track segments helps it to mesh with other teeth on the sprocket and loosely wrap around the rollers and idler. The block Transform Half Seg Angle orients the interface frame so that the two chain segments attached to that pin will wrap around the sprocket.</p>
 <p>
-<a href="matlab:open_system('sm_excv_trackI2R4_1_float');open_system('sm_excv_trackI2R4_1_float/Track%20L','force');">Open Subsystem</a>
+<a href="matlab:sm_trackV_open_model('sm_excv_trackI2R4_1_float','','','Track%20L');">Open Subsystem</a>
 </p>
 <img vspace="5" hspace="5" src="sm_excv_trackI2R4_1_float_02.png" alt=""> <h2 id="3">Rollers Subsystem</h2>
 <p>This subsystem models the rollers, idler, and sprocket. They each can rotate around shafts attached to the lower frame. A spring is included in the Prismatic Tensioner joint that pushes the idler against the chain to maintain tension.</p>
 <p>The sprocket joint interfaces to 1D mechanical rotational port. This represents a mechanical shaft connection to the sprocket. It can be attached to Simscape models of gears, hydrostatic transmissions, and electric motors.</p>
 <p>The bus of connections at port R contains the connections to the geometry that is used to model contact between the rollers, idler, and sprocket to the chain.</p>
 <p>
-<a href="matlab:open_system('sm_excv_trackI2R4_1_float');open_system('sm_excv_trackI2R4_1_float/Track%20L/Undercarriage/Rollers','force');">Open Subsystem</a>
+<a href="matlab:sm_trackV_open_model('sm_excv_trackI2R4_1_float','','','Track%20L/Undercarriage/Rollers');">Open Subsystem</a>
 </p>
 <img vspace="5" hspace="5" src="sm_excv_trackI2R4_1_float_03.png" alt=""> <h2 id="4">Track Subsystem</h2>
 <p>A set of track segments are joined using Revolute Joints to model the track. The joints are contained in each segment. Joint targets are assigned in the mask to ensure the track meshes with the sprocket and wraps loosely around the rollers and idler.</p>
 <p>
-<a href="matlab:open_system('sm_excv_trackI2R4_1_float');open_system('sm_excv_trackI2R4_1_float/Track%20L/Track','force');">Open Subsystem</a>
+<a href="matlab:sm_trackV_open_model('sm_excv_trackI2R4_1_float','','','Track%20L/Track');">Open Subsystem</a>
 </p>
 <img vspace="5" hspace="5" src="sm_excv_trackI2R4_1_float_04.png" alt=""> <h2 id="5">Track Segment Subsystem</h2>
 <p>Each track segment is composed of a chain link and a shoe. To streamline the contact force calculation, simpler geometry is connected to the Spatial Contact Force block.</p>
@@ -150,14 +150,14 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <p>
 <img vspace="5" hspace="5" src="sm_excv_contact_trackSeg_PtcldAll_Overview.png" alt=""> </p>
 <p>
-<a href="matlab:open_system('sm_excv_trackI2R4_1_float');open_system('sm_excv_trackI2R4_1_float/Track%20L/Track/Seg%2001','force');">Open Subsystem</a>
+<a href="matlab:sm_trackV_open_model('sm_excv_trackI2R4_1_float','','','Track%20L/Track/Seg%2001');">Open Subsystem</a>
 </p>
 <img vspace="5" hspace="5" src="sm_excv_trackI2R4_1_float_05.png" alt=""> <h2 id="6">Simulation Results</h2>
 <p>Below are the simulation results from a test where the sprocket is driven as the track is suspended in the air. To help keep the track taut around the rollers, gravity is applied from the idler to the grouser.</p>
-<pre class="codeoutput">Elapsed Sim Time = 103.3394
+<pre class="codeoutput">Elapsed Sim Time = 36.6795
 </pre>
 <img vspace="5" hspace="5" src="sm_excv_trackI2R4_1_float_06.png" alt=""> <p class="footer">Copyright 2023-2026 The MathWorks, Inc.<br>
-<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026a</a>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026b</a>
 <br>
 </p>
 </div>
@@ -188,7 +188,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 open_system('sm_excv_trackI2R4_1_float')
 
-set_param(find_system('sm_excv_trackI2R4_1_float','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_excv_trackI2R4_1_float','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
 
 %% Track Subsystem
 %
@@ -216,7 +216,7 @@ set_param(find_system('sm_excv_trackI2R4_1_float','FindAll', 'on','type','annota
 % block Transform Half Seg Angle orients the interface frame so that the
 % two chain segments attached to that pin will wrap around the sprocket. 
 %
-% <matlab:open_system('sm_excv_trackI2R4_1_float');open_system('sm_excv_trackI2R4_1_float/Track%20L','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_trackI2R4_1_float','','','Track%20L'); Open Subsystem>
 
 set_param('sm_excv_trackI2R4_1_float/Track L','LinkStatus','none')
 open_system('sm_excv_trackI2R4_1_float/Track L','force')
@@ -237,7 +237,7 @@ open_system('sm_excv_trackI2R4_1_float/Track L','force')
 % that is used to model contact between the rollers, idler, and sprocket to
 % the chain.
 %
-% <matlab:open_system('sm_excv_trackI2R4_1_float');open_system('sm_excv_trackI2R4_1_float/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_trackI2R4_1_float','','','Track%20L/Undercarriage/Rollers'); Open Subsystem>
 
 set_param('sm_excv_trackI2R4_1_float/Track L/Undercarriage','LinkStatus','none')
 set_param('sm_excv_trackI2R4_1_float/Track L/Undercarriage/Rollers','LinkStatus','none')
@@ -250,7 +250,7 @@ open_system('sm_excv_trackI2R4_1_float/Track L/Undercarriage/Rollers','force')
 % assigned in the mask to ensure the track meshes with the sprocket and
 % wraps loosely around the rollers and idler.
 %
-% <matlab:open_system('sm_excv_trackI2R4_1_float');open_system('sm_excv_trackI2R4_1_float/Track%20L/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_trackI2R4_1_float','','','Track%20L/Track'); Open Subsystem>
 
 set_param('sm_excv_trackI2R4_1_float/Track L/Track','LinkStatus','none')
 open_system('sm_excv_trackI2R4_1_float/Track L/Track','force')
@@ -268,7 +268,7 @@ open_system('sm_excv_trackI2R4_1_float/Track L/Track','force')
 %
 % <<sm_excv_contact_trackSeg_PtcldAll_Overview.png>>
 %
-% <matlab:open_system('sm_excv_trackI2R4_1_float');open_system('sm_excv_trackI2R4_1_float/Track%20L/Track/Seg%2001','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_trackI2R4_1_float','','','Track%20L/Track/Seg%2001'); Open Subsystem>
 
 set_param('sm_excv_trackI2R4_1_float/Track L/Track/Seg 01','LinkStatus','none')
 open_system('sm_excv_trackI2R4_1_float/Track L/Track/Seg 01','force')

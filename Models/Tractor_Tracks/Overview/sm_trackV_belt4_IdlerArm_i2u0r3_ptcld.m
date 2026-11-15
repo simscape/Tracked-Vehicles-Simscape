@@ -21,11 +21,20 @@
 %
 % In this example, four tracks are modeled along with the chassis. 
 %
-% <matlab:open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld'); Open Model>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'BeltPts',''); Open Model>
 
-open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3')
 
-set_param(find_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_trackV_belt4_IdlerArm_i2u0r3','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL','popup_trackModel','Belt, Points');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FR','popup_trackModel','Belt, Points');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track RL','popup_trackModel','Belt, Points');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track RR','popup_trackModel','Belt, Points');
+
+sm_trackV_measure_loads('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL','Actuator Torque');
+sm_trackV_measure_loads('sm_trackV_belt4_IdlerArm_i2u0r3/Track FR','Actuator Torque');
+sm_trackV_measure_loads('sm_trackV_belt4_IdlerArm_i2u0r3/Track RL','Actuator Torque');
+sm_trackV_measure_loads('sm_trackV_belt4_IdlerArm_i2u0r3/Track RR','Actuator Torque');
 
 %% Track Subsystem
 %
@@ -53,10 +62,10 @@ set_param(find_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld','FindAll', 'on','t
 % Transform Half Seg Angle orients the interface frame so that the two
 % chain segments attached to that pin will wrap around the sprocket.
 %
-% <matlab:open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track%20FL','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'BeltPts','Track%20FL/BeltPts'); Open Subsystem>
 
-set_param('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL','LinkStatus','none')
-open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts','force')
 
 % This subsystem models the rollers, idler, and sprocket.  They each can
 % rotate around shafts attached to the lower frame. A spring is included in
@@ -72,11 +81,11 @@ open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL','force')
 % that is used to model contact between the rollers, idler, and sprocket to
 % the chain.
 %
-% <matlab:open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track%20FL/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'BeltPts','Track%20FL/BeltPts/Undercarriage/Rollers'); Open Subsystem>
 
-set_param('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage','LinkStatus','none')
-set_param('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage/Rollers','LinkStatus','none')
-open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage/Rollers','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts/Undercarriage','LinkStatus','none')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts/Undercarriage/Rollers','force')
 
 
 %% Track Subsystem
@@ -86,10 +95,10 @@ open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Undercarriage/Roller
 % assigned in the mask to ensure the track meshes with the sprocket and
 % wraps loosely around the rollers and idler.
 %
-% <matlab:open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track%20FL/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'BeltPts','Track%20FL/BeltPts/Track'); Open Subsystem>
 
-set_param('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Track','LinkStatus','none')
-open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Track','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts/Track','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts/Track','force')
 
 %% Belt Segment Subsystem
 %
@@ -107,10 +116,10 @@ open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Track','force')
 % <<sm_belt_contact_trackSeg_Ptcld_Line_Overview.png>>
 %
 %
-% <matlab:open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track%20L/Track/Seg%2001','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'BeltPts','Track%20FL/BeltPts/Track/Seg%2001'); Open Subsystem>
 
-set_param('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Track/Seg 01','LinkStatus','none')
-open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Track/Seg 01','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts/Track/Seg 01','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Track FL/BeltPts/Track/Seg 01','force')
 
 %% Steering Subsystem
 %
@@ -119,10 +128,10 @@ open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Track FL/Track/Seg 01','force
 % based on no-slip travel is also calculated to help the tractor drive in a
 % circle at the target turning radius.
 %
-% <matlab:open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Steering','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_trackV_belt4_IdlerArm_i2u0r3',{'Track%20FL','Track%20FR','Track%20RL','Track%20RR'},'BeltPts','Steering'); Open Subsystem>
 
-set_param('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Steering','LinkStatus','none')
-open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Steering','force')
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Steering','LinkStatus','none')
+open_system('sm_trackV_belt4_IdlerArm_i2u0r3/Steering','force')
 
 
 %% Simulation Results: Terrain Test
@@ -137,21 +146,21 @@ open_system('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Steering','force')
 
 stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
-set_param('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld/Scene','LabelModeActiveChoice','Terrain');
+set_param('sm_trackV_belt4_IdlerArm_i2u0r3/Scene','LabelModeActiveChoice','Terrain');
 set_param([bdroot '/Steer On'],'Gain','1')
-set_param([bdroot '/Track FL'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track FR'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track RL'],'popup_sense_roller','Actuator Torque')
-set_param([bdroot '/Track RR'],'popup_sense_roller','Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track FR'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RL'],'Actuator Torque')
+sm_trackV_measure_loads([bdroot '/Track RR'],'Actuator Torque')
 
 set_param(bdroot,'StopTime','14')
-sim('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');
+sim('sm_trackV_belt4_IdlerArm_i2u0r3');
 
-sm_excv_track_plot1loc(simlog_sm_trackV_belt4_IdlerArm_i2u0r3_ptcld,logsout_sm_trackV_belt4_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot2trq(simlog_sm_trackV_belt4_IdlerArm_i2u0r3_ptcld);
-sm_excv_track_plot4xy(simlog_sm_trackV_belt4_IdlerArm_i2u0r3_ptcld);
+sm_excv_track_plot1loc(simlog_sm_trackV_belt4_IdlerArm_i2u0r3,logsout_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot2trq(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
+sm_excv_track_plot4xy(simlog_sm_trackV_belt4_IdlerArm_i2u0r3);
 
 %%
 
 close all
-%bdclose('sm_trackV_belt4_IdlerArm_i2u0r3_ptcld');
+bdclose('sm_trackV_belt4_IdlerArm_i2u0r3');

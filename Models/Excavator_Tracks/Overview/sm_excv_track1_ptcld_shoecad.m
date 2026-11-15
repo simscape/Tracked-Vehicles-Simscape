@@ -18,11 +18,13 @@
 % centered on the track.  This enables faster adjustments of the track
 % model which can then be mirrored to the second track.
 %
-% <matlab:open_system('sm_excv_track1_ptcld_shoecad'); Open Model>
+% <matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPtsCAD',''); Open Model>
 
-open_system('sm_excv_track1_ptcld_shoecad')
+open_system('sm_excv_track1')
 
-set_param(find_system('sm_excv_track1_ptcld_shoecad','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_excv_track1','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param('sm_excv_track1/Track L','popup_trackModel','Chain, Points, CAD');
+sm_trackV_measure_loads('sm_excv_track1/Track L','Actuator Torque')
 
 %% Track Subsystem
 %
@@ -50,10 +52,10 @@ set_param(find_system('sm_excv_track1_ptcld_shoecad','FindAll', 'on','type','ann
 % block Transform Half Seg Angle orients the interface frame so that the
 % two chain segments attached to that pin will wrap around the sprocket. 
 %
-% <matlab:open_system('sm_excv_track1_ptcld_shoecad');open_system('sm_excv_track1_ptcld_shoecad/Track%20L','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPtsCAD','Track%20L/ChainPtsCAD'); Open Model>
 
-set_param('sm_excv_track1_ptcld_shoecad/Track L','LinkStatus','none')
-open_system('sm_excv_track1_ptcld_shoecad/Track L','force')
+set_param('sm_excv_track1/Track L/ChainPtsCAD','LinkStatus','none')
+open_system('sm_excv_track1/Track L/ChainPtsCAD','force')
 
 %% Rollers Subsystem
 %
@@ -71,11 +73,11 @@ open_system('sm_excv_track1_ptcld_shoecad/Track L','force')
 % that is used to model contact between the rollers, idler, and sprocket to
 % the chain.
 %
-% <matlab:open_system('sm_excv_track1_ptcld_shoecad');open_system('sm_excv_track1_ptcld_shoecad/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPtsCAD','Track%20L/ChainPtsCAD/Undercarriage/Rollers'); Open Subsystem>
 
-set_param('sm_excv_track1_ptcld_shoecad/Track L/Undercarriage','LinkStatus','none')
-set_param('sm_excv_track1_ptcld_shoecad/Track L/Undercarriage/Rollers','LinkStatus','none')
-open_system('sm_excv_track1_ptcld_shoecad/Track L/Undercarriage/Rollers','force')
+set_param('sm_excv_track1/Track L/ChainPtsCAD/Undercarriage','LinkStatus','none')
+set_param('sm_excv_track1/Track L/ChainPtsCAD/Undercarriage/Rollers','LinkStatus','none')
+open_system('sm_excv_track1/Track L/ChainPtsCAD/Undercarriage/Rollers','force')
 
 %% Track Subsystem
 %
@@ -84,10 +86,10 @@ open_system('sm_excv_track1_ptcld_shoecad/Track L/Undercarriage/Rollers','force'
 % assigned in the mask to ensure the track meshes with the sprocket and
 % wraps loosely around the rollers and idler.
 %
-% <matlab:open_system('sm_excv_track1_ptcld_shoecad');open_system('sm_excv_track1_ptcld_shoecad/Track%20L/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPtsCAD','Track%20L/ChainPtsCAD/Track'); Open Subsystem>
 
-set_param('sm_excv_track1_ptcld_shoecad/Track L/Track','LinkStatus','none')
-open_system('sm_excv_track1_ptcld_shoecad/Track L/Track','force')
+set_param('sm_excv_track1/Track L/ChainPtsCAD/Track','LinkStatus','none')
+open_system('sm_excv_track1/Track L/ChainPtsCAD/Track','force')
 
 %% Track Segment Subsystem
 %
@@ -112,10 +114,10 @@ open_system('sm_excv_track1_ptcld_shoecad/Track L/Track','force')
 % 
 % <<sm_excv_contact_trackSeg_PtcldAll_Overview.png>>
 %
-% <matlab:open_system('sm_excv_track1_ptcld_shoecad');open_system('sm_excv_track1_ptcld_shoecad/Track%20L/Track/Seg%2001','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track1',{'Track%20L'},'ChainPtsCAD','Track%20L/ChainPtsCAD/Track/Seg%2001'); Open Subsystem>
 
-set_param('sm_excv_track1_ptcld_shoecad/Track L/Track/Seg 01','LinkStatus','none')
-open_system('sm_excv_track1_ptcld_shoecad/Track L/Track/Seg 01','force')
+set_param('sm_excv_track1/Track L/ChainPtsCAD/Track/Seg 01','LinkStatus','none')
+open_system('sm_excv_track1/Track L/ChainPtsCAD/Track/Seg 01','force')
 
 %% Track Shoe Subsystem
 %
@@ -129,8 +131,8 @@ open_system('sm_excv_track1_ptcld_shoecad/Track L/Track/Seg 01','force')
 % <matlab:web('ptcloud_workflow_trackShoe_createFromSTL.html') Extracting
 % Point Cloud from STL Geometry: Track Shoe>
 
-set_param('sm_excv_track1_ptcld_shoecad/Track L/Track/Seg 01/Shoe/CAD','LinkStatus','none')
-open_system('sm_excv_track1_ptcld_shoecad/Track L/Track/Seg 01/Shoe/CAD','force')
+set_param('sm_excv_track1/Track L/ChainPtsCAD/Track/Seg 01/Shoe/CAD','LinkStatus','none')
+open_system('sm_excv_track1/Track L/ChainPtsCAD/Track/Seg 01/Shoe/CAD','force')
 
 
 %% Simulation Results: Terrain Test
@@ -146,15 +148,15 @@ open_system('sm_excv_track1_ptcld_shoecad/Track L/Track/Seg 01/Shoe/CAD','force'
 
 stl_to_gridsurface('hills_terrain.stl',100,100,'plot');
 
-set_param('sm_excv_track1_ptcld_shoecad/Scene','LabelModeActiveChoice','Terrain');
+set_param('sm_excv_track1/Scene','LabelModeActiveChoice','Terrain');
 Excv.Shoe.ground_contact.ptcld.pts = Excv.Shoe.ptcld_sets.plate;
-set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+sm_trackV_measure_loads('sm_excv_track1/Track L','Constraint Force')
 
-sim('sm_excv_track1_ptcld_shoecad');
+sim('sm_excv_track1');
 
-sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld_shoecad,logsout_sm_excv_track1_ptcld_shoecad);
-sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld_shoecad);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad,'magnitude');
+sm_excv_track_plot1loc(simlog_sm_excv_track1,logsout_sm_excv_track1);
+sm_excv_track_plot2trq(simlog_sm_excv_track1);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1,'magnitude');
 
 %% Simulation Results: Flat Terrain with Obstacle
 %%
@@ -167,19 +169,20 @@ sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad,'magnitude');
 % For ground contact, points are distributed across the shoe plate and not
 % the grousers.  
 
-set_param('sm_excv_track1_ptcld_shoecad/Scene','LabelModeActiveChoice','Rod');
-set_param([bdroot '/Track L'],'ptcld_shoe','Excv.Shoe.ptcld_sets.cad_profile');
-set_param([bdroot '/Track L'],'popup_sense_roller','Constraint Force')
+set_param('sm_excv_track1/Scene','LabelModeActiveChoice','Rod');
+set_param([bdroot '/Track L/ChainPtsCAD'],'ptcld_shoe','Excv.Shoe.ptcld_sets.cad_profile');
+sm_trackV_measure_loads('sm_excv_track1/Track L','Constraint Force')
 set_param(bdroot,'StopTime','7')
 
-sim('sm_excv_track1_ptcld_shoecad');
+sim('sm_excv_track1');
+sm_trackV_measure_loads('sm_excv_track1/Track L','Actuator Torque')
 
-sm_excv_track_plot1loc(simlog_sm_excv_track1_ptcld_shoecad,logsout_sm_excv_track1_ptcld_shoecad);
-sm_excv_track_plot2trq(simlog_sm_excv_track1_ptcld_shoecad);
-sm_excv_track_plot3fcroller(logsout_sm_excv_track1_ptcld_shoecad,'magnitude');
+sm_excv_track_plot1loc(simlog_sm_excv_track1,logsout_sm_excv_track1);
+sm_excv_track_plot2trq(simlog_sm_excv_track1);
+sm_excv_track_plot3fcroller(logsout_sm_excv_track1,'magnitude');
 
 
 %%
 
 close all
-bdclose('sm_excv_track1_ptcld_shoecad');
+bdclose('sm_excv_track1');

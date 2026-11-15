@@ -1,8 +1,8 @@
 function [newTrackFile, newTrackSub] = genTVchain_track(nSegs,nIdler,nRollL,nRollU,...
-    newUnderc,newChain,newChainIdler,newChainSprocket,newChainRoller)
+    newUnderc,newChain)
 
 %% Source files: Copy to new location and modify
-refTrackFile = 'sm_trackV_lib_chain_lower_frame_s46i1u2l7';
+refTrackFile = 'sm_trackV_lib_chain_lower_frame_s46i1u2l7_ptcld';
 % Reference subsystem to be modified
 refTrackSub = sprintf('Track Contact Point Cloud');
 
@@ -32,12 +32,6 @@ bh_del = setdiff(bh_all,bh_tr);
 delete_block(bh_del)
 
 %% Replace subsystems
-set_param([newTrackFile '/' newTrackSub '/CF Chain Sprocket'],...
-    'ReferenceBlock',newChainSprocket)
-set_param([newTrackFile '/' newTrackSub '/CF Chain Rollers'],...
-    'ReferenceBlock',newChainRoller)
-set_param([newTrackFile '/' newTrackSub '/CF Chain Idler'],...
-    'ReferenceBlock',newChainIdler)
 set_param([newTrackFile '/' newTrackSub '/Undercarriage'],...
     'ReferenceBlock',newUnderc)
 set_param([newTrackFile '/' newTrackSub '/Track'],...

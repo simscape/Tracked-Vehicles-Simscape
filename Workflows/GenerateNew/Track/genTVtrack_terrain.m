@@ -30,6 +30,7 @@ for si = 1:length(refContactTerrainSub_list)
     newContactTerrainSub = strrep(refContactTerrainSub,dpat{1},num2str(nSegs));
     set_param([newContactTerrainFile '/' refContactTerrainSub],'Name',newContactTerrainSub)
 
+    %{
     % 1. Delete all lines connected to contact force elements
     % 2. Delete all contact force elements except first element
     f = Simulink.FindOptions('RegExp',true,'SearchDepth',1);
@@ -107,7 +108,7 @@ for si = 1:length(refContactTerrainSub_list)
         add_line([newContactTerrainFile '/' newContactTerrainSub],ph_ssbu.LConn(i),ph_cfi.RConn(1),'autorouting','on');
         add_line([newContactTerrainFile '/' newContactTerrainSub],ph_cpb.RConn(1),ph_cfi.LConn(1),'autorouting','on');
     end
-
+    %}
     % Fix Unresolved Links due to subsystem rename
     % findBlocks cannot find blocks with unresolved links - must check them all
     f = Simulink.FindOptions('LookUnderMasks','All','SearchDepth',-1);

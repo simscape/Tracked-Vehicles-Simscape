@@ -27,7 +27,8 @@
 
 open_system('sm_excv_track2_roller_sphere')
 
-set_param(find_system('sm_excv_track2_roller_sphere','FindAll', 'on','type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param(find_system('sm_excv_track2_roller_sphere','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+set_param([bdroot '/Track L'],'popup_sense_roller','Actuator Torque')
 
 %% Track Subsystem
 %
@@ -39,7 +40,7 @@ set_param(find_system('sm_excv_track2_roller_sphere','FindAll', 'on','type','ann
 % via a Simscape bus to <https://www.mathworks.com/help/sm/ref/spatialcontactforce.html Spatial Contact Force block> to model ground
 % contact.
 % 
-% <matlab:open_system('sm_excv_track2_roller_sphere');open_system('sm_excv_track2_roller_sphere/Track%20L','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2_roller_sphere','','','Track%20L'); Open Model>
 
 set_param('sm_excv_track2_roller_sphere/Track L','LinkStatus','none')
 open_system('sm_excv_track2_roller_sphere/Track L','force')
@@ -60,7 +61,7 @@ open_system('sm_excv_track2_roller_sphere/Track L','force')
 % that is used to model contact with the ground.  The rollers, sprocket,
 % and idler have point clouds whose radius includes the depth of the track.
 %
-% <matlab:open_system('sm_excv_track2_roller_sphere');open_system('sm_excv_track2_roller_sphere/Track%20L/Undercarriage/Rollers','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2_roller_sphere','','','Track%20L/Undercarriage/Rollers'); Open Model>
 
 set_param('sm_excv_track2_roller_sphere/Track L/Undercarriage','LinkStatus','none')
 set_param('sm_excv_track2_roller_sphere/Track L/Undercarriage/Rollers','LinkStatus','none')
@@ -73,7 +74,7 @@ open_system('sm_excv_track2_roller_sphere/Track L/Undercarriage/Rollers','force'
 % The spheres are positioned so that they touch the ground at the edges of
 % the track.
 %
-% <matlab:open_system('sm_excv_track2_roller_sphere');open_system('sm_excv_track2_roller_sphere/Track%20L/Undercarriage/Rollers/Roller%20Lower%201','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2_roller_sphere','','','Track%20L/Undercarriage/Rollers/Roller%20Lower%201'); Open Model>
 
 set_param('sm_excv_track2_roller_sphere/Track L/Undercarriage/Rollers/Roller Lower 1','LinkStatus','none')
 open_system('sm_excv_track2_roller_sphere/Track L/Undercarriage/Rollers/Roller Lower 1','force')
@@ -82,11 +83,11 @@ open_system('sm_excv_track2_roller_sphere/Track L/Undercarriage/Rollers/Roller L
 %% Track Subsystem
 %
 % The track is modeled as a solid. It provides a visual indication of where
-% the track segements would be.  It also includes mass and inertia
+% the track segments would be.  It also includes mass and inertia
 % properties which can be parameterized to match the full set of track
 % segments.
 %
-% <matlab:open_system('sm_excv_track2_roller_sphere');open_system('sm_excv_track2_roller_sphere/Track%20L/Track','force'); Open Subsystem>
+% <matlab:sm_trackV_open_model('sm_excv_track2_roller_sphere','','','Track%20L/Track'); Open Model>
 
 set_param('sm_excv_track2_roller_sphere/Track L/Track','LinkStatus','none')
 open_system('sm_excv_track2_roller_sphere/Track L/Track','force')
@@ -94,11 +95,11 @@ open_system('sm_excv_track2_roller_sphere/Track L/Track','force')
 %% Simulation Results: Flat Surface
 %%
 %
-% Below are the simulation results from a test where the track is driven
-% on a flat surface.  The terrain is defined using the 
-% <https://www.mathworks.com/help/sm/ref/infiniteplane.html. The tracks are
-% driven at different speeds so that the tracked vehicle can turn.
-% Infinite Plane block>. 
+% Below are the simulation results from a test where the track is driven on
+% a flat surface.  The terrain is defined using the
+% <https://www.mathworks.com/help/sm/ref/infiniteplane.html. Infinite Plane
+% block>. The tracks are driven at different speeds so that the tracked
+% vehicle can turn.
 
 Excv = sm_excv_track_param_machine;
 

@@ -28,24 +28,14 @@ assignin('base',['CBO_Chain' num2str(nSegs)],...
 [newFrameFile,  newFrameSub]   = genTVchain_frame(nRollL,nRollU,nIdler);
 [newUndercFile, newUndercSubs] = genTVchain_rollers(nRollL,nRollU,nIdler,newFrameFile,newFrameSub);
 [newChainFile,  newChainSubs]  = genTVchain_chain(nSegs);
-[newChainElemFile, newChain2ElemSub_list] = genTVchain_chain2element(nSegs);
-
-% Name of subsystem for chain to one roller contact
-newRollerSetRefBlock = [newChainElemFile '/' newChain2ElemSub_list{3}];
-
-% Create Components: Contact between chain and all rollers
-[newChain2RollerSetFile, newChain2RollerSetSub] = genTVchain_chain2rollerset(nSegs,(nRollL+nRollU),newRollerSetRefBlock);
 
 % Compose names of new components [file/subsystem]
 newUnderc        = [newUndercFile          '/' newUndercSubs];
 newChain         = [newChainFile           '/' newChainSubs];
-newChainIdler    = [newChainElemFile       '/' newChain2ElemSub_list{1}];
-newChainSprocket = [newChainElemFile       '/' newChain2ElemSub_list{2}];
-newChainRoller   = [newChain2RollerSetFile '/' newChain2RollerSetSub];
 
 % Swap new components into new track library
 [newTrackFile, newTrackSub]    = genTVchain_track(nSegs,nIdler,nRollL,nRollU,...
-    newUnderc,newChain,newChainIdler,newChainSprocket,newChainRoller);
+    newUnderc,newChain);
 
 %% Minimum adjustments to default Excv parameter set to enable simulation
 % May enable model to run, not tuned to a new design
@@ -89,11 +79,8 @@ Excv.Idler.Tensioner.x0 = tensioner_x0;
 sim(newMdlGenTargets)
 bdclose(newMdlGenTargets)
 
-%% Update terrain due to new number of segments
-[newContactTerrainFile, newContactTerrainSub] = genTVtrack_terrain(nSegs);
-
 %% Test new track by swapping it in single track model
-mdlname = 'sm_excv_track1_ptcld';
+mdlname = 'sm_excv_track1';
 open_system(mdlname)
 filesuff  = ['GEN_i' num2str(nIdler) 'u' num2str(nRollU) 'l' num2str(nRollL)];
 newTestModel = [mdlname '_' filesuff];
@@ -101,14 +88,7 @@ save_system(bdroot,newTestModel);
 
 % Swap in track
 set_param([bdroot '/Track L'],'ReferenceBlock',[newTrackFile '/' newTrackSub])
-
-% Swap in Terrain
-set_param([bdroot '/Scene/Grid Surface Terrain 1 Track'],...
-    'ReferenceBlock',[newContactTerrainFile '/Grid Surface Terrain 1 Track']);
-set_param([bdroot '/Scene/Road 1 Track'],...
-    'ReferenceBlock',[newContactTerrainFile '/Road 1 Track']);
-set_param([bdroot '/Scene/Grid Surface Slope 1 Track'],...
-    'ReferenceBlock',[newContactTerrainFile '/Grid Surface Slope 1 Track']);
+set_param([bdroot '/Track L'],'AttributesFormatString','%<popup_sense_roller>')
 
 % Test model
 %sim(bdroot)
