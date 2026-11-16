@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Info File="Scripts_Data/startup_sm_excv_track.m" GroupUUID="default" Icon="" Name="startup_sm_excv_track" Type="StartUp" Visible="0">
+    <Extension Name="StartUpPrev" Value="HEAD"/>
+</Info>

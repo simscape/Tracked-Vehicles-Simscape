@@ -1,4 +1,8 @@
 function sm_trackV_open_model(mdl,vntblk,vnt,blk)
+% Function to open model and configure variant.
+%
+% Used function to simplify maintenance of this operation as it is used in
+% hyperlinks within models, HTML doc, and HTML overview
 
 open_system(mdl);
 

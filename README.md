@@ -14,7 +14,7 @@ are also provided.
 * **MATLAB enables automation** of modeling, simulation, and post-processing tasks.
 * **Measure mechanical loads** on rollers and other components.
 
-Open the project file Tracked_Vehicle_Simscape.prj to get started.
+Open the project file Tracked_Vehicle.prj to get started.
 
 View on File Exchange: [![View Tracked Vehicle Model with Simscape™ on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/134861-tracked-vehicle-model-with-simscape)  
 You can also open in MATLAB Online: [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=simscape/Tracked-Vehicles-Simscape&project=Tracked_Vehicle_Simscape.prj)
