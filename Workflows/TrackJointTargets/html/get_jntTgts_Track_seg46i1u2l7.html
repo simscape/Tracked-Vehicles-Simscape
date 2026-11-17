@@ -7,9 +7,9 @@ This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
       -->
 <title>Generate Joint Targets for Chain Track (46 segments, 2 upper, 7 lower)</title>
-<meta name="generator" content="MATLAB 24.2">
+<meta name="generator" content="MATLAB 26.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2024-12-31">
+<meta name="DC.date" content="2026-11-17">
 <meta name="DC.source" content="get_jntTgts_Track_seg46i1u2l7.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -99,14 +99,54 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </div>
 <h2 id="1">Open and Configure Test Harness Model</h2>
 <p>A test harness model is provided that holds the sprocket in a fixed position. We swap in the track model for which we want to obtain a set of joint targets.</p>
+<pre class="codeinput">
+<span class="comment">% Load parameter structure and corresponding library block for track</span>
+Excv = sm_excv_track_param_machine;
+trackLibraryMdl   = <span class="string">'sm_trackV_lib_chain_lower_frame_s46i1u2l7_ptcld'</span>;
+trackLibraryBlock = [trackLibraryMdl <span class="string">'/Track Contact Point Cloud'</span>];
+load_system(trackLibraryMdl)
+
+<span class="comment">% Open test harness model, swap in new track</span>
+mdlgenTargets = <span class="string">'get_jntTgts_Track'</span>;
+open_system(mdlgenTargets)
+replace_block(bdroot,<span class="string">'Name'</span>,<span class="string">'Track'</span>,trackLibraryBlock,<span class="string">'noprompt'</span>)
+[suffixStr,suffixVals] = sm_excv_track_param2suffix(Excv,bdroot);
+
+newMdlGenTargets = [mdlgenTargets <span class="string">'_TEST_'</span> suffixStr];
+save_system(bdroot,newMdlGenTargets);
+</pre>
 <img vspace="5" hspace="5" src="get_jntTgts_Track_seg46i1u2l7_01.png" alt=""> <h2 id="2">Define Preliminary Set of Joint Targets</h2>
 <p>For the initial assembly, we need a set of joint targets that will enable the track to surround the sprocket, rollers, and idlers. The idler is fully retracted and a MATLAB script is used to create a preliminary set of targets that surrounds the components. This is good enough to get the model to assemble, but it would be a poor set of joint targets for simulation tests as the initial transient would be very harsh.</p>
 <p>
 <img vspace="5" hspace="5" src="get_jntTgts_Track_seg46i1u2l7_mechExp_prelim.png" alt=""> </p>
+<pre class="codeinput">
+<span class="comment">% Retract tensioner cylinder just to ensure chain surrounds it</span>
+default_Tensionerx0 = Excv.Idler.Tensioner.x0; <span class="comment">% Save default value</span>
+Excv.Idler.Tensioner.x0 = -2; <span class="comment">% Initial extension of cylinder</span>
+
+<span class="comment">% Create rough set of targets that hopefully surrounds rollers, idler</span>
+track_joint_targets = sm_excv_track_segTargets_forAsy(Excv.Chain.pin_sep, <span class="keyword">...</span>
+    Excv.Sprocket.sprocket_rPitch,suffixVals.nSegs);
+</pre>
 <h2 id="4">Simulate with Preliminary Targets</h2>
 <p>A simulation is run to let the chain settle. MATLAB is used to extract the final positions of the joints in the segmented track.</p>
 <p>
 <img vspace="5" hspace="5" src="get_jntTgts_Track_seg46i1u2l7_mechExp_final.png" alt=""> </p>
+<pre class="codeinput">
+<span class="comment">% Model holds sprocket still until chain settles</span>
+sim(newMdlGenTargets)
+
+<span class="comment">% Extract track segment joint targets, tensioner initial position</span>
+<span class="comment">% from simulation results</span>
+[track_joint_targets,tensioner_x0] = genTVchain_targets(simlog_getChainJointTargets);
+Excv.Idler.Tensioner.x0 = tensioner_x0;
+
+trackSegTgtFilename = [<span class="string">'track_joint_targets_'</span> suffixStr <span class="string">'.m'</span>];
+
+matlab.io.saveVariablesToScript(trackSegTgtFilename,<span class="string">'track_joint_targets'</span>);
+
+track_joint_targets
+</pre>
 <pre class="codeoutput">
 track_joint_targets =
 
@@ -115,53 +155,55 @@ track_joint_targets =
     {'on' }    {'Low'}    {[    32.8385]}
     {'on' }    {'Low'}    {[    32.8407]}
     {'on' }    {'Low'}    {[    32.6576]}
-    {'on' }    {'Low'}    {[     5.4470]}
-    {'on' }    {'Low'}    {[ 1.3277e-04]}
-    {'on' }    {'Low'}    {[     1.7589]}
-    {'on' }    {'Low'}    {[     0.8675]}
-    {'on' }    {'Low'}    {[-1.4634e-04]}
-    {'on' }    {'Low'}    {[-3.3658e-04]}
-    {'on' }    {'Low'}    {[-4.2940e-04]}
-    {'on' }    {'Low'}    {[-4.9705e-04]}
-    {'on' }    {'Low'}    {[-5.2970e-04]}
-    {'on' }    {'Low'}    {[-5.2132e-04]}
-    {'on' }    {'Low'}    {[-4.6966e-04]}
-    {'on' }    {'Low'}    {[-3.8011e-04]}
-    {'on' }    {'Low'}    {[-2.6621e-04]}
-    {'on' }    {'Low'}    {[ 4.6763e-05]}
-    {'on' }    {'Low'}    {[     1.1075]}
-    {'on' }    {'Low'}    {[     0.1245]}
-    {'on' }    {'Low'}    {[ 6.4867e-05]}
-    {'on' }    {'Low'}    {[    11.1152]}
-    {'on' }    {'Low'}    {[    30.3431]}
-    {'on' }    {'Low'}    {[    32.3566]}
+    {'on' }    {'Low'}    {[     5.4474]}
+    {'on' }    {'Low'}    {[-1.4926e-04]}
+    {'on' }    {'Low'}    {[     1.7562]}
+    {'on' }    {'Low'}    {[     0.8660]}
+    {'on' }    {'Low'}    {[ 1.8372e-04]}
+    {'on' }    {'Low'}    {[ 4.1239e-04]}
+    {'on' }    {'Low'}    {[ 5.2756e-04]}
+    {'on' }    {'Low'}    {[ 6.0857e-04]}
+    {'on' }    {'Low'}    {[ 6.4252e-04]}
+    {'on' }    {'Low'}    {[ 6.2505e-04]}
+    {'on' }    {'Low'}    {[ 5.5731e-04]}
+    {'on' }    {'Low'}    {[ 4.5037e-04]}
+    {'on' }    {'Low'}    {[ 3.2996e-04]}
+    {'on' }    {'Low'}    {[-9.2254e-06]}
+    {'on' }    {'Low'}    {[     1.1043]}
+    {'on' }    {'Low'}    {[     0.1238]}
+    {'on' }    {'Low'}    {[-2.7342e-05]}
+    {'on' }    {'Low'}    {[    11.1154]}
+    {'on' }    {'Low'}    {[    30.3433]}
+    {'on' }    {'Low'}    {[    32.3564]}
     {'on' }    {'Low'}    {[    31.2315]}
-    {'on' }    {'Low'}    {[    32.7074]}
-    {'on' }    {'Low'}    {[    29.2112]}
-    {'on' }    {'Low'}    {[     7.6812]}
-    {'on' }    {'Low'}    {[-3.9493e-05]}
-    {'on' }    {'Low'}    {[-4.2189e-05]}
-    {'on' }    {'Low'}    {[-3.4821e-05]}
-    {'on' }    {'Low'}    {[-3.2281e-05]}
-    {'on' }    {'Low'}    {[-2.2438e-05]}
-    {'on' }    {'Low'}    {[     3.4114]}
+    {'on' }    {'Low'}    {[    32.7076]}
+    {'on' }    {'Low'}    {[    29.2110]}
+    {'on' }    {'Low'}    {[     7.6811]}
+    {'on' }    {'Low'}    {[-6.8597e-06]}
+    {'on' }    {'Low'}    {[ 4.6244e-06]}
+    {'on' }    {'Low'}    {[ 2.7140e-06]}
+    {'on' }    {'Low'}    {[-5.9437e-06]}
+    {'on' }    {'Low'}    {[-1.8107e-05]}
+    {'on' }    {'Low'}    {[     3.4113]}
     {'on' }    {'Low'}    {[     0.4756]}
-    {'on' }    {'Low'}    {[-1.2501e-05]}
-    {'on' }    {'Low'}    {[-7.1543e-06]}
-    {'on' }    {'Low'}    {[-3.1816e-06]}
+    {'on' }    {'Low'}    {[ 1.9255e-06]}
+    {'on' }    {'Low'}    {[ 8.4297e-06]}
+    {'on' }    {'Low'}    {[ 3.9537e-06]}
     {'on' }    {'Low'}    {[     3.4032]}
     {'on' }    {'Low'}    {[     2.9598]}
-    {'on' }    {'Low'}    {[-2.8638e-06]}
-    {'on' }    {'Low'}    {[-2.2795e-06]}
-    {'off'}    {'Low'}    {[ 1.1558e-07]}
-    {'on' }    {'Low'}    {[-1.1779e-06]}
-    {'on' }    {'Low'}    {[     2.0157]}
+    {'on' }    {'Low'}    {[-7.9961e-07]}
+    {'on' }    {'Low'}    {[ 1.1319e-06]}
+    {'off'}    {'Low'}    {[ 1.1078e-07]}
+    {'on' }    {'Low'}    {[-2.4161e-06]}
+    {'on' }    {'Low'}    {[     2.0158]}
     {'on' }    {'Low'}    {[    32.6120]}
     {'on' }    {'Low'}    {[    32.8373]}
 
 </pre>
+<pre class="codeinput">bdclose(newMdlGenTargets)
+</pre>
 <p class="footer">Copyright 2023-2026 The MathWorks, Inc.<br>
-<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026b</a>
 <br>
 </p>
 </div>
@@ -195,7 +237,7 @@ track_joint_targets =
 
 % Load parameter structure and corresponding library block for track
 Excv = sm_excv_track_param_machine;
-trackLibraryMdl   = 'sm_trackV_lib_chain_lower_frame_s46i1u2l7';
+trackLibraryMdl   = 'sm_trackV_lib_chain_lower_frame_s46i1u2l7_ptcld';
 trackLibraryBlock = [trackLibraryMdl '/Track Contact Point Cloud'];
 load_system(trackLibraryMdl)
 
@@ -253,6 +295,9 @@ trackSegTgtFilename = ['track_joint_targets_' suffixStr '.m'];
 matlab.io.saveVariablesToScript(trackSegTgtFilename,'track_joint_targets');
 
 track_joint_targets
+
+%%
+bdclose(newMdlGenTargets)
 ##### SOURCE END #####
 -->
 </body>

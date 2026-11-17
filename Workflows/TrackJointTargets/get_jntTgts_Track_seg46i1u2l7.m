@@ -26,7 +26,7 @@
 
 % Load parameter structure and corresponding library block for track
 Excv = sm_excv_track_param_machine;
-trackLibraryMdl   = 'sm_trackV_lib_chain_lower_frame_s46i1u2l7';
+trackLibraryMdl   = 'sm_trackV_lib_chain_lower_frame_s46i1u2l7_ptcld';
 trackLibraryBlock = [trackLibraryMdl '/Track Contact Point Cloud'];
 load_system(trackLibraryMdl)
 
@@ -84,3 +84,6 @@ trackSegTgtFilename = ['track_joint_targets_' suffixStr '.m'];
 matlab.io.saveVariablesToScript(trackSegTgtFilename,'track_joint_targets');
 
 track_joint_targets
+
+%%
+bdclose(newMdlGenTargets)

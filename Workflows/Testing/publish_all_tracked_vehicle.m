@@ -93,5 +93,34 @@ for pf_i = 1:length(publishFolderList_wkf)
     end
 end
 
+%% Publish workflow documentation, generate joint targets
+publishFolderList_jtgt = {...
+    ['Workflows' filesep 'TrackJointTargets']
+    };
+FileList_jtgt = {...
+    'get_jntTgts_Track_seg46i1u2l7.m','get_jntTgts_Track_seg46i2u0l4.m','get_jntTgts_TrackV_seg45i2u0l3.m'};
+
+cd([homedir filesep publishFolderList_jtgt{1}])
+for ft_i=1:length(FileList_jtgt)
+    publish(FileList_jtgt{ft_i},'showCode',true)
+end
+
+%% Publish library documentation
+publishFolderList = {...
+    ['Libraries' filesep 'Doc'],...
+    }; 
+
+for pf_i = 1:length(publishFolderList)
+    cd([homedir filesep publishFolderList{pf_i}])
+    filelist_m=dir('*.m');
+    filenames_m = {filelist_m.name};
+    for i=1:length(filenames_m)
+        if ~(strcmp(filenames_m{i},'publish_all_html.m'))
+            publish(filenames_m{i},'showCode',false)
+        end
+    end
+end
+
+
 %%
 publishDuration = toc(publishStart)

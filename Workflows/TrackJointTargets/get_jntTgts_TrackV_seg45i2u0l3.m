@@ -27,7 +27,7 @@
 % Load parameter structure and corresponding library block for track
 Trac = sm_trackV_belt_param_machine_seg45i2u0r3_IdlerArm;
 sprk_pitch_rad = Trac.Sprocket.Spoke.pitch_rad + Trac.Sprocket.Spoke.rad+Trac.Belt.pad_h+0.01;
-trackLibraryMdl   = 'sm_trackV_lib_belt_lower_frame_s45i2u0l3';
+trackLibraryMdl   = 'sm_trackV_lib_belt_lower_frame_s45i2u0l3_ptcld';
 trackLibraryBlock = [trackLibraryMdl '/Track Contact Point Cloud'];
 load_system(trackLibraryMdl)
 
@@ -90,3 +90,6 @@ trackSegTgtFilename = ['trackV_joint_targets_' suffixStr '.m'];
 matlab.io.saveVariablesToScript(trackSegTgtFilename,{'track_seg_tgts_seg45i2u0r3','qSegSpr_seg45i2u0r3','tensioner_x0'});
 
 track_seg_tgts_seg45i2u0r3
+
+%%
+bdclose(newMdlGenTargets)

@@ -29,6 +29,7 @@ open_system('sm_excv_track2_roller_sphere')
 
 set_param(find_system('sm_excv_track2_roller_sphere','FindAll', 'on','MatchFilter',@Simulink.match.allVariants,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
 set_param([bdroot '/Track L'],'popup_sense_roller','Actuator Torque')
+set_param([bdroot '/Track R'],'popup_sense_roller','Actuator Torque')
 
 %% Track Subsystem
 %

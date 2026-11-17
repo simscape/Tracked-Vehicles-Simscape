@@ -7,9 +7,9 @@ This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
       -->
 <title>Generate Joint Targets for Belt Track (45 segments, 0 upper, 3 lower)</title>
-<meta name="generator" content="MATLAB 24.2">
+<meta name="generator" content="MATLAB 26.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2024-12-31">
+<meta name="DC.date" content="2026-11-17">
 <meta name="DC.source" content="get_jntTgts_TrackV_seg45i2u0l3.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -102,70 +102,115 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </div>
 <h2 id="1">Open and Configure Test Harness Model</h2>
 <p>A test harness model is provided that holds the sprocket in a fixed position. We swap in the track model for which we want to obtain a set of joint targets.</p>
+<pre class="codeinput">
+<span class="comment">% Load parameter structure and corresponding library block for track</span>
+Trac = sm_trackV_belt_param_machine_seg45i2u0r3_IdlerArm;
+sprk_pitch_rad = Trac.Sprocket.Spoke.pitch_rad + Trac.Sprocket.Spoke.rad+Trac.Belt.pad_h+0.01;
+trackLibraryMdl   = <span class="string">'sm_trackV_lib_belt_lower_frame_s45i2u0l3_ptcld'</span>;
+trackLibraryBlock = [trackLibraryMdl <span class="string">'/Track Contact Point Cloud'</span>];
+load_system(trackLibraryMdl)
+
+<span class="comment">% Retract tensioner cylinder just to ensure belt surrounds it</span>
+default_Tensionerx0 = Trac.IdlerF.Tensioner.x0; <span class="comment">% Save default value</span>
+Trac.IdlerF.Tensioner.x0 = 0; <span class="comment">% Initial extension of cylinder</span>
+</pre>
 <h2 id="2">Obtain new set of joint targets for new track</h2>
 <p>Open test harness model, swap in new track</p>
+<pre class="codeinput">mdlgenTargets = <span class="string">'get_jntTgts_Track'</span>;
+open_system(mdlgenTargets)
+replace_block(bdroot,<span class="string">'Name'</span>,<span class="string">'Track'</span>,trackLibraryBlock,<span class="string">'noprompt'</span>)
+[suffixStr,suffixVals] = sm_excv_trackV_param2suffix(Trac,bdroot);
+
+newMdlGenTargets = [mdlgenTargets <span class="string">'_TESTTrackV_'</span> suffixStr];
+save_system(bdroot,newMdlGenTargets);
+</pre>
 <img vspace="5" hspace="5" src="get_jntTgts_TrackV_seg45i2u0l3_01.png" alt=""> <h2 id="3">Define Preliminary Set of Joint Targets</h2>
 <p>For the initial assembly, we need a set of joint targets that will enable the track to surround the sprocket, rollers, and idlers. The idler is fully retracted and a MATLAB script is used to create a preliminary set of targets that surrounds the components. This is good enough to get the model to assemble, but it would be a poor set of joint targets for simulation tests as the initial transient would be very harsh.</p>
 <p>
 <img vspace="5" hspace="5" src="get_jntTgts_TrackV_seg45i2u0l3_mechExp_prelim.png" alt=""> </p>
+<pre class="codeinput">
+<span class="comment">% Retract tensioner cylinder just to ensure belt surrounds it</span>
+default_Tensionerx0 = Excv.Idler.Tensioner.x0; <span class="comment">% Save default value</span>
+Excv.Idler.Tensioner.x0 = -2; <span class="comment">% Initial extension of cylinder</span>
+
+<span class="comment">% Create rough set of targets that hopefully surrounds rollers, idler</span>
+[track_seg_tgts_seg45i2u0r3, qSegSpr_seg45i2u0r3]= sm_trackV_belt_segTargets_seg45i2u0r3_IdlerArm(Trac.Belt.l, sprk_pitch_rad);
+</pre>
 <h2 id="5">Simulate with Preliminary Targets</h2>
 <p>A simulation is run to let the belt settle. MATLAB is used to extract the final positions of the joints in the segmented track.</p>
 <p>
 <img vspace="5" hspace="5" src="get_jntTgts_TrackV_seg45i2u0l3_mechExp_final.png" alt=""> </p>
+<pre class="codeinput">
+<span class="comment">% Model holds sprocket still until belt settles</span>
+sim(newMdlGenTargets)
+
+<span class="comment">% Extract track segment joint targets, tensioner initial position</span>
+<span class="comment">% from simulation results</span>
+[track_seg_tgts_seg45i2u0r3,tensioner_x0] = genTVchain_targets(simlog_getChainJointTargets);
+Trac.IdlerF.Tensioner.x0 = tensioner_x0;
+
+trackSegTgtFilename = [<span class="string">'trackV_joint_targets_'</span> suffixStr <span class="string">'.m'</span>];
+
+matlab.io.saveVariablesToScript(trackSegTgtFilename,{<span class="string">'track_seg_tgts_seg45i2u0r3'</span>,<span class="string">'qSegSpr_seg45i2u0r3'</span>,<span class="string">'tensioner_x0'</span>});
+
+track_seg_tgts_seg45i2u0r3
+</pre>
 <pre class="codeoutput">
 track_seg_tgts_seg45i2u0r3 =
 
   45&times;3 cell array
 
-    {'on' }    {'Low'}    {[    16.7353]}
-    {'on' }    {'Low'}    {[    16.7616]}
-    {'on' }    {'Low'}    {[    16.8540]}
-    {'on' }    {'Low'}    {[     8.7892]}
-    {'on' }    {'Low'}    {[-2.6781e-06]}
-    {'on' }    {'Low'}    {[ 3.3981e-06]}
-    {'on' }    {'Low'}    {[ 6.5981e-06]}
-    {'on' }    {'Low'}    {[ 7.1751e-06]}
-    {'on' }    {'Low'}    {[ 5.4436e-06]}
-    {'on' }    {'Low'}    {[ 1.6080e-06]}
-    {'on' }    {'Low'}    {[-1.3070e-06]}
-    {'on' }    {'Low'}    {[    12.5557]}
-    {'on' }    {'Low'}    {[    23.7614]}
-    {'on' }    {'Low'}    {[    23.8170]}
-    {'on' }    {'Low'}    {[    23.2143]}
-    {'on' }    {'Low'}    {[    24.9036]}
-    {'on' }    {'Low'}    {[    17.2980]}
-    {'on' }    {'Low'}    {[ 5.7226e-07]}
-    {'on' }    {'Low'}    {[-4.1930e-06]}
-    {'on' }    {'Low'}    {[     0.9953]}
-    {'on' }    {'Low'}    {[     3.0275]}
-    {'on' }    {'Low'}    {[-6.8084e-06]}
-    {'on' }    {'Low'}    {[-3.7484e-05]}
-    {'on' }    {'Low'}    {[ 7.3524e-06]}
-    {'on' }    {'Low'}    {[     1.1180]}
-    {'on' }    {'Low'}    {[     1.5371]}
-    {'on' }    {'Low'}    {[ 5.2558e-06]}
-    {'on' }    {'Low'}    {[-7.5935e-07]}
-    {'on' }    {'Low'}    {[     2.3912]}
-    {'on' }    {'Low'}    {[    20.6762]}
-    {'on' }    {'Low'}    {[    24.9380]}
-    {'on' }    {'Low'}    {[    23.1125]}
-    {'on' }    {'Low'}    {[    24.0809]}
-    {'on' }    {'Low'}    {[    23.0911]}
-    {'on' }    {'Low'}    {[     9.9393]}
-    {'on' }    {'Low'}    {[-5.0911e-06]}
-    {'off'}    {'Low'}    {[-4.3665e-07]}
-    {'on' }    {'Low'}    {[ 2.8324e-06]}
-    {'on' }    {'Low'}    {[ 4.8666e-06]}
-    {'on' }    {'Low'}    {[ 4.1469e-06]}
-    {'on' }    {'Low'}    {[ 7.6625e-07]}
-    {'on' }    {'Low'}    {[-7.8842e-07]}
-    {'on' }    {'Low'}    {[     7.0642]}
-    {'on' }    {'Low'}    {[    16.4334]}
-    {'on' }    {'Low'}    {[    16.9054]}
+    {'on' }    {'Low'}    {[    16.7354]}
+    {'on' }    {'Low'}    {[    16.7617]}
+    {'on' }    {'Low'}    {[    16.8534]}
+    {'on' }    {'Low'}    {[     8.7862]}
+    {'on' }    {'Low'}    {[-9.2476e-07]}
+    {'on' }    {'Low'}    {[ 4.2973e-06]}
+    {'on' }    {'Low'}    {[ 5.8056e-06]}
+    {'on' }    {'Low'}    {[ 6.0177e-06]}
+    {'on' }    {'Low'}    {[ 5.6146e-06]}
+    {'on' }    {'Low'}    {[ 3.8789e-06]}
+    {'on' }    {'Low'}    {[-4.8847e-07]}
+    {'on' }    {'Low'}    {[    12.5599]}
+    {'on' }    {'Low'}    {[    23.7624]}
+    {'on' }    {'Low'}    {[    23.8164]}
+    {'on' }    {'Low'}    {[    23.2148]}
+    {'on' }    {'Low'}    {[    24.9027]}
+    {'on' }    {'Low'}    {[    17.2939]}
+    {'on' }    {'Low'}    {[-2.6305e-07]}
+    {'on' }    {'Low'}    {[ 1.2927e-07]}
+    {'on' }    {'Low'}    {[     0.9961]}
+    {'on' }    {'Low'}    {[     3.0264]}
+    {'on' }    {'Low'}    {[-1.9249e-07]}
+    {'on' }    {'Low'}    {[-1.1270e-07]}
+    {'off'}    {'Low'}    {[-1.1584e-08]}
+    {'on' }    {'Low'}    {[     1.1183]}
+    {'on' }    {'Low'}    {[     1.5363]}
+    {'on' }    {'Low'}    {[-1.3352e-07]}
+    {'on' }    {'Low'}    {[ 3.1796e-07]}
+    {'on' }    {'Low'}    {[     2.3954]}
+    {'on' }    {'Low'}    {[    20.6779]}
+    {'on' }    {'Low'}    {[    24.9373]}
+    {'on' }    {'Low'}    {[    23.1126]}
+    {'on' }    {'Low'}    {[    24.0813]}
+    {'on' }    {'Low'}    {[    23.0900]}
+    {'on' }    {'Low'}    {[     9.9351]}
+    {'on' }    {'Low'}    {[-1.2025e-06]}
+    {'on' }    {'Low'}    {[ 4.0326e-06]}
+    {'on' }    {'Low'}    {[ 6.0594e-06]}
+    {'on' }    {'Low'}    {[ 6.4633e-06]}
+    {'on' }    {'Low'}    {[ 5.8657e-06]}
+    {'on' }    {'Low'}    {[ 3.8326e-06]}
+    {'on' }    {'Low'}    {[-7.4261e-07]}
+    {'on' }    {'Low'}    {[     7.0672]}
+    {'on' }    {'Low'}    {[    16.4342]}
+    {'on' }    {'Low'}    {[    16.9050]}
 
 </pre>
+<pre class="codeinput">bdclose(newMdlGenTargets)
+</pre>
 <p class="footer">Copyright 2023-2026 The MathWorks, Inc.<br>
-<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026b</a>
 <br>
 </p>
 </div>
@@ -200,7 +245,7 @@ track_seg_tgts_seg45i2u0r3 =
 % Load parameter structure and corresponding library block for track
 Trac = sm_trackV_belt_param_machine_seg45i2u0r3_IdlerArm;
 sprk_pitch_rad = Trac.Sprocket.Spoke.pitch_rad + Trac.Sprocket.Spoke.rad+Trac.Belt.pad_h+0.01;
-trackLibraryMdl   = 'sm_trackV_lib_belt_lower_frame_s45i2u0l3';
+trackLibraryMdl   = 'sm_trackV_lib_belt_lower_frame_s45i2u0l3_ptcld';
 trackLibraryBlock = [trackLibraryMdl '/Track Contact Point Cloud'];
 load_system(trackLibraryMdl)
 
@@ -263,6 +308,9 @@ trackSegTgtFilename = ['trackV_joint_targets_' suffixStr '.m'];
 matlab.io.saveVariablesToScript(trackSegTgtFilename,{'track_seg_tgts_seg45i2u0r3','qSegSpr_seg45i2u0r3','tensioner_x0'});
 
 track_seg_tgts_seg45i2u0r3
+
+%%
+bdclose(newMdlGenTargets)
 ##### SOURCE END #####
 -->
 </body>

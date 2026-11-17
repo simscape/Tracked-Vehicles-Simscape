@@ -83,3 +83,6 @@ trackSegTgtFilename = ['track_joint_targets_' suffixStr '.m'];
 matlab.io.saveVariablesToScript(trackSegTgtFilename,{'track_joint_targetsC46I2','tensioner_x0'});
 
 track_joint_targetsC46I2
+
+%%
+bdclose(newMdlGenTargets)

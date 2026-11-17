@@ -7,9 +7,9 @@ This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
       -->
 <title>Generate Joint Targets for Chain Track (46 segments, 2 idler, 4 lower)</title>
-<meta name="generator" content="MATLAB 24.2">
+<meta name="generator" content="MATLAB 26.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2024-12-31">
+<meta name="DC.date" content="2026-11-17">
 <meta name="DC.source" content="get_jntTgts_Track_seg46i2u0l4.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -99,14 +99,53 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </div>
 <h2 id="1">Open and Configure Test Harness Model</h2>
 <p>A test harness model is provided that holds the sprocket in a fixed position. We swap in the track model for which we want to obtain a set of joint targets.</p>
+<pre class="codeinput">
+<span class="comment">% Load parameter structure and corresponding library block for track</span>
+ExcvI2R4 = sm_excv_track_param_machine_2Idler4Roller;
+trackLibraryMdl   = <span class="string">'sm_trackV_lib_chain_lower_frame_s46i2u0l4'</span>;
+trackLibraryBlock = [trackLibraryMdl <span class="string">'/Track Contact Point Cloud'</span>];
+load_system(trackLibraryMdl)
+
+<span class="comment">% Open test harness model, swap in new track</span>
+mdlgenTargets = <span class="string">'get_jntTgts_Track'</span>;
+open_system(mdlgenTargets)
+replace_block(bdroot,<span class="string">'Name'</span>,<span class="string">'Track'</span>,trackLibraryBlock,<span class="string">'noprompt'</span>)
+[suffixStr,suffixVals] = sm_excv_track_param2suffix(ExcvI2R4,bdroot);
+
+newMdlGenTargets = [mdlgenTargets <span class="string">'_TEST_'</span> suffixStr];
+save_system(bdroot,newMdlGenTargets);
+</pre>
 <img vspace="5" hspace="5" src="get_jntTgts_Track_seg46i2u0l4_01.png" alt=""> <h2 id="2">Define Preliminary Set of Joint Targets</h2>
 <p>For the initial assembly, we need a set of joint targets that will enable the track to surround the sprocket, rollers, and idlers. The idler is fully retracted and a MATLAB script is used to create a preliminary set of targets that surrounds the components. This is good enough to get the model to assemble, but it would be a poor set of joint targets for simulation tests as the initial transient would be very harsh.</p>
 <p>
 <img vspace="5" hspace="5" src="get_jntTgts_Track_seg46i2u0l4_mechExp_prelim.png" alt=""> </p>
+<pre class="codeinput">
+<span class="comment">% Retract tensioner cylinder just to ensure chain surrounds it</span>
+default_Tensionerx0 = ExcvI2R4.IdlerF.Tensioner.x0; <span class="comment">% Save default value</span>
+ExcvI2R4.Idler.Tensioner.x0 = -2; <span class="comment">% Initial extension of cylinder</span>
+
+<span class="comment">% Create rough set of targets that hopefully surrounds rollers, idler</span>
+track_joint_targetsC46I2 = sm_excv_track_segTargets_46seg2Idler(ExcvI2R4.Chain.pin_sep, ExcvI2R4.Sprocket.sprocket_rPitch);
+</pre>
 <h2 id="4">Simulate with Preliminary Targets</h2>
 <p>A simulation is run to let the chain settle. MATLAB is used to extract the final positions of the joints in the segmented track.</p>
 <p>
 <img vspace="5" hspace="5" src="get_jntTgts_Track_seg46i2u0l4_mechExp_final.png" alt=""> </p>
+<pre class="codeinput">
+<span class="comment">% Model holds sprocket still until chain settles</span>
+sim(newMdlGenTargets)
+
+<span class="comment">% Extract track segment joint targets, tensioner initial position</span>
+<span class="comment">% from simulation results</span>
+[track_joint_targetsC46I2,tensioner_x0] = genTVchain_targets(simlog_getChainJointTargets);
+Excv.Idler.Tensioner.x0 = tensioner_x0;
+
+trackSegTgtFilename = [<span class="string">'track_joint_targets_'</span> suffixStr <span class="string">'.m'</span>];
+
+matlab.io.saveVariablesToScript(trackSegTgtFilename,{<span class="string">'track_joint_targetsC46I2'</span>,<span class="string">'tensioner_x0'</span>});
+
+track_joint_targetsC46I2
+</pre>
 <pre class="codeoutput">
 track_joint_targetsC46I2 =
 
@@ -116,52 +155,54 @@ track_joint_targetsC46I2 =
     {'on' }    {'Low'}    {[    21.2728]}
     {'on' }    {'Low'}    {[    21.1778]}
     {'on' }    {'Low'}    {[    14.6799]}
-    {'on' }    {'Low'}    {[-9.8563e-07]}
-    {'off'}    {'Low'}    {[ 2.7817e-08]}
-    {'on' }    {'Low'}    {[ 1.0630e-06]}
+    {'on' }    {'Low'}    {[-3.1220e-06]}
+    {'off'}    {'Low'}    {[ 2.9246e-08]}
+    {'on' }    {'Low'}    {[ 2.8433e-06]}
     {'on' }    {'Low'}    {[     3.6382]}
     {'on' }    {'Low'}    {[    23.3265]}
     {'on' }    {'Low'}    {[    28.6317]}
     {'on' }    {'Low'}    {[    28.6317]}
     {'on' }    {'Low'}    {[    23.3266]}
     {'on' }    {'Low'}    {[     3.6382]}
-    {'on' }    {'Low'}    {[ 5.4746e-07]}
+    {'on' }    {'Low'}    {[-1.7858e-06]}
     {'on' }    {'Low'}    {[     0.6694]}
     {'on' }    {'Low'}    {[     0.7268]}
-    {'on' }    {'Low'}    {[ 2.0812e-07]}
-    {'on' }    {'Low'}    {[ 7.6397e-05]}
-    {'on' }    {'Low'}    {[ 8.8258e-05]}
-    {'on' }    {'Low'}    {[-2.4946e-06]}
+    {'on' }    {'Low'}    {[-7.1477e-08]}
+    {'on' }    {'Low'}    {[ 7.6628e-05]}
+    {'on' }    {'Low'}    {[ 8.9412e-05]}
+    {'on' }    {'Low'}    {[-4.7392e-07]}
     {'on' }    {'Low'}    {[     0.0063]}
     {'on' }    {'Low'}    {[     0.0074]}
-    {'on' }    {'Low'}    {[ 5.2087e-07]}
+    {'on' }    {'Low'}    {[ 4.5412e-07]}
     {'on' }    {'Low'}    {[     0.8363]}
     {'on' }    {'Low'}    {[     0.1882]}
-    {'on' }    {'Low'}    {[ 1.7405e-06]}
+    {'on' }    {'Low'}    {[ 6.9756e-07]}
     {'on' }    {'Low'}    {[     6.7648]}
     {'on' }    {'Low'}    {[    25.1368]}
     {'on' }    {'Low'}    {[    28.4302]}
     {'on' }    {'Low'}    {[    27.8813]}
     {'on' }    {'Low'}    {[    27.9110]}
-    {'on' }    {'Low'}    {[    28.2754]}
-    {'on' }    {'Low'}    {[    15.0441]}
-    {'on' }    {'Low'}    {[-6.9240e-06]}
-    {'on' }    {'Low'}    {[ 3.4506e-05]}
-    {'on' }    {'Low'}    {[ 3.8711e-05]}
-    {'on' }    {'Low'}    {[ 3.6067e-05]}
-    {'on' }    {'Low'}    {[ 3.5199e-05]}
-    {'on' }    {'Low'}    {[ 3.5527e-05]}
-    {'on' }    {'Low'}    {[ 3.5552e-05]}
-    {'on' }    {'Low'}    {[ 3.5481e-05]}
-    {'on' }    {'Low'}    {[ 3.7609e-05]}
-    {'on' }    {'Low'}    {[ 4.2478e-05]}
-    {'on' }    {'Low'}    {[ 3.8993e-05]}
-    {'on' }    {'Low'}    {[-1.2114e-05]}
-    {'on' }    {'Low'}    {[     8.7290]}
+    {'on' }    {'Low'}    {[    28.2755]}
+    {'on' }    {'Low'}    {[    15.0442]}
+    {'on' }    {'Low'}    {[ 3.6515e-05]}
+    {'on' }    {'Low'}    {[ 2.4346e-05]}
+    {'on' }    {'Low'}    {[ 8.0844e-07]}
+    {'on' }    {'Low'}    {[-1.3175e-05]}
+    {'on' }    {'Low'}    {[-1.8565e-05]}
+    {'on' }    {'Low'}    {[-1.9961e-05]}
+    {'on' }    {'Low'}    {[-1.9849e-05]}
+    {'on' }    {'Low'}    {[-1.8067e-05]}
+    {'on' }    {'Low'}    {[-1.1398e-05]}
+    {'on' }    {'Low'}    {[ 6.0674e-06]}
+    {'on' }    {'Low'}    {[ 3.6102e-05]}
+    {'on' }    {'Low'}    {[ 5.2408e-05]}
+    {'on' }    {'Low'}    {[     8.7291]}
 
 </pre>
+<pre class="codeinput">bdclose(newMdlGenTargets)
+</pre>
 <p class="footer">Copyright 2023-2026 The MathWorks, Inc.<br>
-<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026b</a>
 <br>
 </p>
 </div>
@@ -252,6 +293,9 @@ trackSegTgtFilename = ['track_joint_targets_' suffixStr '.m'];
 matlab.io.saveVariablesToScript(trackSegTgtFilename,{'track_joint_targetsC46I2','tensioner_x0'});
 
 track_joint_targetsC46I2
+
+%%
+bdclose(newMdlGenTargets)
 ##### SOURCE END #####
 -->
 </body>
